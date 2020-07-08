@@ -1,0 +1,115 @@
+<form [formGroup]="form" (ngSubmit)="submit(form)">
+    <div formGroupName="meta" class="tab-content p-24">
+        <!-- <div class="inputs_container">
+				<app-image-upload [image]="meta.image" (uploadComplete)="onUploadComplete($event)">
+				</app-image-upload>
+		</div> -->
+
+        <div fusePerfectScrollbar fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="space-between" formGroupName='title'>
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                    <mat-label> Title Ge </mat-label>
+                    <input matInput placeholder="Title Ge" name="Title Ge" formControlName="ge">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                    <mat-label> Title En </mat-label>
+                    <input matInput placeholder="Title En" name="Title En" formControlName="en">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                    <mat-label> Title Ru </mat-label>
+                    <input matInput placeholder="Title Ru" name="Title Ru" formControlName="ru">
+                </mat-form-field>
+            </div>
+
+            <div formGroupName='description'>
+                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                    <mat-label> Description GE </mat-label>
+                    <input matInput placeholder="Description GE" name="description" formControlName="ge" rows="5">
+                </mat-form-field>
+                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                    <mat-label> Description EN </mat-label>
+                    <input matInput placeholder="Description EN" name="description" formControlName="en" rows="5">
+                </mat-form-field>
+                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                    <mat-label> Description RU </mat-label>
+                    <input matInput placeholder="Description RU" name="description" formControlName="ru" rows="5">
+                </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                <mat-label> Keywords </mat-label>
+                <mat-chip-list #chipList aria-label="selection">
+                    <mat-chip *ngFor="let keyword of getControls(form.controls['meta'], 'keywords'); let i = index;"
+                        [selectable]="selectable" [removable]="removable" (removed)="remove(i)">
+                        {{keyword.value}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="New keyword..." [matChipInputFor]="chipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                        (matChipInputTokenEnd)="add($event)">
+                </mat-chip-list>
+            </mat-form-field>
+
+            <!-- <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+				<mat-label>Categories</mat-label>
+				<mat-chip-list #chipList name="categories" formControlName="categories">
+					<mat-chip *ngFor="let keyword of getControls(form.controls['meta'], 'keywords'); let i = index;"
+										[selectable]="selectable" [
+										removable]="removable" 
+										(removed)="remove(i)">
+						{{keyword.value}}
+						<mat-icon matChipRemove *ngIf="removable"> cancel </mat-icon>
+					</mat-chip>
+					<input  placeholder="New keyword..." 
+									[matChipInputFor]="chipList"
+									[matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
+									[matChipInputAddOnBlur]="addOnBlur"
+									(matChipInputTokenEnd)="add($event)">
+				</mat-chip-list>
+			</mat-form-field> -->
+        </div>
+
+        <!-- <div class="inputs_container" formGroupName="title">
+					<mat-form-field class="example-full-width">
+							<input formControlName="ge" matInput placeholder="Title GE">
+					</mat-form-field>
+					<mat-form-field class="example-full-width">
+							<input formControlName="en" matInput placeholder="Title EN">
+					</mat-form-field>
+					<mat-form-field class="example-full-width">
+							<input formControlName="ru" matInput placeholder="Title RU">
+					</mat-form-field>
+			</div>
+
+			<div class="inputs_container" formGroupName="description">
+					<mat-form-field class="example-full-width">
+							<textarea formControlName="ge" matInput placeholder="Description GE"> </textarea>
+					</mat-form-field>
+					<mat-form-field class="example-full-width">
+							<textarea formControlName="en" matInput placeholder="Description EN"> </textarea>
+					</mat-form-field>
+					<mat-form-field class="example-full-width">
+							<textarea formControlName="ru" matInput placeholder="Description RU"> </textarea>
+					</mat-form-field>
+			</div> -->
+        <!-- 
+			<div class="inputs_container">
+					<mat-form-field class="example-chip-list">
+							<mat-chip-list #chipList aria-label="selection">
+									<mat-chip *ngFor="let keyword of getControls(form.controls['meta'], 'keywords'); let i = index;"
+											[selectable]="selectable" [removable]="removable" (removed)="remove(i)">
+											{{keyword.value}}
+											<mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+									</mat-chip>
+									<input placeholder="New keyword..." [matChipInputFor]="chipList"
+											[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+											(matChipInputTokenEnd)="add($event)">
+							</mat-chip-list>
+					</mat-form-field>
+			</div> -->
+
+        <button type="submit" mat-raised-button color="primary" *ngIf="showSubmit"> Submit </button>
+    </div>
+</form>

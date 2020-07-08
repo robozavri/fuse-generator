@@ -1,0 +1,33 @@
+{
+  "name": "gulp-generator",
+  "version": "1.0.0",
+  "description": "gulp test generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.3"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.3.13",
+    "babel-register": "^6.4.3",
+    "del": "^2.2.0",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-inject": "^3.0.0",
+    "gulp-load-plugins": "^1.2.0",
+    "gulp-nodemon": "^2.0.3",
+    "gulp-plumber": "^1.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-spawn-mocha": "^2.0.1",
+    "gulp-template": "^3.0.0",
+    "gulp-util": "^3.0.4",
+    "gulp-watch": "4.2.5",
+    "pluralize": "^7.0.0",
+    "require-dir": "^0.3.0",
+    "run-sequence": "^1.1.0"
+  }
+}

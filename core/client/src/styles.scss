@@ -1,0 +1,14 @@
+// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+@import 'scss/vendors-extensions/reset';
+@import 'scss/base/fonts';
+
+@import 'scss/abstracts/mixins';
+@import 'scss/abstracts/variables';
+
+@import 'scss/base/typography';
+@import 'scss/base/helpers';
+@import 'scss/base/base';
+
+@import 'scss/components/buttons';
+@import 'scss/components/forms';

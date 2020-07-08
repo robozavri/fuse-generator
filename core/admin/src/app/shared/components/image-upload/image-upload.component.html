@@ -1,0 +1,20 @@
+<div>
+    <div class="image_holder">
+        <div class="empty_image" *ngIf="!selectedImage?.base64 && !image?.url">
+            Upload Photo
+        </div>
+        <div class="the_image" *ngIf="selectedImage?.base64 || image?.url">
+            <img [src]="selectedImage?.base64 ? selectedImage?.base64 : (image?.url | resourceUrl) " alt="image">
+        </div>
+    </div>
+
+    <app-file-upload class="upload_photo_container" [accept]="'image/*'" [base64]="true"
+        (fileChange)="onImageSelected($event)">
+        <div class="upload_photo_box">
+            <button type="button" *ngIf="!selectedImage?.base64 && !image.url" mat-raised-button color="basic">
+                Upload Photo </button>
+            <button type="button" *ngIf="selectedImage?.base64 || image.url" mat-raised-button color="basic">
+                Change Photo </button>
+        </div>
+    </app-file-upload>
+</div>
