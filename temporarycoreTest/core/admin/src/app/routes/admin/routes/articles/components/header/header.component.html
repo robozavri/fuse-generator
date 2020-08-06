@@ -1,0 +1,39 @@
+<form [formGroup]="form" (ngSubmit)="submit()" accept-charset="utf-8" *ngIf="data">
+    <div class="tab-content p-24">
+        <div fusePerfectScrollbar fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="flex-start" formGroupName="title">
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                    <mat-label> Title Ge </mat-label>
+                    <input matInput placeholder="Title Ge" formControlName="ge">
+                </mat-form-field>
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                    <mat-label> Title En </mat-label>
+                    <input matInput placeholder="Title En" formControlName="en">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                    <mat-label> Title Ru </mat-label>
+                    <input matInput placeholder="Title Ru" formControlName="ru">
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="flex-start" formGroupName="subtitle">
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                    <mat-label> Subtitle Ge </mat-label>
+                    <input matInput placeholder="Subtitle Ge" formControlName="ge">
+                </mat-form-field>
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                    <mat-label> Subtitle En </mat-label>
+                    <input matInput placeholder="Subtitle En" formControlName="en">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                    <mat-label> Subtitle Ru </mat-label>
+                    <input matInput placeholder="Subtitle Ru" formControlName="ru">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <button mat-raised-button type="submit" color="primary" [disabled]="form.invalid" style="margin: 30px;">
+        Submit
+    </button>
+</form>

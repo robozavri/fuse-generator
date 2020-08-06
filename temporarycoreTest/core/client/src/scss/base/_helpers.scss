@@ -1,0 +1,41 @@
+// *** Hide numbers in number input ***
+// *** uncomment if needed ***
+
+
+// input[type=number]::-webkit-inner-spin-button,
+// input[type=number]::-webkit-outer-spin-button {
+//   -webkit-appearance: none;
+//   -moz-appearance: none;
+//   appearance: none;
+//   margin: 0;
+//   border-radius: 0;
+// }
+
+
+// input[type=number] {
+//   -moz-appearance: textfield;
+// }
+
+// *** for ios mobile ***
+
+// input[type=text],
+// input[type=password],
+// input[type=email],
+// select,
+// textarea {
+//   -webkit-appearance: none;
+//   -moz-appearance: none;
+//   appearance: none;
+//   border-radius: 0;
+// }
+
+.hide {
+  display: none !important;
+}
+
+.with_100 {
+  width: 100% !important;
+}
+
+
+//Media

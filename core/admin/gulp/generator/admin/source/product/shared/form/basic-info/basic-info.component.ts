@@ -31,7 +31,8 @@ export class BasicInfoComponent extends FormComponent implements OnInit {
     this.formData.<%=defField%> = this.formData.<%=defField%> || '';
     this.formData.title = this.formData.title || {};
     this.formData.description = this.formData.description || {};
-
+    this.formData.thumbnail = this.formData.thumbnail || {};
+    
     this.form = this.fb.group({
       <%=defField%>: [this.formData.<%=defField%> || '', Validators.required],
       title: this.fb.group({
@@ -44,7 +45,15 @@ export class BasicInfoComponent extends FormComponent implements OnInit {
         en: [this.formData.description.en || ''],
         ru: [this.formData.description.ru || ''],
       }),
+      thumbnail: this.fb.group({
+        url: [this.formData.thumbnail.url || '']
+      }),
     });
+  }
+
+  onUploadComplete(data) {
+    this.form.get('thumbnail').get('url').markAsTouched();
+    this.form.get('thumbnail').get('url').setValue(data.url);
   }
 
   submit() {

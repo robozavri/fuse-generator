@@ -40,7 +40,7 @@ export class <%=nameSingularFUC%>Component implements OnInit, AfterViewInit {
   }
 
   loadData() {
-    if (this.route.snapshot.params.id !== 'new') {
+    if (this.route.snapshot.params.id && this.route.snapshot.params.id !== 'new') {
       this.editMode = true;
       this.api.getByQuery({ _id: this.route.snapshot.params.id }).subscribe((data) => {
         this.mainData = data.items[0];
@@ -71,7 +71,7 @@ export class <%=nameSingularFUC%>Component implements OnInit, AfterViewInit {
           }, () => {
             this.snackBarService.open('Update Failed');
           }, () => {
-           // this.router.navigate(['/admin/<%=nameSingularLC%>']);
+           // this.router.navigate(['/admin/<%=namePluralLC%>']);
           });
       } else {
         this.api.create(this.getFormData())
@@ -80,7 +80,7 @@ export class <%=nameSingularFUC%>Component implements OnInit, AfterViewInit {
           }, () => {
             this.snackBarService.open('Creation Failed');
           }, () => {
-            this.router.navigate(['/admin/<%=nameSingularLC%>']);
+            this.router.navigate(['/admin/<%=namePluralLC%>']);
           });
       }
     } else {

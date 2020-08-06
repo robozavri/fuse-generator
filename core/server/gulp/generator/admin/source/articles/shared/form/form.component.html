@@ -1,9 +1,9 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="tab-content p-24" fusePerfectScrollbar fxLayout="column">
 
-        <!-- <div class="inputs_container">
+    <div class="inputs_container">
 		<app-image-upload [image]="formData.thumbnail" (uploadComplete)="onUploadComplete($event)"></app-image-upload>
-	</div> -->
+	</div>
 
         <div fxLayout="row" fxLayoutAlign="space-between" formGroupName='title'>
             <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">

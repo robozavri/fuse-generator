@@ -8,9 +8,7 @@ const <%=nameUC%>Schema = new Schema({
   title: multilingualSchema,
   description: multilingualSchema,
   thumbnail: imageSchema,
-  content: multilingualSchema,
   createdAt: Date,
-  isFeatured: Boolean,
   meta: metaTagsSchema,
   position: Number,
 });

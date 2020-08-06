@@ -3,7 +3,6 @@ import { cloneStub }  from '../helpers/stub-helpers';
 
 const <%=nameUC%>Stub = {
   <%=defField%>: '<%=defField%>',
-  isFeatured: true,
   createdAt: Date(),
   thumbnail: {url : ''},
 };
@@ -21,30 +20,25 @@ export function getMany(count: number, fields?: any) {
     ...fields,
     <%=defField%>: `<%=defField%>_${i}`,
     title: {
-      en: `title_${i} en`,
-      ge: `title_${i} ge`,
-      ru: `title_${i} ru`
+      en: `<%=nameSingularLC%> title_${i} en`,
+      ge: `<%=nameSingularLC%> title_${i} ge`,
+      ru: `<%=nameSingularLC%> title_${i} ru`
   },
   description: {
-      en: `description_${i} en`,
-      ge: `description_${i} ge`,
-      ru: `description_${i} ru`
-  },
-  content: {
-      ge: `content_${i} ge`,
-      en: `content_${i} en`,
-      ru: `content_${i} ru`
+      en: `<%=nameSingularLC%> description_${i} en`,
+      ge: `<%=nameSingularLC%> description_${i} ge`,
+      ru: `<%=nameSingularLC%> description_${i} ru`
   },
   meta: {
     title: {
-      en: `title_${i} en`,
-      ge: `title_${i} ge`,
-      ru: `title_${i} ru`
+      en: `<%=nameSingularLC%> title_${i} en`,
+      ge: `<%=nameSingularLC%> title_${i} ge`,
+      ru: `<%=nameSingularLC%> title_${i} ru`
     },
     description: {
-      en: `description_${i} en`,
-      ge: `description_${i} ge`,
-      ru: `description_${i} ru`
+      en: `<%=nameSingularLC%> description_${i} en`,
+      ge: `<%=nameSingularLC%> description_${i} ge`,
+      ru: `<%=nameSingularLC%> description_${i} ru`
     },
     keywords: ['test','test2'],
     image: { url : '' },

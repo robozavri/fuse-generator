@@ -4,7 +4,7 @@ import gulp from 'gulp';
 import path from 'path';
 import runSequence from 'run-sequence';
 import paths from '../paths';
-import {getNameFromArgv, getDefFieldFromArgv, getDirFromArgv, firstUC, firstLC, plural} from '../helpers';
+import {getNameFromArgv, getDefFieldFromArgv, getDirFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
 const $ = require('gulp-load-plugins')();
 
 gulp.task('api', (done) => {
@@ -32,6 +32,10 @@ function insertTemplates(name, src, dest, defFieldIncluded) {
       nameUC: firstUC(name),
       nameLC: firstLC(name),
       namePlural: plural(name),
+      namePluralLC: plural(name.toLowerCase()),
+      namePluralFUC: firstUC(plural(name)),
+      nameSingularLC: singular(name),
+      nameSingularFUC: firstUC(singular(name)),
       defField: defFieldIncluded ? getDefFieldFromArgv() : null
     }, {
       interpolate: /<%=([\s\S]+?)%>/g

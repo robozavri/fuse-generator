@@ -75,6 +75,34 @@ const routes: Routes = [
         path: 'author/new',
         loadChildren: './routes/videos/videos.module#VideosModule'
       },
+      {
+        path: 'car/new',
+        loadChildren: './routes/car/car.module#CarModule'
+      },
+      {
+        path: 'cars',
+        loadChildren: './routes/cars/cars.module#CarsModule'
+      },
+      {
+        path: 'car/:id',
+        loadChildren: './routes/car/car.module#CarModule'
+      },
+      {
+        path: 'compiuter/new',
+        loadChildren: './routes/compiuter/compiuter.module#CompiuterModule'
+      },
+      {
+        path: 'compiuters',
+        loadChildren: './routes/compiuters/compiuters.module#CompiutersModule'
+      },
+      {
+        path: 'compiuter/:id',
+        loadChildren: './routes/compiuter/compiuter.module#CompiuterModule'
+      },
+      {
+        path: 'guitars',
+        loadChildren: './routes/guitars/guitars.module#GuitarsModule'
+      },
     ]
   }
 ];

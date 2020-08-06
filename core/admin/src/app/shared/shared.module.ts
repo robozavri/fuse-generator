@@ -63,6 +63,9 @@ import { NewsApiService } from './http/news-api.service';
 import { BookApiService } from './http/book-api.service';
 import { AuthorApiService } from './http/author-api.service';
 import { VideoApiService } from './http/video-api.service';
+import { CarApiService } from './http/car-api.service';
+import { CompiuterApiService } from './http/compiuter-api.service';
+import { GuitarApiService } from './http/guitar-api.service';
 
 
 @NgModule({
@@ -190,7 +193,10 @@ export class SharedModule {
         NewsApiService,
         BookApiService,
         AuthorApiService,
-        VideoApiService
+        VideoApiService,
+        CarApiService,
+        CompiuterApiService,
+        GuitarApiService
       ]
     };
   }

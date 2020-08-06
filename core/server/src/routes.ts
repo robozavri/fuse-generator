@@ -18,6 +18,10 @@ import newsRouter from './api/news';
 import booksRouter from './api/books';
 import authorsRouter from './api/authors';
 import videosRouter from './api/videos';
+import carsRouter from './api/cars';
+import compiutersRouter from './api/compiuters';
+import guitarsRouter from './api/guitars';
+
 
 import { getMetaTags } from './helpers/metaTagsHelper';
 
@@ -45,6 +49,9 @@ export function initRoutes(app: Express) {
   app.use('/api/books', booksRouter);
   app.use('/api/authors', authorsRouter);
   app.use('/api/videos', videosRouter);
+  app.use('/api/cars', carsRouter);
+  app.use('/api/compiuters', compiutersRouter);
+  app.use('/api/guitars', guitarsRouter);
 
   app.get('/admin/*', renderAdminHtml);
   app.get('/*', renderClientHtml);

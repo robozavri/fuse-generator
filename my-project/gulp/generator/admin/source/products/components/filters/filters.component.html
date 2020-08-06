@@ -7,7 +7,7 @@
             shopping_basket
         </mat-icon>
         <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-            Products
+            <%=namePluralFUC%>
         </span>
     </div>
     <!-- / APP TITLE -->
@@ -23,7 +23,7 @@
 
     <!-- ADD BUTTON -->
     <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0">
-        <span [routerLink]="['/admin/<%=namePluralLC%>/new']">ADD NEW PRODUCT</span>
+        <span [routerLink]="['/admin/<%=fileName%>/new']">Add new  <%=nameSingularLC%></span>
     </button>
     <!-- / ADD BUTTON -->
 

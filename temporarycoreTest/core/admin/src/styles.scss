@@ -1,0 +1,21 @@
+@import "@fuse/scss/core";
+@import "app/app.theme";
+
+@import "~quill/dist/quill.core.css";
+@import "~quill/dist/quill.bubble.css";
+@import "~quill/dist/quill.snow.css";
+
+@import './scss/components/lists';
+@import './scss/components/filters';
+@import './scss/components/forms';
+@import './scss/components/material';
+@import './scss/components/calendar';
+
+
+.content .mat-tab-label {
+    height: 64px;
+}
+
+content> :not(router-outlet)> :not(router-outlet) {
+    flex-grow: 1;
+}

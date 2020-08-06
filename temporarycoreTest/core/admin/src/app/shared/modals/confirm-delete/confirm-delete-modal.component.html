@@ -1,0 +1,16 @@
+<div class="small_modal_wrapper">
+    <div mat-dialog-content>
+        <h2> Delete </h2>
+        <p>Are you sure you want to delete "{{ data.title?.ge || data.name?.ge || data.roomType?.ge || data.title }}" ?
+        </p>
+    </div>
+
+    <mat-dialog-actions>
+        <button mat-raised-button mat-dialog-close>
+            Cancel
+        </button>
+        <button mat-raised-button [mat-dialog-close]="true">
+            Submit
+        </button>
+    </mat-dialog-actions>
+</div>

@@ -10,10 +10,10 @@ const argv = $.util.env;
 
 
 gulp.task('products', (done) => {
-  runSequence('generateAdminComponent', 'generateHttp', 'generateModel', done);
+  runSequence('generateProductsAdminComponent', 'generateHttp', 'generateModel', done);
 });
 
-gulp.task('generateAdminComponent', () => {
+gulp.task('generateProductsAdminComponent', () => {
     insertProductsMainTemplate();
     insertProductMainTemplate();
 });

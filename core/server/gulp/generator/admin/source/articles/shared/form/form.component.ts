@@ -29,7 +29,6 @@ export class FormComponent extends _FormComponent implements OnInit {
 
   ngOnInit() {
     this.formData.title = this.formData.title || {};
-    this.formData.content = this.formData.content || {};
     this.formData.description = this.formData.description || {};
     this.formData.thumbnail = this.formData.thumbnail || {};
 
@@ -43,11 +42,6 @@ export class FormComponent extends _FormComponent implements OnInit {
         ge: [this.formData.description.ge || ''],
         en: [this.formData.description.en || ''],
         ru: [this.formData.description.ru || ''],
-      }),
-      content: this.fb.group({
-        ge: [this.formData.content.ge || ''],
-        en: [this.formData.content.en || ''],
-        ru: [this.formData.content.ru || ''],
       }),
       thumbnail: this.fb.group({
         url: [this.formData.thumbnail.url || '']

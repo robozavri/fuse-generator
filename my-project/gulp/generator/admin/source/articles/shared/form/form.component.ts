@@ -11,9 +11,9 @@ import { MatSnackBar } from '@angular/material';
 })
 export class FormComponent extends _FormComponent implements OnInit {
 
-  @Input() formData:  <%=nameSingularFUC%>;
-  @Input() showSubmit: boolean = true;
-  @Output() submitForm = new EventEmitter< <%=nameSingularFUC%>>();
+  @Input() formData: <%=nameSingularFUC%>;
+  @Input() showSubmit = true;
+  @Output() submitForm = new EventEmitter<<%=nameSingularFUC%>>();
 
 
   form: FormGroup;
@@ -27,9 +27,8 @@ export class FormComponent extends _FormComponent implements OnInit {
     super();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formData.title = this.formData.title || {};
-    this.formData.content = this.formData.content || {};
     this.formData.description = this.formData.description || {};
     this.formData.thumbnail = this.formData.thumbnail || {};
 
@@ -44,23 +43,18 @@ export class FormComponent extends _FormComponent implements OnInit {
         en: [this.formData.description.en || ''],
         ru: [this.formData.description.ru || ''],
       }),
-      content: this.fb.group({
-        ge: [this.formData.content.ge || ''],
-        en: [this.formData.content.en || ''],
-        ru: [this.formData.content.ru || ''],
-      }),
       thumbnail: this.fb.group({
         url: [this.formData.thumbnail.url || '']
       }),
     });
   }
 
-  onUploadComplete(data) {
+  onUploadComplete(data): void {
     this.form.get('thumbnail').get('url').markAsTouched();
     this.form.get('thumbnail').get('url').setValue(data.url);
   }
 
-  submit() {
+  submit(): void {
     if (this.form.valid) {
       this.submitForm.emit(this.form.value);
     }

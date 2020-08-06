@@ -28,18 +28,18 @@ export class <%=namePluralFUC%>Component {
   loadData$: Subject<Query>;
 
   dataSource: <%=nameSingularFUC%>[];
-  numTotal: Number;
+  numTotal: number;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private api:<%=nameSingularFUC%>ApiService,
+    private api: <%=nameSingularFUC%>ApiService,
     private dialog: MatDialog,
     public fileApiService: FileApiService,
     private snackBarService: SnackBarService,
   ) {
 
-    this.query = parseQueryParams(this.route.snapshot.queryParams);
+    this.query = this.parseQueryParams(this.route.snapshot.queryParams);
     this.loadData$ = new BehaviorSubject(this.query);
 
     this.loadData$.subscribe((query: Query) => {
@@ -59,13 +59,11 @@ export class <%=namePluralFUC%>Component {
 
   }
 
-  add() {
+  add(): void {
     const data: <%=nameSingularFUC%> = {
       title: {},
       description: {},
       thumbnail: {},
-      content: {},
-      isFeatured: true,
       meta: {},
     };
     this.dialog
@@ -84,7 +82,7 @@ export class <%=namePluralFUC%>Component {
       );
   }
 
-  update(data: any) {
+  update(data: any): void {
     this.api.update(data)
       .subscribe(
         () => this.snackBarService.open('Updated Successfully'),
@@ -93,7 +91,7 @@ export class <%=namePluralFUC%>Component {
       );
   }
 
-  updatePositions(data: any) {
+  updatePositions(data: any): void {
     this.api.updatePositions(data)
       .subscribe(() => {
         this.loadData$.next(this.query);
@@ -103,7 +101,7 @@ export class <%=namePluralFUC%>Component {
   }
 
 
-  delete(data: <%=nameSingularFUC%>) {
+  delete(data: <%=nameSingularFUC%>): void {
     this.dialog
       .open(ConfirmDeleteModalComponent, { data })
       .afterClosed()
@@ -118,17 +116,19 @@ export class <%=namePluralFUC%>Component {
       );
   }
 
-  reloadParams(query: Query) {
+  reloadParams(query: Query): void {
     this.query = { ...this.query, ...query };
     this.loadData$.next(this.query);
+  }
+
+  parseQueryParams(params): Query {
+    return {
+      ...params,
+      page: params.page ? Number(params.page) : 1,
+      limit: params.limit ? Number(params.limit) : 10,
+    };
   }
 }
 
 
-function parseQueryParams(params): Query {
-  return {
-    ...params,
-    page: params.page ? Number(params.page) : 1,
-    limit: params.limit ? Number(params.limit) : 10,
-  };
-}
+

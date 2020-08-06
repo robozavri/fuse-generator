@@ -10,10 +10,10 @@ const argv = $.util.env;
 
 
 gulp.task('articles', (done) => {
-  runSequence('generateAdminComponent', 'generateHttp', 'generateModel', done);
+  runSequence('generateArticlesAdminComponent', 'generateHttp', 'generateModel', done);
 });
 
-gulp.task('generateAdminComponent', () => {
+gulp.task('generateArticlesAdminComponent', () => {
     insertArticleMainTemplate();
 });
 

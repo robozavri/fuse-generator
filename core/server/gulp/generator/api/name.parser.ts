@@ -55,9 +55,7 @@ function parseBaseProps(body: any) {
     'title',
     'description',
     'thumbnail',
-    'content',
     'createdAt',
-    'isFeatured',
     'meta',
     'position',
   ]);

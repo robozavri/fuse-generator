@@ -16,8 +16,8 @@ export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit
   metas: any; // metas -> meta
   filesToCreate: any[] = []; // remove
   filesToDestroy: any[] = []; // remove 
-  showFormWarning: boolean = false;
-  submitted: boolean = false;
+  showFormWarning = false;
+  submitted = false;
 
   showSubmit = false;
 
@@ -31,23 +31,23 @@ export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit
 
   formComponents: FormComponent[];
 
-  ngOnInit() {
+  ngOnInit(): void {
     // empty meta data object for making new meta object
     this.metas = {};
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.formComponents = [
       this.<%=nameSingularLC%>FormComponent,
       this.<%=nameSingularLC%>MetaComponent,
     ];
   }
 
-  formsAreValid() {
+  formsAreValid(): any {
     return this.formComponents.filter(component => component).every((formComponent: FormComponent) => formComponent.formIsValid());
   }
 
-  onFinish() {
+  onFinish(): void {
     this.showFormWarning = false;
     this.submitted = true;
     if (this.formsAreValid()) {
@@ -58,7 +58,7 @@ export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit
   }
 
   get<%=nameSingularFUC%>Data(): any {
-    let data = _.cloneDeep(_.merge(
+    const data = _.cloneDeep(_.merge(
       this.<%=nameSingularLC%>Type,
       this.<%=nameSingularLC%>MetaComponent.getFormValue(),
       this.<%=nameSingularLC%>FormComponent.getFormValue(),

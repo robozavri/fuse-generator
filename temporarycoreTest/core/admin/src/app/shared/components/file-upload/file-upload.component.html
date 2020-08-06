@@ -1,0 +1,5 @@
+<input type="file" (change)="onFileChange($event)" [accept]="accept" [multiple]="multiple" #fileInput hidden>
+
+<div (click)="fileInput.value = ''; fileInput.click()">
+  <ng-content></ng-content>
+</div>

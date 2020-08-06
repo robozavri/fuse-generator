@@ -64,8 +64,6 @@ export class <%=namePluralFUC%>Component {
       title: {},
       description: {},
       thumbnail: {},
-      content: {},
-      isFeatured: true,
       meta: {},
     };
     this.dialog

@@ -1,0 +1,43 @@
+<div class="location_map_wrapper">
+    <app-map-location [location]="mapLocation" (locationParams)="locationParams($event)"></app-map-location>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="submit()" accept-charset="utf-8">
+    <div formGroupName="contact" class="tab-content p-24">
+        <div fusePerfectScrollbar fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="space-between" formGroupName="address">
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                    <mat-label> Address Ge </mat-label>
+                    <input matInput placeholder="Address Ge" name="Address Ge" formControlName="ge">
+                </mat-form-field>
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                    <mat-label> Address En </mat-label>
+                    <input matInput placeholder="Address En" name="Address En" formControlName="en">
+                </mat-form-field>
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                    <mat-label> Address Ru </mat-label>
+                    <input matInput placeholder="Address Ru" name="Address Ru" formControlName="ru">
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between">
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                    <mat-label> Phone </mat-label>
+                    <input matInput placeholder="phone" name="phone" formControlName="phone">
+                </mat-form-field>
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                    <mat-label> Email </mat-label>
+                    <input matInput placeholder="email" name="email" formControlName="email">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                    <mat-label> Admin Email </mat-label>
+                    <input matInput placeholder="Admin Email" formControlName="adminEmail">
+                </mat-form-field>
+
+            </div>
+        </div>
+    </div>
+    <button mat-raised-button type="submit" color="primary" [disabled]="form.invalid">
+        Submit
+    </button>
+</form>
