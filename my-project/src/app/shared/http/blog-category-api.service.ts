@@ -5,38 +5,38 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../../environments/environment';
 import { QueryResponse } from '../models/query-response';
-import { <%=nameSingularUC%> } from '../models/<%=nameSingular%>';
+import { BlogCategory } from '../models/blog-category';
 
 const API_URL = environment.apiUrl;
 
 @Injectable()
-export class <%=nameSingularUC%>ApiService {
+export class BlogCategoryApiService {
   constructor(private http: HttpClient) { }
 
-  getByQuery(params): Observable<QueryResponse<<%=nameSingularUC%>>> {
-    return this.http.get<any>(`${API_URL}/api/<%=namePlural%>`, {
+  getByQuery(params): Observable<QueryResponse<BlogCategory>> {
+    return this.http.get<any>(`${API_URL}/api/blog-categories`, {
       params,
     });
   }
 
   create(data): Observable<any> {
-    return this.http.post(`${API_URL}/api/<%=namePlural%>`, data, {
+    return this.http.post(`${API_URL}/api/blog-categories`, data, {
       responseType: 'text',
     });
   }
 
   update(data): Observable<any> {
-    return this.http.put(`${API_URL}/api/<%=namePlural%>/${data._id}`, data, {
+    return this.http.put(`${API_URL}/api/blog-categories/${data._id}`, data, {
       responseType: 'text',
     });
   }
 
   updatePositions(data): Observable<any> {
-    return this.http.patch(`${API_URL}/api/<%=namePlural%>/positions`, data);
+    return this.http.patch(`${API_URL}/api/blog-categories/positions`, data);
   }
 
   delete(id: string): Observable<any> {
-    return this.http.delete(`${API_URL}/api/<%=namePlural%>/${id}`, {
+    return this.http.delete(`${API_URL}/api/blog-categories/${id}`, {
       responseType: 'text',
     });
   }

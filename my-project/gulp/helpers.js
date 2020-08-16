@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 
 import gulp from 'gulp';
 import _ from 'lodash';
@@ -44,12 +44,24 @@ export function getDirFromArgv() {
 }
 
 export function getDefFieldFromArgv() {
-  const field = argv.field;
+  const field = argv.f;
   if (!field) {
-    log(colors.red('Error: default field is required (e.g. --field <myField>)'));
+    log(colors.red('Error: default field is required (e.g. -f <myField>)'));
     process.exit(1);
   }
   return field;
+}
+
+export function getDefFieldsFromArgv() {
+  // { name: string, title: 'multilingual', description: 'multilingual', count: 'number', thumbnail: 'image', images: 'images' }
+  // { \"name\": \"string\", \"title\": \"multilingual\", \"description\": \"multilingual\", \"count\": \"number\", \"thumbnail\": \"image\", \"images\": \"images\" }
+  const fields = argv.fields;
+  if (!fields) {
+    log(colors.red('Error: default fields is required (e.g. --fields <myField>)'));
+    process.exit(1);
+  }
+  return JSON.parse(fields);
+  // return fields;
 }
 
 export function getMinifyFromArgv() {

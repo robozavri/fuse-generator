@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { <%=nameSingularFUC%>ModalComponent } from './shared/modals/modal/<%=nameSingularLC%>-modal.component';
+import { <%=nameSingularFUC%>ModalComponent } from './shared/modals/modal/<%=singularFileName%>-modal.component';
 import { Query } from '../../../../shared/models/query';
 import { Subject, BehaviorSubject, Observable } from 'rxjs';
-import { <%=nameSingularFUC%> } from '../../../../shared/models/<%=nameSingularLC%>';
+import { <%=nameSingularFUC%> } from '../../../../shared/models/<%=singularFileName%>';
 import { Router, ActivatedRoute } from '@angular/router';
-import { <%=nameSingularFUC%>ApiService } from '../../../../shared/http/<%=nameSingularLC%>-api.service';
+import { <%=nameSingularFUC%>ApiService } from '../../../../shared/http/<%=singularFileName%>-api.service';
 import { ConfirmDeleteModalComponent } from '../../../../shared/modals/confirm-delete/confirm-delete-modal.component';
 import { filter, switchMap, share, map } from 'rxjs/operators';
 import { fuseAnimations } from '../../../../../@fuse/animations';
@@ -60,12 +60,7 @@ export class <%=namePluralFUC%>Component {
   }
 
   add(): void {
-    const data: <%=nameSingularFUC%> = {
-      title: {},
-      description: {},
-      thumbnail: {},
-      meta: {},
-    };
+    const data: <%=nameSingularFUC%> = <%=formModalEmptyObj%>;
     this.dialog
       .open(<%=nameSingularFUC%>ModalComponent, { data })
       .afterClosed()

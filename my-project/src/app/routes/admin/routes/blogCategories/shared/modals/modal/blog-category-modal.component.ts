@@ -1,17 +1,17 @@
 import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { <%=nameSingularFUC%> } from 'app/shared/models/<%=nameSingularLC%>';
+import { BlogCategory } from 'app/shared/models/blogCategory';
 import { FormComponent } from 'app/shared/components/form.component';
 import { FormComponent as _FormComponent } from '../../form/form.component';
 import * as _ from 'lodash';
 import { MetaFormComponent } from '../../../../../../../shared/components/meta-form/meta-form.component';
 
 @Component({
-  selector: 'app-<%=nameSingularLC%>-modal',
-  templateUrl: './<%=nameSingularLC%>-modal.component.html',
-  styleUrls: ['./<%=nameSingularLC%>-modal.component.scss']
+  selector: 'app-blogCategory-modal',
+  templateUrl: './blogCategory-modal.component.html',
+  styleUrls: ['./blogCategory-modal.component.scss']
 })
-export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit {
+export class BlogCategoryModalComponent implements OnInit, AfterViewInit {
 
   metas: any; // metas -> meta
   filesToCreate: any[] = []; // remove
@@ -21,13 +21,15 @@ export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit
 
   showSubmit = false;
 
-  @ViewChild('<%=nameSingularLC%>Form', { static: false }) <%=nameSingularLC%>FormComponent: _FormComponent;
-  @ViewChild('<%=nameSingularLC%>MetaForm', { static: false }) <%=nameSingularLC%>MetaComponent: MetaFormComponent;
+  @ViewChild('blogCategoryForm', { static: false }) blogCategoryFormComponent: _FormComponent;
+  @ViewChild('blogCategoryMetaForm', { static: false }) blogCategoryMetaComponent: MetaFormComponent;
 
-  <%=nameSingularLC%>Type: <%=nameSingularFUC%>;
+  blogCategoryType: BlogCategory;
 
-  constructor(private dialogRef: MatDialogRef<<%=nameSingularFUC%>ModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: <%=nameSingularFUC%>) { }
+  constructor(
+    private dialogRef: MatDialogRef<BlogCategoryModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: BlogCategory
+  ) { }
 
   formComponents: FormComponent[];
 
@@ -38,8 +40,8 @@ export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit
 
   ngAfterViewInit(): void {
     this.formComponents = [
-      this.<%=nameSingularLC%>FormComponent,
-      this.<%=nameSingularLC%>MetaComponent,
+      this.blogCategoryFormComponent,
+      this.blogCategoryMetaComponent,
     ];
   }
 
@@ -51,17 +53,17 @@ export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit
     this.showFormWarning = false;
     this.submitted = true;
     if (this.formsAreValid()) {
-      this.dialogRef.close(this.get<%=nameSingularFUC%>Data());
+      this.dialogRef.close(this.getBlogCategoryData());
     } else {
       this.showFormWarning = true;
     }
   }
 
-  get<%=nameSingularFUC%>Data(): any {
+  getBlogCategoryData(): any {
     const data = _.cloneDeep(_.merge(
-      this.<%=nameSingularLC%>Type,
-      this.<%=nameSingularLC%>MetaComponent.getFormValue(),
-      this.<%=nameSingularLC%>FormComponent.getFormValue(),
+      this.blogCategoryType,
+      this.blogCategoryMetaComponent.getFormValue(),
+      this.blogCategoryFormComponent.getFormValue(),
     ));
     return data;
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { <%=nameSingularFUC%> } from 'app/shared/models/<%=nameSingularLC%>';
+import { <%=nameSingularFUC%> } from 'app/shared/models/<%=singularFileName%>';
 import { FormComponent as _FormComponent } from '../../../../../../shared/components/form.component';
 import { MatSnackBar } from '@angular/material';
 
@@ -32,27 +32,10 @@ export class FormComponent extends _FormComponent implements OnInit {
     this.formData.description = this.formData.description || {};
     this.formData.thumbnail = this.formData.thumbnail || {};
 
-    this.form = this.fb.group({
-      title: this.fb.group({
-        ge: [this.formData.title.ge || ''],
-        en: [this.formData.title.en || ''],
-        ru: [this.formData.title.ru || ''],
-      }),
-      description: this.fb.group({
-        ge: [this.formData.description.ge || ''],
-        en: [this.formData.description.en || ''],
-        ru: [this.formData.description.ru || ''],
-      }),
-      thumbnail: this.fb.group({
-        url: [this.formData.thumbnail.url || '']
-      }),
-    });
+    this.form = <%=formGroup%>
   }
 
-  onUploadComplete(data): void {
-    this.form.get('thumbnail').get('url').markAsTouched();
-    this.form.get('thumbnail').get('url').setValue(data.url);
-  }
+  <%=imageMethods%>
 
   submit(): void {
     if (this.form.valid) {

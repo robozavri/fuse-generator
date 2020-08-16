@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { PageEvent, MatTable } from '@angular/material';
-import { <%=nameSingularFUC%> } from 'app/shared/models/<%=singularFileName%>';
+import { BlogCategory } from 'app/shared/models/blog-category';
 import { Query } from 'app/shared/models/query';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
@@ -26,14 +26,14 @@ export class ListComponent implements OnInit {
 
   @Output() queryChange = new EventEmitter<Query>();
   @Output() updateForm = new EventEmitter<any>();
-  @Output() deleteForm = new EventEmitter<<%=nameSingularFUC%>>();
+  @Output() deleteForm = new EventEmitter<BlogCategory>();
   @Output() updateMeta = new EventEmitter<any>();
   @Output() updatePositions = new EventEmitter<any>();
 
   @ViewChild('table', { static: false }) table: MatTable<ListComponent>;
   @ViewChild('nameLabel', { static: false }) nameLabel: ElementRef;
 
-  dataSource: <%=nameSingularFUC%>[];
+  dataSource: BlogCategory[];
   pageLength: number;
   pageEvent: PageEvent;
   expandedElement: any;
