@@ -43,6 +43,15 @@ function getCreateAtObject(i: number = 0): any {
     return new Date();
 }
 
+function getMeta(i: number = 0): any {
+  return {
+    title: { en: `service meta title en ${i}`, ge: `service meta title ge ${i}`},
+    description: { en: `service meta description en ${i}`, ge: `service meta description ge ${i}`},
+    keywords: ['service meta keyword1', 'service meta keyword2', 'service meta keyword3'],
+    image: { url: '' },
+  };
+}
+
 const BlogStub = {
     name: getNameObject(),
     title: getTitleObject(),
@@ -51,6 +60,7 @@ const BlogStub = {
     thumbnail: getThumbnailObject(),
     images: getImagesObject(),
     createAt: getCreateAtObject(),
+    meta: getMeta(),
 };
 
 export function getSingle(fields?: any): any {
@@ -71,5 +81,6 @@ export function getMany(count: number, fields?: any) {
     thumbnail: getThumbnailObject(i),
     images: getImagesObject(i),
     createAt: getCreateAtObject(i),
+    meta: getMeta(i),
   }));
 }
