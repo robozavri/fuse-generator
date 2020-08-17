@@ -8,15 +8,17 @@ export function generateEmptyObjModal(fields = false) {
 
     Object.keys(fields).map((key, index) => {
         switch( fields[key] ) {
-            case 'multilingual':  emptyObj[key] = {} ;
+            case 'multilingualSchema':  emptyObj[key] = {} ;
               break;
-            case 'string':  emptyObj[key] = '';
+            case 'String':  emptyObj[key] = '';
               break;
-            case 'number':  emptyObj[key] = '';
+            case 'Number':  emptyObj[key] = '';
               break;
-            case 'image':  emptyObj[key] =  {};
+            case 'imageSchema':  emptyObj[key] =  {};
               break;
-            case 'images':  emptyObj[key]  = [];
+            case '[imageSchema]':  emptyObj[key] = [];
+              break;
+            case 'Date':  emptyObj[key] = 'new Date()';
               break;
         }
     });

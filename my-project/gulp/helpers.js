@@ -55,6 +55,7 @@ export function getDefFieldFromArgv() {
 export function getDefFieldsFromArgv() {
   // { name: string, title: 'multilingual', description: 'multilingual', count: 'number', thumbnail: 'image', images: 'images' }
   // { \"name\": \"string\", \"title\": \"multilingual\", \"description\": \"multilingual\", \"count\": \"number\", \"thumbnail\": \"image\", \"images\": \"images\" }
+  // { \"name\": \"string\", \"title\": \"multilingual\", \"description\": \"multilingual\", \"count\": \"number\", \"thumbnail\": \"image\" }
   const fields = argv.fields;
   if (!fields) {
     log(colors.red('Error: default fields is required (e.g. --fields <myField>)'));

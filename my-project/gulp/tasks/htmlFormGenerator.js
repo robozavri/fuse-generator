@@ -8,16 +8,18 @@ export function generateFormHtml(fields = false) {
   
     Object.keys(fields).map((key, index) => {
         switch( fields[key] ) {
-            case 'multilingual':  emptyObj[key] = multilingual(key);
+            case 'multilingualSchema':  emptyObj[key] = multilingual(key);
               break;
-            case 'string':  emptyObj[key] = string(key);
+            case 'String':  emptyObj[key] = string(key);
               break;
-            case 'number':  emptyObj[key] = number(key);
+            case 'Number':  emptyObj[key] = number(key);
               break;
-            case 'image':  emptyObj[key] =  image(key);
+            case 'imageSchema':  emptyObj[key] =  image(key);
               break;
-            // case 'images':  emptyObj[key]  = [];
-            //   break;
+            case 'Date':  emptyObj[key] = date(key);
+              break;
+            case '[imageSchema]':  emptyObj[key] = images(key);
+              break;
         }
     });
     Object.keys(emptyObj).map((key, index) => {
@@ -25,12 +27,6 @@ export function generateFormHtml(fields = false) {
     });
    
     return formTemplate;
-//     return ` 
-// <form [formGroup]="form" (ngSubmit)="submit()">
-//     <div class="tab-content p-24" fusePerfectScrollbar fxLayout="column">
-//             ${formTemplate}
-//     </div>
-// </form>`;
 }
 
 function multilingual(key) {
@@ -76,11 +72,33 @@ function number(key) {
     `;
 }
 
-
 function image(key) {
     return  `
+        <h3>${key}</h3>
         <div class="inputs_container">
             <app-image-upload [image]="formData.${key}" (uploadComplete)="onUploadComplete${_.upperFirst(key)}($event)"></app-image-upload>
         </div>
       `;
-  }
+}
+
+function date(key) {
+  return  ` 
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <mat-form-field appearance="outline" fxFlex="50">
+            <mat-label>${key}</mat-label>
+            <input matInput [matDatepicker]="startDatePicker" formControlName="${key}">
+            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #startDatePicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+   `;
+}
+
+function images(key) {
+    return  `
+        <h3>${key}</h3>
+        <div class="inputs_container">
+            <app-images-upload *ngIf="images" [images]="images" (removeImage)="deleteImage${_.upperFirst(key)}($event)" (uploadComplete)="onUploadComplete${_.upperFirst(key)}($event)"></app-images-upload>
+        </div>
+  `;
+}

@@ -5,8 +5,9 @@ import path from 'path';
 import runSequence from 'run-sequence';
 import paths from '../paths';
 import * as _ from 'lodash';
+import { fields } from './fields';
 import { generateEmptyObjModal } from './emptyObjGenerator';
-import { generateFormGroup, generateImageMethods } from './formGroupGenerator';
+import { generateFormGroup, generateImageMethods, generateImagesMethods, generateFormEmptyObjects } from './formGroupGenerator';
 import { generateFormHtml } from './htmlFormGenerator';
 import { generateInterface } from './generateInterface';
 import {getNameFromArgv, getDefFieldsFromArgv, getDirFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
@@ -15,24 +16,7 @@ const argv = $.util.env;
 
 
 gulp.task('articles', (done) => {
-  // const field = argv.field;
-  // const emptyObjString = generateEmptyObjModal({name: 'string', title: 'multilingual', thumbnail: 'image'});
-  // console.log('emptyObjString: ', JSON.stringify(emptyObjString)  )
-  // console.log('field', field)
-  // console.log('generateInterface', generateInterface({name: 'string', title: 'multilingual', thumbnail: 'image'}))
-  // let obj = JSON.parse(field);
-  // console.log('typeof', typeof obj)
-  // console.log('typeof', typeof field)
-  // '{"name": "string", "title": "multilingual", "thumbnail": "image"}'
-  // console.log('fields', typeof field)
-  // console.log('generateFormHtml',  generateFormHtml({name: 'string', title: 'multilingual', thumbnail: 'image'}));
-  // console.log('generateFormGroup',  generateFormGroup({name: 'string', title: 'multilingual', thumbnail: 'image'}));
-  // generateEmptyObjModal();
-  // console.log('kebabCase singular:', _.kebabCase(singular(getNameFromArgv())))
-  // console.log('kebabCase plural:', _.kebabCase(plural(getNameFromArgv())))
   runSequence('generateArticlesAdminComponent', 'generateHttp', 'generateModel', done);
-  // console.log(' 1 generateHttp weh are here ' ); return;
-  // runSequence('generateHttp'); 
 });
 
 
@@ -42,7 +26,7 @@ gulp.task('generateArticlesAdminComponent', () => {
 
 function insertArticleMainTemplate(){
     const name = getNameFromArgv();
-    const fields = getDefFieldsFromArgv();
+    // const fields = getDefFieldsFromArgv();
     const src = paths.adminGeneratorTemplates.articles;
     const dest = path.join(paths.admin.adminModules, plural(name));
     return insertArticlesTemplate(name, src, dest, fields);
@@ -57,13 +41,14 @@ gulp.task('generateHttp', () => {
 
 gulp.task('generateModel', () => {
   const name = getNameFromArgv();
-  const fields = getDefFieldsFromArgv();
+  // const fields = getDefFieldsFromArgv();
   const src = paths.adminGeneratorTemplates.model;
   const dest = paths.admin.model;
   return insertModelTemplate(name, src, dest, fields);
 });
 
 function insertArticlesTemplate(name, src, dest, fields) {
+    const imagesMethods = generateImagesMethods(fields);
     return gulp.src(src)
         .pipe($.template({
             nameUC: firstUC(name),
@@ -77,8 +62,11 @@ function insertArticlesTemplate(name, src, dest, fields) {
             pluralFileName: _.kebabCase(plural(name)),
             formModalEmptyObj: generateEmptyObjModal(fields),
             formGroup: generateFormGroup(fields),
+            formEmptyObjects: generateFormEmptyObjects(fields),
             formHtml: generateFormHtml(fields),
             imageMethods: generateImageMethods(fields),
+            imagesMethods: imagesMethods.methods,
+            imagesProperties: imagesMethods.properties,
         }, {
             interpolate: /<%=([\s\S]+?)%>/g
         }))

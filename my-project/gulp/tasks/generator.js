@@ -4,10 +4,13 @@ import gulp from 'gulp';
 import path from 'path';
 import runSequence from 'run-sequence';
 import paths from '../paths';
+import { fields } from './fields'
+import { generateSchema, generateKeywordSearch, generateBaseProps, generateSingleStub } from './apiHelper'
 import {getNameFromArgv, getDefFieldFromArgv, getDirFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
 const $ = require('gulp-load-plugins')();
 
 gulp.task('api', (done) => {
+  // generateSchema(fields);
   runSequence('generateApi', 'generateStub', 'inject', done);
 });
 
@@ -27,6 +30,8 @@ gulp.task('generateStub', () => {
 });
 
 function insertTemplates(name, src, dest, defFieldIncluded) { 
+  const singleStub = generateSingleStub(fields);
+
   return gulp.src(src)
     .pipe($.template({
       nameUC: firstUC(name),
@@ -36,7 +41,13 @@ function insertTemplates(name, src, dest, defFieldIncluded) {
       namePluralFUC: firstUC(plural(name)),
       nameSingularLC: singular(name),
       nameSingularFUC: firstUC(singular(name)),
-      defField: defFieldIncluded ? getDefFieldFromArgv() : null
+      schema: generateSchema(fields),
+      keywords: generateKeywordSearch(fields),
+      keybaseProps: generateBaseProps(fields),
+      objectNames: singleStub.objectNames,
+      stubObjectMethods: singleStub.stubObjectMethods,
+      objectNamesWithI: singleStub.objectNamesWithI,
+      defField: ''
     }, {
       interpolate: /<%=([\s\S]+?)%>/g
     }))

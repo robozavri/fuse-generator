@@ -4,11 +4,7 @@ import metaTagsSchema from '../../schemas/metaTags.schema';
 import imageSchema from '../../schemas/image.schema';
 
 const <%=nameUC%>Schema = new Schema({
-  <%=defField%>: String,
-  title: multilingualSchema,
-  description: multilingualSchema,
-  thumbnail: imageSchema,
-  createdAt: Date,
+  <%=schema%>
   meta: metaTagsSchema,
   position: Number,
 });
