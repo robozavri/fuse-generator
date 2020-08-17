@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { PageEvent, MatTable } from '@angular/material';
-import { <%=nameSingularFUC%> } from 'app/shared/models/<%=nameSingularLC%>';
+import { <%=nameSingularFUC%> } from 'app/shared/models/<%=singularFileName%>';
 import { Query } from 'app/shared/models/query';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
@@ -34,7 +34,7 @@ export class ListComponent implements OnInit {
   @ViewChild('nameLabel', { static: false }) nameLabel: ElementRef;
 
   dataSource: <%=nameSingularFUC%>[];
-  pageLength: Number
+  pageLength: number;
   pageEvent: PageEvent;
   expandedElement: any;
 
@@ -42,7 +42,7 @@ export class ListComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.items.subscribe((data) => {
       this.dataSource = data;
     });
@@ -56,24 +56,24 @@ export class ListComponent implements OnInit {
     });
   }
 
-  submitMeta(data: any, id: any) { // metaData -> data
+  submitMeta(data: any, id: any): void { // metaData -> data
     this.updateMeta.emit({ _id: id, ...data });
   }
 
-  submitFormData(data: any, id: any) {
+  submitFormData(data: any, id: any): void {
     this.updateForm.emit({ _id: id, ...data });
   }
 
-  confirmDelete(event, element) {
+  confirmDelete(event, element): void {
     event.stopPropagation();
     this.deleteForm.emit(element);
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.dataSource, event.previousIndex, event.currentIndex);
     this.table.renderRows();
-    let page = this.query.page - 1;
-    let limit = this.query.limit;
+    const page = this.query.page - 1;
+    const limit = this.query.limit;
     const data = this.dataSource.map((item, index) => {
       return {
         position: index + (page * limit),

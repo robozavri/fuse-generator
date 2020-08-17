@@ -10,6 +10,7 @@ const <%=nameLC%>Router = Router();
 <%=nameLC%>Router.post('/', auth.isAdmin, <%=nameLC%>Parser.parseCreate, create);
 <%=nameLC%>Router.put('/:id', auth.isAdmin, <%=nameLC%>Parser.parseUpdate, update);
 <%=nameLC%>Router.delete('/:id', auth.isAdmin, destroy);
+<%=nameLC%>Router.patch('/positions', <%=nameLC%>Parser.parseUpdatePositions, updatePositions);
 
 export default <%=nameLC%>Router;
 
@@ -41,6 +42,18 @@ async function update(req: Request, res: Response, next: NextFunction) {
   try {
     const payload = req.body;
     await <%=nameLC%>Dao.update(payload._id, payload);
+    res.sendStatus(200);
+  } catch (e) {
+    next(e);
+  }
+}
+
+async function updatePositions(req: Request, res: Response, next: NextFunction) {
+  try {
+    const payload = req.body;
+    await payload.items.map((item: any) => {
+      <%=nameLC%>Dao.update(item._id, { position: item.position });
+    });
     res.sendStatus(200);
   } catch (e) {
     next(e);

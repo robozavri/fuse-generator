@@ -15,16 +15,16 @@ export class FiltersComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string): void {
     this.query.keyword = filterValue.trim().toLowerCase();
-    let val = this.query.keyword;
+    const val = this.query.keyword;
     this.queryChange.emit({ keyword: val });
   }
 
-  add() {
+  add(): void {
     this.createNew.emit({});
   }
 

@@ -19,6 +19,5 @@ export function getMany(count: number, fields?: any) {
     ...getSingle(),
     ...fields,
     <%=objectNamesWithI%>
-  }
   }));
 }

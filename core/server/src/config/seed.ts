@@ -14,7 +14,7 @@ import * as AuthorsDao from '../api/authors/authors.dao';
 import * as VideosDao from '../api/videos/videos.dao';
 import * as CarsDao from '../api/cars/cars.dao';
 import * as CompiutersDao from '../api/compiuters/compiuters.dao';
-import * as GuitarsDao from '../api/guitars/guitars.dao';
+import * as BlogDao from '../api/blogs/blog.dao';
 
 
 import * as UserStub from '../stubs/user.stub';
@@ -28,7 +28,7 @@ import * as AuthorsStub from '../stubs/authors.stub';
 import * as VideosStub from '../stubs/videos.stub';
 import * as CarsStub from '../stubs/cars.stub';
 import * as CompiutersStub from '../stubs/compiuters.stub';
-import * as GuitarsStub from '../stubs/guitars.stub';
+import * as BlogStub from '../stubs/blog.stub';
 
 
 
@@ -57,7 +57,7 @@ export async function seedDBDevelopment() {
   await VideosDao.insertMany(VideosStub.getMany(11));
   await CarsDao.insertMany(CarsStub.getMany(11));
   await CompiutersDao.insertMany(CompiutersStub.getMany(11));
-  await GuitarsDao.insertMany(GuitarsStub.getMany(11));
+  await BlogDao.insertMany(BlogStub.getMany(11));
 
 
   logger.info('Seed DB development completed');
@@ -85,7 +85,7 @@ export async function clearDBDevelopment() {
   await VideosDao.destroyAll();
   await CarsDao.destroyAll();
   await CompiutersDao.destroyAll();
-  await GuitarsDao.destroyAll();
+  await BlogDao.destroyAll();
 }
 
 export async function clearDBProduction() {

@@ -20,7 +20,7 @@ import authorsRouter from './api/authors';
 import videosRouter from './api/videos';
 import carsRouter from './api/cars';
 import compiutersRouter from './api/compiuters';
-import guitarsRouter from './api/guitars';
+import blogRouter from './api/blogs';
 
 
 import { getMetaTags } from './helpers/metaTagsHelper';
@@ -51,7 +51,7 @@ export function initRoutes(app: Express) {
   app.use('/api/videos', videosRouter);
   app.use('/api/cars', carsRouter);
   app.use('/api/compiuters', compiutersRouter);
-  app.use('/api/guitars', guitarsRouter);
+  app.use('/api/blog', blogRouter);
 
   app.get('/admin/*', renderAdminHtml);
   app.get('/*', renderClientHtml);

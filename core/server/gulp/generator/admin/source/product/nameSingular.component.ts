@@ -8,12 +8,12 @@ import { <%=nameSingularFUC%>ApiService } from 'app/shared/http/<%=nameSingularL
 import { SnackBarService } from 'app/shared/services/snack-bar.service';
 
 @Component({
-  selector: 'app-<%=nameSingularLC%>',
-  templateUrl: './<%=nameSingularLC%>.component.html',
-  styleUrls: ['./<%=nameSingularLC%>.component.scss'],
+  selector: 'app-<%=fileName%>',
+  templateUrl: './<%=fileName%>.component.html',
+  styleUrls: ['./<%=fileName%>.component.scss'],
   animations: fuseAnimations
 })
-export class <%=nameSingularFUC%>Component implements OnInit, AfterViewInit {
+export class <%=className%>Component implements OnInit, AfterViewInit {
   pageType: any;
   formComponents: FormComponent[] = [];
   loadpage: boolean;

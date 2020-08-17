@@ -99,10 +99,6 @@ const routes: Routes = [
         path: 'compiuter/:id',
         loadChildren: './routes/compiuter/compiuter.module#CompiuterModule'
       },
-      {
-        path: 'guitars',
-        loadChildren: './routes/guitars/guitars.module#GuitarsModule'
-      },
     ]
   }
 ];

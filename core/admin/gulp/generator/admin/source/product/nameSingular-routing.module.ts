@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { <%=nameSingularFUC%>Component } from './<%=nameSingularLC%>.component';
+import { <%=className%>Component } from './<%=fileName%>.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: <%=nameSingularFUC%>Component,
+    component: <%=className%>Component,
     children: [],
   }
 ];
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class <%=nameSingularFUC%>RoutingModule { }
+export class <%=className%>RoutingModule { }

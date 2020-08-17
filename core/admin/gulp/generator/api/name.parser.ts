@@ -12,8 +12,13 @@ export function parseGetByQuery(req: Request, res: Response, next: NextFunction)
       ...parseId(query),
     },
     ...parseSearch(query),
+    ...parseQueryPopulate(query),
   };
   next();
+}
+
+function parseQueryPopulate({ populate }: any) {
+  return populate ? { populate } : {};
 }
 
 function parseId({ _id }: { _id?: any }) {
@@ -23,13 +28,7 @@ function parseId({ _id }: { _id?: any }) {
 function parseSearch({ keyword }: { keyword?: string }) {
   return keyword ? {
     or: [
-      { <%=defField%>: { $regex: keyword, $options: 'i' } },
-      { 'title.en': { $regex: keyword, $options: 'i' } },
-      { 'title.ge': { $regex: keyword, $options: 'i' } },
-      { 'title.ru': { $regex: keyword, $options: 'i' } },
-      { 'description.en': { $regex: keyword, $options: 'i' } },
-      { 'description.ge': { $regex: keyword, $options: 'i' } },
-      { 'description.ru': { $regex: keyword, $options: 'i' } },
+      <%=keywords%>
     ],
   } : {};
 }
@@ -49,13 +48,18 @@ export function parseUpdate(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
+export function parseUpdatePositions(req: Request, res: Response, next: NextFunction) {
+  req.body = Object.assign(
+    {
+      items: req.body.items,
+    }
+  );
+  next();
+}
+
 function parseBaseProps(body: any) {
   return _.pick(body, [
-    '<%=defField%>',
-    'title',
-    'description',
-    'thumbnail',
-    'createdAt',
+    <%=keybaseProps%>
     'meta',
     'position',
   ]);

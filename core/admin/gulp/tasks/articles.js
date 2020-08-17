@@ -1,10 +1,16 @@
-'use strict';
+// 'use strict';
 
 import gulp from 'gulp';
 import path from 'path';
 import runSequence from 'run-sequence';
 import paths from '../paths';
-import {getNameFromArgv, getDefFieldFromArgv, getDirFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
+import * as _ from 'lodash';
+import { fields } from './fields';
+import { generateEmptyObjModal } from './emptyObjGenerator';
+import { generateFormGroup, generateImageMethods, generateImagesMethods, generateFormEmptyObjects } from './formGroupGenerator';
+import { generateFormHtml } from './htmlFormGenerator';
+import { generateInterface } from './generateInterface';
+import {getNameFromArgv, getDefFieldsFromArgv, getDirFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
 const $ = require('gulp-load-plugins')();
 const argv = $.util.env;
 
@@ -13,32 +19,36 @@ gulp.task('articles', (done) => {
   runSequence('generateArticlesAdminComponent', 'generateHttp', 'generateModel', done);
 });
 
+
 gulp.task('generateArticlesAdminComponent', () => {
     insertArticleMainTemplate();
 });
 
 function insertArticleMainTemplate(){
     const name = getNameFromArgv();
+    // const fields = getDefFieldsFromArgv();
     const src = paths.adminGeneratorTemplates.articles;
     const dest = path.join(paths.admin.adminModules, plural(name));
-    return insertArticlesTemplate(name, src, dest);
+    return insertArticlesTemplate(name, src, dest, fields);
 }
 
 gulp.task('generateHttp', () => {
   const name = getNameFromArgv();
   const src = paths.adminGeneratorTemplates.http;
-  const dest = paths.admin.http;
+  const dest = paths.admin.http; 
   return insertHttpTemplate(name, src, dest, true);
 });
 
 gulp.task('generateModel', () => {
   const name = getNameFromArgv();
+  // const fields = getDefFieldsFromArgv();
   const src = paths.adminGeneratorTemplates.model;
   const dest = paths.admin.model;
-  return insertModelTemplate(name, src, dest);
+  return insertModelTemplate(name, src, dest, fields);
 });
 
-function insertArticlesTemplate(name, src, dest) {
+function insertArticlesTemplate(name, src, dest, fields) {
+    const imagesMethods = generateImagesMethods(fields);
     return gulp.src(src)
         .pipe($.template({
             nameUC: firstUC(name),
@@ -48,6 +58,15 @@ function insertArticlesTemplate(name, src, dest) {
             namePluralFUC: firstUC(plural(name)),
             nameSingularLC: singular(name),
             nameSingularFUC: firstUC(singular(name)),
+            singularFileName: _.kebabCase(singular(name)),
+            pluralFileName: _.kebabCase(plural(name)),
+            formModalEmptyObj: generateEmptyObjModal(fields),
+            formGroup: generateFormGroup(fields),
+            formEmptyObjects: generateFormEmptyObjects(fields),
+            formHtml: generateFormHtml(fields),
+            imageMethods: generateImageMethods(fields),
+            imagesMethods: imagesMethods.methods,
+            imagesProperties: imagesMethods.properties,
         }, {
             interpolate: /<%=([\s\S]+?)%>/g
         }))
@@ -57,18 +76,21 @@ function insertArticlesTemplate(name, src, dest) {
         .pipe(gulp.dest(dest));
 }
 
-function insertModelTemplate(name, src, dest) {
+function insertModelTemplate(name, src, dest, fields) {
   return gulp.src(src)
     .pipe($.template({
       nameUC: firstUC(name),
       nameLC: firstLC(name),
       namePlural: plural(name),
       nameSingularUC: firstUC(singular(name)),
+      singularFileName: _.kebabCase(singular(name)),
+      pluralFileName: _.kebabCase(plural(name)),
+      interfaceFields: generateInterface(fields),
     }, {
       interpolate: /<%=([\s\S]+?)%>/g
     }))
     .pipe($.rename(path => {
-      path.basename = getFileName(singular(name), path.basename);
+      path.basename = getFileName(name, path.basename);
     }))
     .pipe(gulp.dest(dest));
 }
@@ -81,21 +103,22 @@ function insertHttpTemplate(name, src, dest) {
       namePlural: plural(name),
       nameSingular: singular(name),
       nameSingularUC: firstUC(singular(name)),
+      singularFileName: _.kebabCase(singular(name)),
+      pluralFileName: _.kebabCase(plural(name)),
     }, {
       interpolate: /<%=([\s\S]+?)%>/g
     }))
     .pipe($.rename(path => {
-      path.basename = getFileName(singular(name), path.basename);
+      path.basename = getFileName(name, path.basename);
     }))
     .pipe(gulp.dest(dest));
 }
 
 function getFileName(name, basename) {
-
-  if (basename.includes('namePlural')) {
-    return basename.replace('namePlural', plural(name));
-  } else if (basename.includes('nameSingular')) {
-    return basename.replace('nameSingular', singular(name));
+  if (basename.includes('pluralFileName')) {
+    return basename.replace('pluralFileName', _.kebabCase(plural(name)));
+  } else if (basename.includes('singularFileName')) {
+    return basename.replace('singularFileName', _.kebabCase(singular(name)));
   } else if (basename.includes('nameUC')) {
     return basename.replace('nameUC', firstUC(name));
   } else {

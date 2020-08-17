@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { <%=nameSingularFUC%>RoutingModule } from './<%=nameSingularLC%>-routing.module';
-import { <%=nameSingularFUC%>Component } from './<%=nameSingularLC%>.component';
+import { <%=className%>RoutingModule } from './<%=fileName%>-routing.module';
+import { <%=className%>Component } from './<%=fileName%>.component';
 import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
-  declarations: [<%=nameSingularFUC%>Component],
+  declarations: [<%=className%>Component],
   imports: [
     CommonModule,
-    <%=nameSingularFUC%>RoutingModule,
+    <%=className%>RoutingModule,
     SharedModule,
   ],
-  exports: [<%=nameSingularFUC%>Component]
+  exports: [<%=className%>Component]
 })
-export class <%=nameSingularFUC%>Module { }
+export class <%=className%>Module { }

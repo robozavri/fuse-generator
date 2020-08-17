@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { <%=nameSingularFUC%>Component } from './<%=nameSingularLC%>.component';
+import { <%=className%>Component } from './<%=fileName%>.component';
 
-describe('<%=nameSingularFUC%>Component', () => {
-  let component: <%=nameSingularFUC%>Component;
-  let fixture: ComponentFixture<<%=nameSingularFUC%>Component>;
+describe('<%=className%>Component', () => {
+  let component: <%=className%>Component;
+  let fixture: ComponentFixture<<%=className%>Component>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ <%=nameSingularFUC%>Component ]
+      declarations: [ <%=className%>Component ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(<%=nameSingularFUC%>Component);
+    fixture = TestBed.createComponent(<%=className%>Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
