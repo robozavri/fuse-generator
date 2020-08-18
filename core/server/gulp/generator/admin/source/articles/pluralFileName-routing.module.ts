@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { <%=namePluralFUC%>Component } from './<%=namePluralLC%>.component';
+import { <%=namePluralFUC%>Component } from './<%=pluralFileName%>.component';
 
 const routes: Routes = [{
   path: '',

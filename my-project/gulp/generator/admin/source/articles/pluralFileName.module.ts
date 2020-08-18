@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { <%=namePluralFUC%>RoutingModule } from './<%=namePluralLC%>-routing.module';
-import { <%=namePluralFUC%>Component } from './<%=namePluralLC%>.component';
+import { <%=namePluralFUC%>RoutingModule } from './<%=pluralFileName%>-routing.module';
+import { <%=namePluralFUC%>Component } from './<%=pluralFileName%>.component';
 import { ComponentsModule } from './components/components.module';
 import { SharedModule } from './shared/shared.module';
 

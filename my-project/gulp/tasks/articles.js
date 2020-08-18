@@ -29,7 +29,7 @@ function insertArticleMainTemplate(){
     const name = getNameFromArgv();
     // const fields = getDefFieldsFromArgv();
     const src = paths.adminGeneratorTemplates.articles;
-    const dest = path.join(paths.admin.adminModules, plural(name));
+    const dest = path.join(paths.admin.adminModules, _.kebabCase(plural(name)));
     return insertArticlesTemplate(name, src, dest, fields);
 }
 

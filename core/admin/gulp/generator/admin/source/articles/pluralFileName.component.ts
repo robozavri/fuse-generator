@@ -14,9 +14,9 @@ import { SnackBarService } from 'app/shared/services/snack-bar.service';
 
 
 @Component({
-  selector: 'app-<%=namePluralLC%>',
-  templateUrl: './<%=namePluralLC%>.component.html',
-  styleUrls: ['./<%=namePluralLC%>.component.scss'],
+  selector: 'app-<%=pluralFileName%>',
+  templateUrl: './<%=pluralFileName%>.component.html',
+  styleUrls: ['./<%=pluralFileName%>.component.scss'],
   animations: fuseAnimations,
   encapsulation: ViewEncapsulation.None
 })
@@ -43,7 +43,7 @@ export class <%=namePluralFUC%>Component {
     this.loadData$ = new BehaviorSubject(this.query);
 
     this.loadData$.subscribe((query: Query) => {
-      this.router.navigate(['/admin/<%=namePluralLC%>'], {
+      this.router.navigate(['/admin/<%=pluralFileName%>'], {
         queryParams: query,
         queryParamsHandling: 'merge',
       });

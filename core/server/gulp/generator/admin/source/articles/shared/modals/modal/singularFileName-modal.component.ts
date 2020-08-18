@@ -1,15 +1,15 @@
 import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { <%=nameSingularFUC%> } from 'app/shared/models/<%=nameSingularLC%>';
+import { <%=nameSingularFUC%> } from 'app/shared/models/<%=singularFileName%>';
 import { FormComponent } from 'app/shared/components/form.component';
 import { FormComponent as _FormComponent } from '../../form/form.component';
 import * as _ from 'lodash';
 import { MetaFormComponent } from '../../../../../../../shared/components/meta-form/meta-form.component';
 
 @Component({
-  selector: 'app-<%=nameSingularLC%>-modal',
-  templateUrl: './<%=nameSingularLC%>-modal.component.html',
-  styleUrls: ['./<%=nameSingularLC%>-modal.component.scss']
+  selector: 'app-<%=singularFileName%>-modal',
+  templateUrl: './<%=singularFileName%>-modal.component.html',
+  styleUrls: ['./<%=singularFileName%>-modal.component.scss']
 })
 export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit {
 

@@ -7,7 +7,7 @@
             shopping_basket
         </mat-icon>
         <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-            <%=namePluralFUC%>
+            <%=pluralFileName%>
         </span>
     </div>
     <!-- / APP TITLE -->
@@ -16,14 +16,14 @@
     <div class="search-wrapper mx-32 mx-md-0">
         <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
             <mat-icon>search</mat-icon>
-            <input #filter (keyup)="applyFilter($event.target.value)" placeholder="Search for a <%=nameSingularLC%>">
+            <input #filter (keyup)="applyFilter($event.target.value)" placeholder="Search for a <%=pluralFileName%>">
         </div>
     </div>
     <!-- / SEARCH -->
 
     <!-- ADD BUTTON -->
     <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" (click)="add()">
-        <span>Add new <%=nameSingularFUC%></span>
+        <span>Add new <%=singularFileName%></span>
     </button>
     <!-- / ADD BUTTON -->
 

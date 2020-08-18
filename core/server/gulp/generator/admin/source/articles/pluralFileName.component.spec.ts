@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { <%=namePluralFUC%>Component } from './<%=namePluralLC%>.component';
+import { <%=namePluralFUC%>Component } from './<%=pluralFileName%>.component';
 
 describe('<%=namePluralFUC%>Component', () => {
   let component: <%=namePluralFUC%>Component;
