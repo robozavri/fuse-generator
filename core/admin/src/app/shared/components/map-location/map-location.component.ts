@@ -13,14 +13,14 @@ export class MapLocationComponent implements OnInit {
 
   map: any;
   address: any = {};
-  invalidAddress: boolean = false;
-  locationOutOfBounds: boolean = true;
+  invalidAddress = false;
+  locationOutOfBounds = true;
 
-  @ViewChild('mapElement', { static: false }) mapElement;
+  @ViewChild('mapElement', { static: false }) mapElement: any;
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.location = this.location || {
       lat: 41.708605,
       lng: 44.787659,
@@ -32,10 +32,10 @@ export class MapLocationComponent implements OnInit {
     }, 500);
   }
 
-  createMap(location) {
-    let center = new google.maps.LatLng(location.lat, location.lng);
-    let mapOptions = {
-      zoom: this.location.zoom,
+  createMap(location: any): void {
+    const center = new google.maps.LatLng(location.lat, location.lng);
+    const mapOptions = {
+      zoom: this.location.zoom || 16,
       zoomControl: true,
       mapTypeControl: true,
       streetViewControl: false,
@@ -48,21 +48,24 @@ export class MapLocationComponent implements OnInit {
     };
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-    let marker = new google.maps.Marker({
+    const marker = new google.maps.Marker({
       position: center,
       map: this.map,
     });
 
     google.maps.event.addListener(this.map, 'dragend', () => this.updateLocation());
     google.maps.event.addListener(this.map, 'zoom', () => this.updateLocation());
-    google.maps.event.addListener(this.map, 'drag', () => marker.setPosition(this.map.getCenter().toJSON()));
+    google.maps.event.addListener(this.map, 'drag', () => {
+      marker.setPosition(this.map.getCenter().toJSON());
+      this.locationParams.emit(this.map.getCenter().toJSON());
+    });
   }
 
-  updateLocation() {
+  updateLocation(): any {  
     return this.map.getCenter().toJSON();
   }
 
-  handleLocationChangeSuccess(result) {
+  handleLocationChangeSuccess(result: any): void {
     this.invalidAddress = false;
     this.address.location = result.formatted_address;
     this.address.placId = result.place_id;
@@ -73,12 +76,12 @@ export class MapLocationComponent implements OnInit {
     this.address.street = (result.address_components.filter(({ types }) => types.includes('route'))[0] || {}).long_name;
   }
 
-  handleLocationChangeFail() {
+  handleLocationChangeFail(): void {
     this.invalidAddress = true;
     this.locationOutOfBounds = false;
   }
 
-  onSubmitLocation() {
+  onSubmitLocation(): void {
     console.log('location from map component: ', this.updateLocation());
     this.locationParams.emit(this.updateLocation());
   }

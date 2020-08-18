@@ -5,15 +5,16 @@ export class FormComponent {
    submitted: boolean;
    form: FormGroup;
 
-   getFormValue() {
+   getFormValue(): any {
       return this.form.getRawValue();
    }
 
-   formIsValid() {
+   formIsValid(): any {
+      this.form.markAllAsTouched();
       return this.form.valid;
    }
 
-   markFormSubmitted() {
+   markFormSubmitted(): void {
       this.submitted = true;
    }
 }

@@ -3,68 +3,7 @@
     <mat-table class="products-table articles_table" #table [dataSource]="dataSource" multiTemplateDataRows
         fusePerfectScrollbar cdkDropList (cdkDropListDropped)="drop($event)">
 
-        <!-- ID Column -->
-        <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-            <mat-cell *matCellDef="let item">
-                <p class="text-truncate"> </p>
-            </mat-cell>
-        </ng-container>
-
-        <!-- Image Column -->
-        <ng-container matColumnDef="image">
-            <mat-header-cell *matHeaderCellDef></mat-header-cell>
-            <mat-cell *matCellDef="let item">
-                <!-- <img class="product-image"
-							*ngIf="item" [alt]="item.name"
-							[src]="item.images[item].url | resourceUrl"/>
-				<img *ngIf="!item"
-							[src]="'assets/images/ecommerce/product-image-placeholder.png'"> -->
-            </mat-cell>
-        </ng-container>
-
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef #nameLabel>Name</mat-header-cell>
-            <mat-cell *matCellDef="let item">
-                <p class="text-truncate">{{item.title?.en}}</p>
-            </mat-cell>
-        </ng-container>
-
-        <!-- Category Column -->
-        <ng-container matColumnDef="category">
-            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Category</mat-header-cell>
-            <mat-cell *matCellDef="let item" fxHide fxShow.gt-md>
-                <p class="category text-truncate">
-                    <!-- {{product.categories[0]}} -->
-                </p>
-            </mat-cell>
-        </ng-container>
-
-        <!-- Price Column -->
-        <ng-container matColumnDef="price">
-            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs>Price</mat-header-cell>
-            <mat-cell *matCellDef="let item" fxHide fxShow.gt-xs>
-                <p class="price text-truncate">
-                    <!-- {{product.priceTaxIncl | currency:'USD':'symbol'}} -->
-                </p>
-            </mat-cell>
-        </ng-container>
-
-        <!-- Quantity Column -->
-        <ng-container matColumnDef="quantity">
-            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Quantity</mat-header-cell>
-            <mat-cell *matCellDef="let item" fxHide fxShow.gt-sm>
-
-                <span class="quantity-indicator text-truncate"
-                    [ngClass]="{'red-500':item.quantity <= 5, 'amber-500':item.quantity > 5 && item.quantity <= 25,'green-600':item.quantity > 25}">
-                </span>
-                <span>
-                    <!-- {{product.quantity}} -->
-                </span>
-
-            </mat-cell>
-        </ng-container>
+        <%=listColumnsHtml%>
 
         <!-- Active Column -->
         <ng-container matColumnDef="active">

@@ -12,8 +12,7 @@ import { FormComponent } from 'app/shared/components/form.component';
 })
 export class MetaFormComponent extends FormComponent implements OnInit {
   @Input() meta: Meta;
-  // tslint:disable-next-line: ban-types
-  @Output() submitMeta = new EventEmitter<Object>();
+  @Output() submitMeta = new EventEmitter<any>();
   @Input() showSubmit = true;
 
   accept: string;
@@ -45,12 +44,10 @@ export class MetaFormComponent extends FormComponent implements OnInit {
         title: this.fb.group({
           ge: [this.meta.title.ge || ''],
           en: [this.meta.title.en || ''],
-          ru: [this.meta.title.ru || ''],
         }),
         description: this.fb.group({
           ge: [this.meta.description.ge || ''],
           en: [this.meta.description.ge || ''],
-          ru: [this.meta.description.ge || ''],
         }),
         keywords: this.fb.array(this.meta.keywords || []),
         image: this.fb.group({
@@ -61,7 +58,7 @@ export class MetaFormComponent extends FormComponent implements OnInit {
   }
 
   getControls(frmGrp: any, key: string): any {
-    return (<FormArray>frmGrp.controls[key]).controls;
+    return (frmGrp.controls[key] as FormArray).controls;
   }
 
   add(event: MatChipInputEvent): void {
@@ -89,7 +86,7 @@ export class MetaFormComponent extends FormComponent implements OnInit {
     this.form.get('meta').get('image').get('url').setValue(data.url);
   }
 
-  submit(form): any {
+  submit(form: any): any {
     if (form.valid) {
       this.submitMeta.emit(form.value);
       this.snackBar.open(

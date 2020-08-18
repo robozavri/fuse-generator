@@ -8,6 +8,13 @@
  [imageSchema]
 */
 
+// list display fields
+// only String or multilingualSchema
+export const listFields = {
+     name: 'String',
+     title: 'multilingualSchema', 
+};
+
 export const fields = {
      name: 'String',
      title: 'multilingualSchema', 

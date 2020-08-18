@@ -10,7 +10,6 @@ import {getNameFromArgv, getDefFieldFromArgv, getDirFromArgv, firstUC, firstLC, 
 const $ = require('gulp-load-plugins')();
 
 gulp.task('api', (done) => {
-  // generateSchema(fields);
   runSequence('generateApi', 'generateStub', 'inject', done);
 });
 

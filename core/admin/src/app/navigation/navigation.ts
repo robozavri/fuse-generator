@@ -88,12 +88,12 @@ export const navigation: FuseNavigation[] = [
         url: '/admin/compiuters',
     },
     {
-      id: 'guitars',
-      title: 'guitars',
-      translate: 'guitars',
+      id: 'blogs',
+      title: 'blogs',
+      translate: 'blogs',
       type: 'item',
       icon: 'info',
-      url: '/admin/guitars',
+      url: '/admin/blogs',
   },
   {
     id: 'cars',

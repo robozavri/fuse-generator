@@ -1,0 +1,20 @@
+<div>
+    <div class="image_holder">
+        <div class="empty_image" *ngIf="images.length === 0">
+            Upload Photos
+        </div>
+        <div class="the_image imgContainer" *ngFor="let imageItem of images; let i = index">
+            <span class="material-icons removeIcon " (click)="removeImageItem(i)">delete</span>
+            <img [src]="(imageItem.url | resourceUrl)" alt="image">
+        </div>
+    </div>
+    <app-file-upload class="upload_photo_container" [accept]="'image/*'" [base64]="true"
+        (fileChange)="onImageSelected($event)" [multiple]="multiple">
+        <div class="upload_photo_box">
+            <button type="button" *ngIf="!selectedImage?.base64 && !image?.url" mat-raised-button color="basic">
+                Upload Photos </button>
+            <button type="button" *ngIf="selectedImage?.base64 || image?.url" mat-raised-button color="basic">
+                Upload Photos </button>
+        </div>
+    </app-file-upload>
+</div>

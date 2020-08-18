@@ -60,7 +60,9 @@ export class <%=namePluralFUC%>Component {
   }
 
   add(): void {
-    const data: <%=nameSingularFUC%> = <%=formModalEmptyObj%>;
+    const data: <%=nameSingularFUC%> = { 
+      <%=formModalEmptyObj%> 
+    };
     this.dialog
       .open(<%=nameSingularFUC%>ModalComponent, { data })
       .afterClosed()

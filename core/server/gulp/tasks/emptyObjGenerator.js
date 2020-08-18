@@ -1,27 +1,31 @@
 export function generateEmptyObjModal(fields = false) {
-    let emptyObj = {
-      meta: {},
-    };
+    let template = 'meta: {},';
     if(!fields) {
-        return emptyObj;
+        return '';
     }
 
     Object.keys(fields).map((key, index) => {
         switch( fields[key] ) {
-            case 'multilingualSchema':  emptyObj[key] = {} ;
+            case 'multilingualSchema': template += `
+      ${key}: {},`;
               break;
-            case 'String':  emptyObj[key] = '';
+            case 'String':  template += `
+      ${key}: '',`;
               break;
-            case 'Number':  emptyObj[key] = '';
+            case 'Number': template += `
+      ${key}: '',`;
               break;
-            case 'imageSchema':  emptyObj[key] =  {};
+            case 'imageSchema': template += `
+      ${key}: {},`;
               break;
-            case '[imageSchema]':  emptyObj[key] = [];
+            case '[imageSchema]': template += `
+      ${key}: [],`;
               break;
-            case 'Date':  emptyObj[key] = 'new Date()';
+            case 'Date': template += `
+      ${key}: new Date(),`;
               break;
         }
     });
-    return  JSON.stringify(emptyObj);
+    return template;
   }
   

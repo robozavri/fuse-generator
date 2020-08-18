@@ -1,25 +1,20 @@
 <form [formGroup]="form" (ngSubmit)="submit(form)">
     <div formGroupName="meta" class="tab-content p-24">
-        <!-- <div class="inputs_container">
+        <div class="inputs_container">
 				<app-image-upload [image]="meta.image" (uploadComplete)="onUploadComplete($event)">
 				</app-image-upload>
-		</div> -->
+		</div>
 
         <div fusePerfectScrollbar fxLayout="column">
             <div fxLayout="row" fxLayoutAlign="space-between" formGroupName='title'>
-                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
                     <mat-label> Title Ge </mat-label>
                     <input matInput placeholder="Title Ge" name="Title Ge" formControlName="ge">
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
                     <mat-label> Title En </mat-label>
                     <input matInput placeholder="Title En" name="Title En" formControlName="en">
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
-                    <mat-label> Title Ru </mat-label>
-                    <input matInput placeholder="Title Ru" name="Title Ru" formControlName="ru">
                 </mat-form-field>
             </div>
 
@@ -31,10 +26,6 @@
                 <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
                     <mat-label> Description EN </mat-label>
                     <input matInput placeholder="Description EN" name="description" formControlName="en" rows="5">
-                </mat-form-field>
-                <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-                    <mat-label> Description RU </mat-label>
-                    <input matInput placeholder="Description RU" name="description" formControlName="ru" rows="5">
                 </mat-form-field>
             </div>
 

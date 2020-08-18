@@ -6,6 +6,8 @@ import imageSchema from '../../schemas/image.schema';
 const BlogSchema = new Schema({
   
   name: String,
+  title: multilingualSchema,
+  description: multilingualSchema,
   count: Number,
   thumbnail: imageSchema,
   images: [imageSchema],

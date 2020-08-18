@@ -8,7 +8,7 @@ export function generateSchema(fields = false) {
 
     Object.keys(fields).map((key, index) => {
         switch( fields[key] ) {
-            case 'multilingual':  template += build(key, 'multilingualSchema');
+            case 'multilingualSchema':  template += build(key, 'multilingualSchema');
               break;
             case 'String': template += build(key, 'String');
               break;
@@ -22,7 +22,6 @@ export function generateSchema(fields = false) {
               break;
         }
     });
-    
     return template;
 }
 

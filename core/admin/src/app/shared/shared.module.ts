@@ -65,7 +65,8 @@ import { AuthorApiService } from './http/author-api.service';
 import { VideoApiService } from './http/video-api.service';
 import { CarApiService } from './http/car-api.service';
 import { CompiuterApiService } from './http/compiuter-api.service';
-import { GuitarApiService } from './http/guitar-api.service';
+import { BlogApiService } from './http/blog-api.service';
+import { ImagesUploadComponent } from './components/images-upload/images-upload.component';
 
 
 @NgModule({
@@ -156,6 +157,7 @@ import { GuitarApiService } from './http/guitar-api.service';
     MatTreeModule,
     FileUploadComponent,
     ImageUploadComponent,
+    ImagesUploadComponent,
     ResourceUrlPipe,
     FlexLayoutModule,
     MapLocationComponent,
@@ -167,6 +169,7 @@ import { GuitarApiService } from './http/guitar-api.service';
     FileUploadComponent,
     ResourceUrlPipe,
     ImageUploadComponent,
+    ImagesUploadComponent,
     MapLocationComponent,
     MetaFormComponent,
     ConfirmDeleteModalComponent
@@ -196,7 +199,7 @@ export class SharedModule {
         VideoApiService,
         CarApiService,
         CompiuterApiService,
-        GuitarApiService
+        BlogApiService
       ]
     };
   }

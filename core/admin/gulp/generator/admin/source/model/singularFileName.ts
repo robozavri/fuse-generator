@@ -1,3 +1,4 @@
 export interface <%=nameSingularUC%> {
-  <%=interfaceFields%> 
+    _id?: any;<%=interfaceFields%> 
+    meta?: any; 
 }

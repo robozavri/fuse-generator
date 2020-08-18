@@ -51,7 +51,7 @@ export function initRoutes(app: Express) {
   app.use('/api/videos', videosRouter);
   app.use('/api/cars', carsRouter);
   app.use('/api/compiuters', compiutersRouter);
-  app.use('/api/blog', blogRouter);
+  app.use('/api/blogs', blogRouter);
 
   app.get('/admin/*', renderAdminHtml);
   app.get('/*', renderClientHtml);

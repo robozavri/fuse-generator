@@ -1,4 +1,4 @@
-// 'use strict';
+'use strict';
 
 import gulp from 'gulp';
 import path from 'path';
@@ -6,6 +6,7 @@ import runSequence from 'run-sequence';
 import paths from '../paths';
 import * as _ from 'lodash';
 import { fields } from './fields';
+import { generateListPropeties } from './adminHelper';
 import { generateEmptyObjModal } from './emptyObjGenerator';
 import { generateFormGroup, generateImageMethods, generateImagesMethods, generateFormEmptyObjects } from './formGroupGenerator';
 import { generateFormHtml } from './htmlFormGenerator';
@@ -49,6 +50,8 @@ gulp.task('generateModel', () => {
 
 function insertArticlesTemplate(name, src, dest, fields) {
     const imagesMethods = generateImagesMethods(fields);
+    const listProperties = generateListPropeties();
+    
     return gulp.src(src)
         .pipe($.template({
             nameUC: firstUC(name),
@@ -67,6 +70,8 @@ function insertArticlesTemplate(name, src, dest, fields) {
             imageMethods: generateImageMethods(fields),
             imagesMethods: imagesMethods.methods,
             imagesProperties: imagesMethods.properties,
+            listColumnsHtml: listProperties.template,
+            listColumntTitles: listProperties.columns
         }, {
             interpolate: /<%=([\s\S]+?)%>/g
         }))
