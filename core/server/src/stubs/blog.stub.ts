@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { cloneStub, generateImage }  from '../helpers/stub-helpers';
+import { cloneStub, generateImage, generateSocials }  from '../helpers/stub-helpers';
 
 
 
@@ -42,12 +42,20 @@ function getImagesObject(i: number = 0): any {
 function getCreateAtObject(i: number = 0): any {
     return new Date();
 }
+function getSocialAccountsObject(i: number = 0): any {
+    const social = generateSocials();
+    return [
+          { account: social, link: `https://www.${social}.com/` },
+          { account: social, link: `https://www.${social}.com/` },
+          { account: social, link: `https://www.${social}.com/` }
+    ];
+}
 
 function getMeta(i: number = 0): any {
   return {
-    title: { en: `service meta title en ${i}`, ge: `service meta title ge ${i}`},
-    description: { en: `service meta description en ${i}`, ge: `service meta description ge ${i}`},
-    keywords: ['service meta keyword1', 'service meta keyword2', 'service meta keyword3'],
+    title: { en: `Blog meta title en ${i}`, ge: `Blog meta title ge ${i}`, ru: `Blog meta title ru ${i}`},
+    description: { en: `Blog meta description en ${i}`, ge: `Blog meta description ge ${i}`, ru: `Blog meta description ru ${i}`},
+    keywords: ['Blog meta keyword1', 'Blog meta keyword2', 'Blog meta keyword3'],
     image: { url: '' },
   };
 }
@@ -60,6 +68,7 @@ const BlogStub = {
     thumbnail: getThumbnailObject(),
     images: getImagesObject(),
     createAt: getCreateAtObject(),
+    socialAccounts: getSocialAccountsObject(),
     meta: getMeta(),
 };
 
@@ -81,6 +90,7 @@ export function getMany(count: number, fields?: any) {
     thumbnail: getThumbnailObject(i),
     images: getImagesObject(i),
     createAt: getCreateAtObject(i),
+    socialAccounts: getSocialAccountsObject(i),
     meta: getMeta(i),
   }));
 }

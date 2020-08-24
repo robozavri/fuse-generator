@@ -74,6 +74,7 @@ function parseBaseProps(body: any) {
     'thumbnail',
     'images',
     'createAt',
+    'socialAccounts',
     'meta',
     'position',
   ]);

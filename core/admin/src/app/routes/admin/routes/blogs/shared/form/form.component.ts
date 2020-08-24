@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { Blog } from 'app/shared/models/blog';
 import { FormComponent as _FormComponent } from '../../../../../../shared/components/form.component';
 import { MatSnackBar } from '@angular/material';
+import { accounts } from '../../../../../../shared/constants/socials';
+            
 
 @Component({
   selector: 'app-form',
@@ -21,8 +23,8 @@ export class FormComponent extends _FormComponent implements OnInit {
   filesToCreate: any[] = [];
   filesToDestroy: any[] = [];
   
-    public images = [];
-    public items: FormArray;
+  public images = [];
+  public items: FormArray;
     
 
   constructor(
@@ -40,6 +42,9 @@ export class FormComponent extends _FormComponent implements OnInit {
     this.formData.thumbnail = this.formData.thumbnail || {};
     this.images = this.formData.images || [];
     this.formData.createAt = this.formData.createAt || new Date();
+    const socialObj = { account: '', link: ''};
+    const socialArray = (this.formData.socialAccounts || [socialObj]).map((socialItem: any) => this.createSocials(socialItem));
+    
 
     this.form = this.fb.group({
         
@@ -60,8 +65,37 @@ export class FormComponent extends _FormComponent implements OnInit {
             }),
             images: this.fb.array(this.formData.images || []),
             createAt: [this.formData.createAt || new Date()],
+            socialAccounts: this.fb.array( socialArray ),
     });
     
+  }
+
+  
+  get accounts(): any { return accounts; }
+
+  get socials(): FormArray {
+      return this.form.get('socialAccounts') as FormArray;
+  }
+
+  
+  // socialAccounts methods
+  createSocials(data: any): FormGroup {
+      return this.fb.group({
+          account: [ data.account || ''],
+          link: [ data.link || ''],
+      });
+  }
+  
+  addSocials(details: string): void {
+      const detailsForm = this.fb.group({
+          account: [''],
+          link: [''],
+      });
+      this[details].push(detailsForm);
+  }
+
+  deleteSocials(i: any): void{
+      this.socials.removeAt(i);
   }
 
   

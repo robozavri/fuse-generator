@@ -8,16 +8,25 @@ import * as _ from 'lodash';
 import { fields } from './fields';
 import { generateListPropeties } from './adminHelper';
 import { generateEmptyObjModal } from './emptyObjGenerator';
-import { generateFormGroup, generateImageMethods, generateImagesMethods, generateFormEmptyObjects } from './formGroupGenerator';
+import { 
+  generateFormGroup,
+  generateImageMethods, 
+  generateImagesMethods, 
+  generateFormEmptyObjects, 
+  generateSocialMethods,
+  getterForSocials,
+  importsForSocials
+ } from './formGroupGenerator';
 import { generateFormHtml } from './htmlFormGenerator';
 import { generateInterface } from './generateInterface';
-import {getNameFromArgv, getDefFieldsFromArgv, getDirFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
+import { getIsGeenerateArgv, getNameFromArgv, getDefFieldsFromArgv, getDirFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
 const $ = require('gulp-load-plugins')();
 const argv = $.util.env;
 
 
 gulp.task('articles', (done) => {
-  runSequence('generateArticlesAdminComponent', 'generateHttp', 'generateModel', done);
+  // runSequence('generateArticlesAdminComponent');
+  runSequence('generateArticlesAdminComponent', 'generateHttp', 'generateModel', 'generateEditPage', done);
 });
 
 
@@ -27,9 +36,16 @@ gulp.task('generateArticlesAdminComponent', () => {
 
 function insertArticleMainTemplate(){
     const name = getNameFromArgv();
-    // const fields = getDefFieldsFromArgv();
-    const src = paths.adminGeneratorTemplates.articles;
-    const dest = path.join(paths.admin.adminModules, _.kebabCase(plural(name)));
+    let src,dest;
+    
+    if('false' === getIsGeenerateArgv()) { 
+       src = paths.adminGeneratorTemplates.articlesWithModal;
+       dest = path.join(paths.admin.adminModules, _.kebabCase(plural(name)));
+    } else {
+       src = paths.adminGeneratorTemplates.articles;
+       dest = path.join(paths.admin.adminModules, _.kebabCase(plural(name)));
+    }
+
     return insertArticlesTemplate(name, src, dest, fields);
 }
 
@@ -47,6 +63,57 @@ gulp.task('generateModel', () => {
   const dest = paths.admin.model;
   return insertModelTemplate(name, src, dest, fields);
 });
+
+gulp.task('generateEditPage', () => {
+  let name = getNameFromArgv();
+  if('false' === getIsGeenerateArgv()) { 
+      return;
+  }
+  let destDirName ='';
+  if(singular(name) === plural(name) ){
+      name = name + '-details';
+      destDirName = name;
+  }else{
+      destDirName = singular(name);
+  }
+  // const fields = getDefFieldsFromArgv();
+  const src = paths.adminGeneratorTemplates.editPage;
+  const dest = path.join(paths.admin.adminModules, _.kebabCase(destDirName));
+  return insertEditPageTemplate(name, src, dest, fields);
+});
+
+function insertEditPageTemplate(name, src, dest, fields) {
+  const imagesMethods = generateImagesMethods(fields);
+  return gulp.src(src)
+        .pipe($.template({
+            nameUC: firstUC(name),
+            nameLC: firstLC(name),
+            namePlural: plural(name),
+            namePluralLC: plural(name.toLowerCase()),
+            namePluralFUC: firstUC(plural(name)),
+            nameSingularUC: firstUC(singular(name)),
+            nameSingularLC: singular(name),
+            nameSingularFUC: firstUC(singular(name)),
+            singularFileName: _.kebabCase(singular(name)),
+            pluralFileName: _.kebabCase(plural(name)),
+            formModalEmptyObj: generateEmptyObjModal(fields),
+            formGroup: generateFormGroup(fields),
+            formEmptyObjects: generateFormEmptyObjects(fields),
+            formHtml: generateFormHtml(fields),
+            imageMethods: generateImageMethods(fields),
+            imagesMethods: imagesMethods.methods,
+            imagesProperties: imagesMethods.properties,
+            socialsMethods: generateSocialMethods(fields),
+            socialsGetter: getterForSocials(fields),
+            socialsImport: importsForSocials(fields),
+        }, {
+            interpolate: /<%=([\s\S]+?)%>/g
+        }))
+        .pipe($.rename(path => {
+            path.basename = getFileName(name, path.basename);
+        }))
+        .pipe(gulp.dest(dest));
+}
 
 function insertArticlesTemplate(name, src, dest, fields) {
     const imagesMethods = generateImagesMethods(fields);
@@ -71,7 +138,11 @@ function insertArticlesTemplate(name, src, dest, fields) {
             imagesMethods: imagesMethods.methods,
             imagesProperties: imagesMethods.properties,
             listColumnsHtml: listProperties.template,
-            listColumntTitles: listProperties.columns
+            listColumntTitles: listProperties.columns,
+
+            socialsMethods: generateSocialMethods(fields),
+            socialsGetter: getterForSocials(fields),
+            socialsImport: importsForSocials(fields),
         }, {
             interpolate: /<%=([\s\S]+?)%>/g
         }))

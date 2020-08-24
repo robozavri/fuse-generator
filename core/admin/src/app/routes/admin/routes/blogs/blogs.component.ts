@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { BlogModalComponent } from './shared/modals/modal/blog-modal.component';
 import { Query } from '../../../../shared/models/query';
 import { Subject, BehaviorSubject, Observable } from 'rxjs';
 import { Blog } from '../../../../shared/models/blog';
@@ -57,24 +56,6 @@ export class BlogsComponent {
     this.items$ = data$.pipe(map(d => d.items));
     this.numTotal$ = data$.pipe(map(d => d.numTotal));
 
-  }
-
-  add(): void {
-    const data: Blog = {"meta":{},"name":"","title":{},"description":{},"count":"","thumbnail":{},"images":[],"createAt":"new Date()"};
-    this.dialog
-      .open(BlogModalComponent, { data })
-      .afterClosed()
-      .pipe(
-        filter(r => r),
-        switchMap(d => {
-          return this.api.create(d);
-        }),
-      )
-      .subscribe(
-        () => this.snackBarService.open('Created Successfully'),
-        () => this.snackBarService.open('Creation Failed'),
-        () => this.loadData$.next(this.query)
-      );
   }
 
   update(data: any): void {

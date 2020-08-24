@@ -20,6 +20,8 @@ export function generateSchema(fields = false) {
               break;
             case '[imageSchema]': template += build(key, '[imageSchema]');
               break;
+            case 'Socials': template += build(key, '[{ account: String, link: String }]');
+              break;
         }
     });
     return template;
@@ -104,6 +106,7 @@ function buildKeyword(key, value) {
 function buildSingleStubObject(key, type) {
 
     let templateContent = '';
+    let socialGenHelper;
     switch( type ) {
         case 'multilingualSchema':   
 templateContent += `{
@@ -132,13 +135,30 @@ templateContent += `{
         { url:  generateImage()}
     ]`;
           break;
+        case 'Socials': 
+    templateContent += `[
+          { account: social, link: \`https://www.\${social}.com/\` },
+          { account: social, link: \`https://www.\${social}.com/\` },
+          { account: social, link: \`https://www.\${social}.com/\` }
+    ]`;
+      socialGenHelper = 'const social = generateSocials();';
+          break;
     }
 
-   return `
+    if ( socialGenHelper !== undefined ) {
+      return `
+function get${_.upperFirst(key)}Object(i: number = 0): any {
+    ${socialGenHelper}
+    return ${templateContent};
+}`;
+    }else {
+      return `
 
 function get${_.upperFirst(key)}Object(i: number = 0): any {
     return ${templateContent};
 }`;
+    }
+  
 }
 
 

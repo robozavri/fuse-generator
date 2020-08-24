@@ -6,6 +6,7 @@
  multilingualSchema
  imageSchema
  [imageSchema]
+ Socials
 */
 
 // list display fields
@@ -22,5 +23,6 @@ export const fields = {
      count: 'Number', 
      thumbnail: 'imageSchema', 
      images: '[imageSchema]' ,
-     createAt: 'Date'
+     createAt: 'Date',
+     socialAccounts: 'Socials'
 };

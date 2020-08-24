@@ -30,6 +30,15 @@ export function singular(str) {
   return pluralize.singular(str);
 }
 
+export function getIsGeenerateArgv() {
+  const edit = argv.edit || argv.n;
+  if (!edit) {
+    log(colors.red('Error: name parameter is required (e.g. --edit <edit>) value: true or false'));
+    process.exit(1);
+  }
+  return edit;
+}
+
 export function getNameFromArgv() {
   const name = argv.name || argv.n;
   if (!name) {

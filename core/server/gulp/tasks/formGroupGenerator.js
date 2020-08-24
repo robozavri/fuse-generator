@@ -21,8 +21,8 @@ export function generateImagesMethods(fields = false) {
         }
     });
     const properties = `
-    public images = [];
-    public items: FormArray;
+  public images = [];
+  public items: FormArray;
     `;
 
     return {methods: template, properties: properties };
@@ -60,6 +60,9 @@ export function generateFormGroup(fields = false) {
             case 'Date': formTemplate += `
             ${key}: [this.formData.${key} || new Date()],`;
             break;
+            case 'Socials': formTemplate += `
+            ${key}: this.fb.array( socialArray ),`;  
+            break;
         }
     });
 
@@ -96,9 +99,73 @@ export function generateFormEmptyObjects(fields = false) {
             case 'Date':  template += `
     this.formData.${key} = this.formData.${key} || new Date();`;
             break;
+            case 'Socials': template += `
+    const socialObj = { account: '', link: ''};
+    const socialArray = (this.formData.${key} || [socialObj]).map((socialItem: any) => this.createSocials(socialItem));
+    `;       break;
         }
     });
     return template;
+}
+
+export function generateSocialMethods(fields = false){
+    if(!fields) {
+        return '';
+    }
+    let template = '';
+    Object.keys(fields).map((key, index) => {
+        if (fields[key] === 'Socials') {
+            template += `
+  // ${key} methods
+  createSocials(data: any): FormGroup {
+      return this.fb.group({
+          account: [ data.account || ''],
+          link: [ data.link || ''],
+      });
+  }
+  
+  addSocials(details: string): void {
+      const detailsForm = this.fb.group({
+          account: [''],
+          link: [''],
+      });
+      this[details].push(detailsForm);
+  }
+
+  deleteSocials(i: any): void{
+      this.socials.removeAt(i);
+  }`;
+        }
+    });
+    return template;
+}
+
+export function getterForSocials(fields = false){
+    let template = '';
+    Object.keys(fields).map((key, index) => {
+        if( fields[key] === 'Socials') {
+            template += `
+  get accounts(): any { return accounts; }
+
+  get socials(): FormArray {
+      return this.form.get('${key}') as FormArray;
+  }`;
+        }
+    });
+
+  return template;
+}
+
+export function importsForSocials(fields = false){
+    let template = '';
+    Object.keys(fields).map((key, index) => {
+        if( fields[key] === 'Socials') {
+            template += 
+`import { accounts } from '../../../../../../shared/constants/socials';
+            `;
+        }
+    });
+  return template;
 }
 
 function imageMethodTemplate(key) {
@@ -134,4 +201,5 @@ function imagesMethodTemplate(key) {
        this.addItem${_.upperFirst(key)}(data.url);
   }
    `
-   }
+}
+

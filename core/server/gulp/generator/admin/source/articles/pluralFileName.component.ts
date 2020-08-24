@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { <%=nameSingularFUC%>ModalComponent } from './shared/modals/modal/<%=singularFileName%>-modal.component';
 import { Query } from '../../../../shared/models/query';
 import { Subject, BehaviorSubject, Observable } from 'rxjs';
 import { <%=nameSingularFUC%> } from '../../../../shared/models/<%=singularFileName%>';
@@ -57,26 +56,6 @@ export class <%=namePluralFUC%>Component {
     this.items$ = data$.pipe(map(d => d.items));
     this.numTotal$ = data$.pipe(map(d => d.numTotal));
 
-  }
-
-  add(): void {
-    const data: <%=nameSingularFUC%> = { 
-      <%=formModalEmptyObj%> 
-    };
-    this.dialog
-      .open(<%=nameSingularFUC%>ModalComponent, { data })
-      .afterClosed()
-      .pipe(
-        filter(r => r),
-        switchMap(d => {
-          return this.api.create(d);
-        }),
-      )
-      .subscribe(
-        () => this.snackBarService.open('Created Successfully'),
-        () => this.snackBarService.open('Creation Failed'),
-        () => this.loadData$.next(this.query)
-      );
   }
 
   update(data: any): void {

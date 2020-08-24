@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { cloneStub, generateImage }  from '../helpers/stub-helpers';
+import { cloneStub, generateImage, generateSocials }  from '../helpers/stub-helpers';
 
 <%=stubObjectMethods%>
 

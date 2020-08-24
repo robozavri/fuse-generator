@@ -103,6 +103,10 @@ const routes: Routes = [
         path: 'blogs',
         loadChildren: './routes/blogs/blogs.module#BlogsModule'
       },
+      {
+        path: 'blog/:id',
+        loadChildren: './routes/blog/blog.module#BlogModule'
+      },
     ]
   }
 ];

@@ -12,6 +12,7 @@ const BlogSchema = new Schema({
   thumbnail: imageSchema,
   images: [imageSchema],
   createAt: Date,
+  socialAccounts: [{ account: String, link: String }],
   meta: metaTagsSchema,
   position: Number,
 });

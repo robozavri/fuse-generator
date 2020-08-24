@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { <%=nameSingularFUC%> } from 'app/shared/models/<%=singularFileName%>';
 import { FormComponent as _FormComponent } from '../../../../../../shared/components/form.component';
 import { MatSnackBar } from '@angular/material';
+<%=socialsImport%>
 
 @Component({
   selector: 'app-form',
@@ -33,6 +34,10 @@ export class FormComponent extends _FormComponent implements OnInit {
 
     this.form = <%=formGroup%>
   }
+
+  <%=socialsGetter%>
+
+  <%=socialsMethods%>
 
   <%=imageMethods%>
 

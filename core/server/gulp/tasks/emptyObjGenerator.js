@@ -24,6 +24,9 @@ export function generateEmptyObjModal(fields = false) {
             case 'Date': template += `
       ${key}: new Date(),`;
               break;
+            case 'Socials': template += `
+      ${key}: [],`;
+              break;
         }
     });
     return template;

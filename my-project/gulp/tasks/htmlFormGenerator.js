@@ -20,6 +20,8 @@ export function generateFormHtml(fields = false) {
               break;
             case '[imageSchema]':  emptyObj[key] = images(key);
               break;
+            case 'Socials':  emptyObj[key] = socials(key);
+              break;
         }
     });
     Object.keys(emptyObj).map((key, index) => {
@@ -101,4 +103,39 @@ function images(key) {
             <app-images-upload *ngIf="images" [images]="images" (removeImage)="deleteImage${_.upperFirst(key)}($event)" (uploadComplete)="onUploadComplete${_.upperFirst(key)}($event)"></app-images-upload>
         </div>
   `;
+}
+
+function socials(key){
+    return `
+        <h1>Socials</h1>
+        <div formArrayName="${key}">
+            <mat-card *ngFor="let item of socials.controls; let i = index;" style="margin-bottom: 20px;">
+                <h2>Account {{i + 1}}</h2>
+                <div [formGroupName]="i" style="margin: 20px">
+                    <div fxLayout="column" fxLayoutAlign="">
+
+                        <mat-form-field  [style.width.px]=300 >
+                            <mat-label>Account</mat-label>
+                            <mat-select  formControlName="account">
+                                <mat-option *ngFor="let account of accounts" [value]="account">{{ account }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" floatLabel="always" fxFlex="40">
+                            <mat-label> link </mat-label>
+                            <input matInput placeholder="link" name="link" formControlName="link">
+                        </mat-form-field>
+                    </div>
+                    <button type="button" mat-raised-button color="warn" (click)="deleteSocials(i)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </mat-card>
+            <button type="button" mat-raised-button color="accent" (click)="addSocials('socials')"
+                    style="margin-bottom: 30px;">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+
+    `;
 }

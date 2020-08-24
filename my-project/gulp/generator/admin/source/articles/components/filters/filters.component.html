@@ -22,7 +22,7 @@
     <!-- / SEARCH -->
 
     <!-- ADD BUTTON -->
-    <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" (click)="add()">
+    <button mat-raised-button class="add-product-button fuse-white mt-24 mt-md-0" (click)="router.navigate(['/admin/<%=singularFileName%>/new']);">
         <span>Add new <%=singularFileName%></span>
     </button>
     <!-- / ADD BUTTON -->
