@@ -1,3 +1,5 @@
+import { availableLangs, refFields } from './fields';
+
 export function generateEmptyObjModal(fields = false) {
     let template = 'meta: {},';
     if(!fields) {
@@ -6,8 +8,20 @@ export function generateEmptyObjModal(fields = false) {
 
     Object.keys(fields).map((key, index) => {
         switch( fields[key] ) {
+            case 'multilingualSchema-quill-editor': template += `
+      ${key}: {},`;
+            break;
+            case 'multilingualSchema-Textarea': template += `
+      ${key}: {},`;
+            break;
             case 'multilingualSchema': template += `
       ${key}: {},`;
+              break;
+            case 'quill-editor':  template += `
+      ${key}: '',`;
+              break;
+            case 'Textarea':  template += `
+      ${key}: '',`;
               break;
             case 'String':  template += `
       ${key}: '',`;
@@ -27,8 +41,20 @@ export function generateEmptyObjModal(fields = false) {
             case 'Socials': template += `
       ${key}: [],`;
               break;
+            case 'Reference':
+                   template += detectReference(key);
+              break;
         }
     });
     return template;
   }
   
+  function detectReference(key) {
+      if (refFields[key].referenceType === 'single') {
+            return  `
+            ${key}: '',`;
+      }
+
+      return  `
+      ${key}: [],`;   
+  }

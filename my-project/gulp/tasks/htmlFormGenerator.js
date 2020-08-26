@@ -1,4 +1,8 @@
 import * as _ from 'lodash';
+import { availableLangs, refFields } from './fields';
+import {firstUC, firstLC, plural, singular} from '../helpers';
+
+
 export function generateFormHtml(fields = false) {
     let emptyObj = {};
     let formTemplate = '';
@@ -8,6 +12,14 @@ export function generateFormHtml(fields = false) {
   
     Object.keys(fields).map((key, index) => {
         switch( fields[key] ) {
+            case 'Textarea':  emptyObj[key] = textarea(key);
+              break;
+            case 'quill-editor':  emptyObj[key] = quillEditor(key);
+              break;
+            case 'multilingualSchema-quill-editor':  emptyObj[key] = multilingualSchemaQuillEditor(key);
+              break;
+            case 'multilingualSchema-Textarea':  emptyObj[key] = multilingualTextarea(key);
+              break;
             case 'multilingualSchema':  emptyObj[key] = multilingual(key);
               break;
             case 'String':  emptyObj[key] = string(key);
@@ -22,6 +34,8 @@ export function generateFormHtml(fields = false) {
               break;
             case 'Socials':  emptyObj[key] = socials(key);
               break;
+            case 'Reference': emptyObj[key] = reference(key); 
+              break;
         }
     });
     Object.keys(emptyObj).map((key, index) => {
@@ -31,23 +45,89 @@ export function generateFormHtml(fields = false) {
     return formTemplate;
 }
 
+function reference(key) {
+    const pluralName = plural(key);
+    const multiple = refFields[key].referenceType === 'multiple' ? 'multiple': '';
+
+    return `
+        <mat-form-field [style.width.px]=500 *ngIf="${pluralName}">
+            <mat-label>${_.kebabCase(key)}</mat-label>
+            <mat-select formControlName="${key}" ${multiple}>
+                <mat-option *ngFor="let item of ${pluralName}" [value]="item.${refFields[key].value}">{{ item.${refFields[key].displayFieldName} }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+`;
+
+}
+
+function textarea(key) {
+    return `
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                <mat-label> ${_.kebabCase(key)} </mat-label>
+                <textarea matInput placeholder="${_.kebabCase(key)}" formControlName="${key}" rows="5">
+                </textarea>
+            </mat-form-field>
+        </div>
+    `;
+}
+
+function quillEditor(key) {
+    return `
+        <div>
+            <label class="formLabel">${_.kebabCase(key)}</label>
+            <quill-editor formControlName="${key}"></quill-editor>
+        </div>
+    `;
+}
+
+function multilingualSchemaQuillEditor(key) {
+    let templete = '';
+    availableLangs.map((lang)=>{
+templete +=  `
+            <label class="formLabel">${_.kebabCase(key)} ${lang}</label>
+            <quill-editor formControlName="${lang}"></quill-editor>
+            `;
+    });
+    return `
+        <div formGroupName='${key}'>
+            ${templete}
+        </div>
+        `;
+}
+
+function multilingualTextarea(key) {
+    let templete = '';
+    availableLangs.map((lang)=>{
+templete += 
+           `<mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                <mat-label> ${_.kebabCase(key)} ${lang} </mat-label>
+                <textarea matInput placeholder="${_.kebabCase(key)} ${lang}" formControlName="${lang}" rows="5">
+                </textarea>
+            </mat-form-field>
+            `;
+    });
+    return `
+        <div formGroupName='${key}'>
+            ${templete}
+        </div>
+    `;
+}
+
+
 function multilingual(key) {
-  return  `
+    let templete = '';
+    availableLangs.map((lang)=>{
+templete +=  `
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+                <mat-label> ${_.kebabCase(key)} ${lang} </mat-label>
+                <input matInput placeholder="${_.kebabCase(key)} ${lang}" formControlName="${lang}">
+            </mat-form-field>
+                `
+    });
+    return `
         <div fxLayout="row" fxLayoutAlign="space-between" formGroupName='${key}'>
-            <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
-                <mat-label> ${key} ge </mat-label>
-                <input matInput placeholder="Title ge" formControlName="ge">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
-                <mat-label> ${key} en </mat-label>
-                <input matInput placeholder="${key} en" formControlName="en">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
-                <mat-label> ${key} ru </mat-label>
-                <input matInput placeholder="${key} ru" formControlName="ru">
-            </mat-form-field>
+            ${templete}
         </div>
     `;
 }
@@ -56,7 +136,7 @@ function string(key) {
   return  `
         <div fxLayout="row" fxLayoutAlign="space-between">
             <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
-                <mat-label> ${key}</mat-label>
+                <mat-label> ${_.kebabCase(key)}</mat-label>
                 <input matInput placeholder="${key}" formControlName="${key}">
             </mat-form-field>
         </div>
@@ -67,7 +147,7 @@ function number(key) {
   return  `
         <div fxLayout="row" fxLayoutAlign="space-between">
             <mat-form-field appearance="outline" floatLabel="always" fxFlex="20">
-                <mat-label>${key}</mat-label>
+                <mat-label>${_.kebabCase(key)}</mat-label>
                 <input matInput type="number" min="0" formControlName="${key}">
             </mat-form-field>
         </div>
@@ -76,7 +156,7 @@ function number(key) {
 
 function image(key) {
     return  `
-        <h3>${key}</h3>
+        <h3>${_.kebabCase(key)}</h3>
         <div class="inputs_container">
             <app-image-upload [image]="formData.${key}" (uploadComplete)="onUploadComplete${_.upperFirst(key)}($event)"></app-image-upload>
         </div>
@@ -87,7 +167,7 @@ function date(key) {
   return  ` 
         <div fxLayout="row" fxLayoutAlign="space-between">
             <mat-form-field appearance="outline" fxFlex="50">
-            <mat-label>${key}</mat-label>
+            <mat-label>${_.kebabCase(key)}</mat-label>
             <input matInput [matDatepicker]="startDatePicker" formControlName="${key}">
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
@@ -98,7 +178,7 @@ function date(key) {
 
 function images(key) {
     return  `
-        <h3>${key}</h3>
+        <h3>${_.kebabCase(key)}</h3>
         <div class="inputs_container">
             <app-images-upload *ngIf="images" [images]="images" (removeImage)="deleteImage${_.upperFirst(key)}($event)" (uploadComplete)="onUploadComplete${_.upperFirst(key)}($event)"></app-images-upload>
         </div>
@@ -107,7 +187,7 @@ function images(key) {
 
 function socials(key){
     return `
-        <h1>Socials</h1>
+        <h2>${_.kebabCase(key)}</h2>
         <div formArrayName="${key}">
             <mat-card *ngFor="let item of socials.controls; let i = index;" style="margin-bottom: 20px;">
                 <h2>Account {{i + 1}}</h2>

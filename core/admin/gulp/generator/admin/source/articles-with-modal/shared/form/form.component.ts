@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class FormComponent extends _FormComponent implements OnInit {
 
+  <%=formInputs%>
   @Input() formData: <%=nameSingularFUC%>;
   @Input() showSubmit = true;
   @Output() submitForm = new EventEmitter<<%=nameSingularFUC%>>();
@@ -30,6 +31,7 @@ export class FormComponent extends _FormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  
     <%=formEmptyObjects%>
 
     this.form = <%=formGroup%>

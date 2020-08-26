@@ -5,6 +5,7 @@ import { FormComponent } from 'app/shared/components/form.component';
 import { FormComponent as _FormComponent } from '../../form/form.component';
 import * as _ from 'lodash';
 import { MetaFormComponent } from '../../../../../../../shared/components/meta-form/meta-form.component';
+<%=modalImports%>
 
 @Component({
   selector: 'app-<%=singularFileName%>-modal',
@@ -18,8 +19,8 @@ export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit
   filesToDestroy: any[] = []; // remove 
   showFormWarning = false;
   submitted = false;
-
   showSubmit = false;
+  <%=modalClassProperties%>
 
   @ViewChild('<%=nameSingularLC%>Form', { static: false }) <%=nameSingularLC%>FormComponent: _FormComponent;
   @ViewChild('<%=nameSingularLC%>MetaForm', { static: false }) <%=nameSingularLC%>MetaComponent: MetaFormComponent;
@@ -27,6 +28,7 @@ export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit
   <%=nameSingularLC%>Type: <%=nameSingularFUC%>;
 
   constructor(
+    <%=modalConstructorArtuments%>
     private dialogRef: MatDialogRef<<%=nameSingularFUC%>ModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: <%=nameSingularFUC%>
   ) { }
@@ -36,6 +38,8 @@ export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit
   ngOnInit(): void {
     // empty meta data object for making new meta object
     this.metas = {};
+
+    <%=modalOnInitBody%>
   }
 
   ngAfterViewInit(): void {

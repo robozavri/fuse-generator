@@ -5,7 +5,6 @@ import imageSchema from '../../schemas/image.schema';
 
 const <%=nameUC%>Schema = new Schema({
   <%=schema%>
-  meta: metaTagsSchema,
   position: Number,
 });
 

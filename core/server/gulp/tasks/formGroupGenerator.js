@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import { availableLangs, refFields } from './fields';
 
 export function generateImageMethods(fields = false) {
     let template = '';
@@ -36,12 +37,26 @@ export function generateFormGroup(fields = false) {
     
     Object.keys(fields).map((key, index) => {
         switch( fields[key] ) {
+            case 'multilingualSchema-Textarea': formTemplate += `
+            ${key}: this.fb.group({
+                ${buildMultilingual(key)}
+            }),`;
+            break;
+            case 'multilingualSchema-quill-editor': formTemplate += `
+            ${key}: this.fb.group({
+                ${buildMultilingual(key)}
+            }),`;
+            break;
             case 'multilingualSchema': formTemplate += `
             ${key}: this.fb.group({
-                    ge: [this.formData.${key}.ge || ''],
-                    en: [this.formData.${key}.en || ''],
-                    ru: [this.formData.${key}.ru || ''],
+                ${buildMultilingual(key)}
             }),`;
+            break;
+            case 'quill-editor': formTemplate += `
+            ${key}: [this.formData.${key} || ''],`;
+            break;
+            case 'Textarea': formTemplate += `
+            ${key}: [this.formData.${key} || ''],`;
             break;
             case 'String': formTemplate += `
             ${key}: [this.formData.${key} || ''],`;
@@ -63,6 +78,8 @@ export function generateFormGroup(fields = false) {
             case 'Socials': formTemplate += `
             ${key}: this.fb.array( socialArray ),`;  
             break;
+            case 'Reference': formTemplate += detectReference(key); 
+            break;
         }
     });
 
@@ -70,6 +87,26 @@ export function generateFormGroup(fields = false) {
         ${formTemplate}
     });
     `;
+}
+
+function detectReference(key) {
+    if (refFields[key].referenceType === 'single') {
+          return   `
+            ${key}: [this.formData.${key} || ''],`;
+    }
+
+    return   `
+            ${key}: [this.formData.${key} || []],`;  
+}
+
+function buildMultilingual(key) {
+    let template = '';
+    availableLangs.map( (lang) => {
+        template += 
+        `
+                ${lang}: [this.formData.${key}.${lang} || ''],`;
+    });
+    return template;
 }
 
 export function generateFormEmptyObjects(fields = false) {
@@ -81,8 +118,20 @@ export function generateFormEmptyObjects(fields = false) {
 
     Object.keys(fields).map((key, index) => {
         switch( fields[key] ) {
+            case 'multilingualSchema-Textarea': template += `
+    this.formData.${key} = this.formData.${key} || {};`;
+            break;
+            case 'multilingualSchema-quill-editor': template += `
+    this.formData.${key} = this.formData.${key} || {};`;
+            break;
             case 'multilingualSchema': template += `
     this.formData.${key} = this.formData.${key} || {};`;
+            break;
+            case 'quill-editor':  template += `
+    this.formData.${key} = this.formData.${key} || '';`;
+            break;
+            case 'Textarea':  template += `
+    this.formData.${key} = this.formData.${key} || '';`;
             break;
             case 'String':  template += `
     this.formData.${key} = this.formData.${key} || '';`;

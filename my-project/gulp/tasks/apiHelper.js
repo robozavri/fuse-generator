@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import { availableLangs, refFields } from './fields';
 
 export function generateSchema(fields = false) {
     if(!fields) {
@@ -8,7 +9,15 @@ export function generateSchema(fields = false) {
 
     Object.keys(fields).map((key, index) => {
         switch( fields[key] ) {
+            case 'multilingualSchema-Textarea':  template += build(key, 'multilingualSchema');
+              break;
+            case 'multilingualSchema-quill-editor':  template += build(key, 'multilingualSchema');
+              break;
             case 'multilingualSchema':  template += build(key, 'multilingualSchema');
+              break;
+            case 'quill-editor': template += build(key, 'String');
+              break;
+            case 'Textarea': template += build(key, 'String');
               break;
             case 'String': template += build(key, 'String');
               break;
@@ -22,9 +31,20 @@ export function generateSchema(fields = false) {
               break;
             case 'Socials': template += build(key, '[{ account: String, link: String }]');
               break;
+            case 'Reference': template += buildReference(key);
+              break;
+            case 'Meta': template += build(key, 'metaTagsSchema');
+              break;
         }
     });
     return template;
+}
+
+function buildReference(key) {
+  if ( refFields[key].referenceType === 'multiple' ) {
+    return build(key, `[{ type: Schema.Types.ObjectId, ref: '${ refFields[key].reference}' }]`);
+  }
+  return build(key, `{ type: Schema.Types.ObjectId, ref: '${ refFields[key].reference}'}`);
 }
 
 export function generateKeywordSearch(fields = false) {
@@ -90,17 +110,24 @@ function build(key, value) {
 }
 
 function buildKeyword(key, value) {
+    let template = '';
     if (value == 'String') {
         return `
-        {  '${key}': { $regex: keyword, $options: 'i' } },`;
+        { '${key}': { $regex: keyword, $options: 'i' } },
+        `;
     }
 
     if (value == 'multilingualSchema') {
-        return `
-        { '${key}.en': { $regex: keyword, $options: 'i' } },
-        { '${key}.ge': { $regex: keyword, $options: 'i' } },
-        { '${key}.ru': { $regex: keyword, $options: 'i' } }, `;
+       
+        availableLangs.map( (lang) => {
+template += 
+        `
+        { '${key}.${lang}': { $regex: keyword, $options: 'i' } },
+       `
+        });
+        return template;
     }
+    
 }
 
 function buildSingleStubObject(key, type) {
@@ -108,14 +135,25 @@ function buildSingleStubObject(key, type) {
     let templateContent = '';
     let socialGenHelper;
     switch( type ) {
-        case 'multilingualSchema':   
+        case 'multilingualSchema-Textarea':   
 templateContent += `{
-        en: \`${key} en \${i}\`,
-        ge: \`${key} ge \${i}\`,
-        ru: \`${key} ru \${i}\`,
+        ${buildMultilingualelement(key)}
     }`;
           break;
-
+        case 'multilingualSchema-quill-editor':   
+templateContent += `{
+        ${buildMultilingualelement(key)}
+    }`;
+          break;
+        case 'multilingualSchema':   
+templateContent += `{
+        ${buildMultilingualelement(key)}
+    }`;
+          break;
+        case 'quill-editor':  templateContent += `'${key}'`;
+          break;
+        case 'Textarea':  templateContent += `'${key}'`;
+          break;
         case 'String':  templateContent += `'${key}'`;
           break;
 
@@ -126,6 +164,8 @@ templateContent += `{
           break;
 
         case 'Date': templateContent += `new Date()`;
+          break;
+        case 'Meta': templateContent += generateMetaObj(key);
           break;
 
         case '[imageSchema]':  
@@ -161,4 +201,25 @@ function get${_.upperFirst(key)}Object(i: number = 0): any {
   
 }
 
+function buildMultilingualelement(key) {
+  let template = '';
+  availableLangs.map( (lang) => {
+    template += 
+        `
+        ${lang}: \`${key} ${lang} \${i}\`,`;
+  });
+  return template;
+}
 
+function generateMetaObj(key) {
+  return  `{
+      title : {
+         ${buildMultilingualelement(key)}
+      },
+      description : {
+         ${buildMultilingualelement(key)}
+      },
+      keywords: ['${key} meta keyword1', '${key} meta keyword2', '${key} meta keyword3'],
+      image: { url: generateImage() },
+  }`;
+}

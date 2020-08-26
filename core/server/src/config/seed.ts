@@ -14,6 +14,7 @@ import * as AuthorsDao from '../api/authors/authors.dao';
 import * as VideosDao from '../api/videos/videos.dao';
 import * as CarsDao from '../api/cars/cars.dao';
 import * as CompiutersDao from '../api/compiuters/compiuters.dao';
+import * as BlogCategoriesDao from '../api/blogCategories/blogCategories.dao';
 import * as BlogDao from '../api/blogs/blog.dao';
 
 
@@ -28,6 +29,7 @@ import * as AuthorsStub from '../stubs/authors.stub';
 import * as VideosStub from '../stubs/videos.stub';
 import * as CarsStub from '../stubs/cars.stub';
 import * as CompiutersStub from '../stubs/compiuters.stub';
+import * as BlogCategoriesStub from '../stubs/blogCategories.stub';
 import * as BlogStub from '../stubs/blog.stub';
 
 
@@ -57,6 +59,7 @@ export async function seedDBDevelopment() {
   await VideosDao.insertMany(VideosStub.getMany(11));
   await CarsDao.insertMany(CarsStub.getMany(11));
   await CompiutersDao.insertMany(CompiutersStub.getMany(11));
+  await BlogCategoriesDao.insertMany(BlogCategoriesStub.getMany(11));
   await BlogDao.insertMany(BlogStub.getMany(11));
 
 

@@ -60,7 +60,6 @@ export function parseUpdatePositions(req: Request, res: Response, next: NextFunc
 function parseBaseProps(body: any) {
   return _.pick(body, [
     <%=keybaseProps%>
-    'meta',
     'position',
   ]);
 }

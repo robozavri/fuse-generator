@@ -4,7 +4,7 @@ import { PageEvent, MatTable } from '@angular/material';
 import { <%=nameSingularFUC%> } from 'app/shared/models/<%=singularFileName%>';
 import { Query } from 'app/shared/models/query';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-
+<%=listImports%>
 
 @Component({
   selector: 'app-list',
@@ -39,14 +39,19 @@ export class ListComponent implements OnInit {
   expandedElement: any;
 
   displayedColumns = [<%=listColumntTitles%> 'active'];
+  <%=ListClassProperties%>
 
-  constructor() { }
+  constructor(
+    <%=listConstructorArtuments%>
+  ) { }
 
   ngOnInit(): void {
     this.items.subscribe((data) => {
       this.dataSource = data;
     });
     this.numTotal.subscribe((data) => this.pageLength = data);
+
+    <%=listOnInitBody%>
   }
 
   pagenatorEvent(pageData: any): any {

@@ -12,7 +12,6 @@ import { fuseAnimations } from '../../../../../@fuse/animations';
 import { FileApiService } from 'app/shared/http/files-api.service';
 import { SnackBarService } from 'app/shared/services/snack-bar.service';
 
-
 @Component({
   selector: 'app-<%=pluralFileName%>',
   templateUrl: './<%=pluralFileName%>.component.html',

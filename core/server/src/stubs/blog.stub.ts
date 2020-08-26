@@ -9,18 +9,42 @@ function getNameObject(i: number = 0): any {
 
 function getTitleObject(i: number = 0): any {
     return {
+        
         en: `title en ${i}`,
         ge: `title ge ${i}`,
-        ru: `title ru ${i}`,
     };
 }
 
 function getDescriptionObject(i: number = 0): any {
     return {
+        
         en: `description en ${i}`,
         ge: `description ge ${i}`,
-        ru: `description ru ${i}`,
     };
+}
+
+function getSmallDescriptionObject(i: number = 0): any {
+    return {
+        
+        en: `smallDescription en ${i}`,
+        ge: `smallDescription ge ${i}`,
+    };
+}
+
+function getContentObject(i: number = 0): any {
+    return {
+        
+        en: `content en ${i}`,
+        ge: `content ge ${i}`,
+    };
+}
+
+function getAboutQuiliObject(i: number = 0): any {
+    return 'aboutQuili';
+}
+
+function getAboutPrimitiveObject(i: number = 0): any {
+    return 'aboutPrimitive';
 }
 
 function getCountObject(i: number = 0): any {
@@ -51,6 +75,10 @@ function getSocialAccountsObject(i: number = 0): any {
     ];
 }
 
+function getCategoryObject(i: number = 0): any {
+    return ;
+}
+
 function getMeta(i: number = 0): any {
   return {
     title: { en: `Blog meta title en ${i}`, ge: `Blog meta title ge ${i}`, ru: `Blog meta title ru ${i}`},
@@ -64,11 +92,16 @@ const BlogStub = {
     name: getNameObject(),
     title: getTitleObject(),
     description: getDescriptionObject(),
+    smallDescription: getSmallDescriptionObject(),
+    content: getContentObject(),
+    aboutQuili: getAboutQuiliObject(),
+    aboutPrimitive: getAboutPrimitiveObject(),
     count: getCountObject(),
     thumbnail: getThumbnailObject(),
     images: getImagesObject(),
     createAt: getCreateAtObject(),
     socialAccounts: getSocialAccountsObject(),
+    category: getCategoryObject(),
     meta: getMeta(),
 };
 
@@ -86,11 +119,16 @@ export function getMany(count: number, fields?: any) {
     name: getNameObject(i),
     title: getTitleObject(i),
     description: getDescriptionObject(i),
+    smallDescription: getSmallDescriptionObject(i),
+    content: getContentObject(i),
+    aboutQuili: getAboutQuiliObject(i),
+    aboutPrimitive: getAboutPrimitiveObject(i),
     count: getCountObject(i),
     thumbnail: getThumbnailObject(i),
     images: getImagesObject(i),
     createAt: getCreateAtObject(i),
     socialAccounts: getSocialAccountsObject(i),
+    category: getCategoryObject(i),
     meta: getMeta(i),
   }));
 }

@@ -13,6 +13,9 @@ import { accounts } from '../../../../../../shared/constants/socials';
 })
 export class FormComponent extends _FormComponent implements OnInit {
 
+    
+  @Input() categories: any;
+   
   @Input() formData: Blog;
   @Input() showSubmit = true;
   @Output() submitForm = new EventEmitter<Blog>();
@@ -34,10 +37,15 @@ export class FormComponent extends _FormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  
     
     this.formData.name = this.formData.name || '';
     this.formData.title = this.formData.title || {};
     this.formData.description = this.formData.description || {};
+    this.formData.smallDescription = this.formData.smallDescription || {};
+    this.formData.content = this.formData.content || {};
+    this.formData.aboutQuili = this.formData.aboutQuili || '';
+    this.formData.aboutPrimitive = this.formData.aboutPrimitive || '';
     this.formData.count = this.formData.count || '';
     this.formData.thumbnail = this.formData.thumbnail || {};
     this.images = this.formData.images || [];
@@ -50,15 +58,27 @@ export class FormComponent extends _FormComponent implements OnInit {
         
             name: [this.formData.name || ''],
             title: this.fb.group({
-                    ge: [this.formData.title.ge || ''],
-                    en: [this.formData.title.en || ''],
-                    ru: [this.formData.title.ru || ''],
+                
+                en: [this.formData.title.en || ''],
+                ge: [this.formData.title.ge || ''],
             }),
             description: this.fb.group({
-                    ge: [this.formData.description.ge || ''],
-                    en: [this.formData.description.en || ''],
-                    ru: [this.formData.description.ru || ''],
+                
+                en: [this.formData.description.en || ''],
+                ge: [this.formData.description.ge || ''],
             }),
+            smallDescription: this.fb.group({
+                
+                en: [this.formData.smallDescription.en || ''],
+                ge: [this.formData.smallDescription.ge || ''],
+            }),
+            content: this.fb.group({
+                
+                en: [this.formData.content.en || ''],
+                ge: [this.formData.content.ge || ''],
+            }),
+            aboutQuili: [this.formData.aboutQuili || ''],
+            aboutPrimitive: [this.formData.aboutPrimitive || ''],
             count: [this.formData.count || ''], 
             thumbnail: this.fb.group({
                 url: [this.formData.thumbnail.url || '']
@@ -66,6 +86,7 @@ export class FormComponent extends _FormComponent implements OnInit {
             images: this.fb.array(this.formData.images || []),
             createAt: [this.formData.createAt || new Date()],
             socialAccounts: this.fb.array( socialArray ),
+            category: [this.formData.category || ''],
     });
     
   }

@@ -67,6 +67,7 @@ import { CarApiService } from './http/car-api.service';
 import { CompiuterApiService } from './http/compiuter-api.service';
 import { BlogApiService } from './http/blog-api.service';
 import { ImagesUploadComponent } from './components/images-upload/images-upload.component';
+import { BlogCategoryApiService } from './http/blog-category-api.service';
 
 
 @NgModule({
@@ -199,7 +200,8 @@ export class SharedModule {
         VideoApiService,
         CarApiService,
         CompiuterApiService,
-        BlogApiService
+        BlogApiService,
+        BlogCategoryApiService
       ]
     };
   }

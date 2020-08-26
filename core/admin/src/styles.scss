@@ -19,3 +19,7 @@
 content> :not(router-outlet)> :not(router-outlet) {
     flex-grow: 1;
 }
+
+.ql-toolbar.ql-snow+.ql-container.ql-snow {
+    height: 140px;
+}

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { <%=nameSingularFUC%> } from 'app/shared/models/<%=singularFileName%>';
 import { FormComponent as _FormComponent } from '../../../../../../shared/components/form.component';
+<%=imports%>
 <%=socialsImport%>
 
 @Component({
@@ -17,15 +18,20 @@ export class BasicInfoComponent extends _FormComponent implements OnInit {
 
 
   form: FormGroup;
+  <%=classProperties%>
   <%=imagesProperties%>
 
   constructor(
     private fb: FormBuilder,
+    <%=constructorArtuments%>
   ) {
     super();
   }
 
   ngOnInit(): void {
+
+    <%=onInitBody%>
+
     <%=formEmptyObjects%>
 
     this.form = <%=formGroup%>

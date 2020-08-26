@@ -6,6 +6,8 @@ import { FormComponent as _FormComponent } from '../../form/form.component';
 import * as _ from 'lodash';
 import { MetaFormComponent } from '../../../../../../../shared/components/meta-form/meta-form.component';
 
+import { BlogCategoryApiService } from 'app/shared/http/blog-category-api.service';
+
 @Component({
   selector: 'app-blog-modal',
   templateUrl: './blog-modal.component.html',
@@ -18,8 +20,10 @@ export class BlogModalComponent implements OnInit, AfterViewInit {
   filesToDestroy: any[] = []; // remove 
   showFormWarning = false;
   submitted = false;
-
   showSubmit = false;
+    
+  categories: any;
+   
 
   @ViewChild('blogForm', { static: false }) blogFormComponent: _FormComponent;
   @ViewChild('blogMetaForm', { static: false }) blogMetaComponent: MetaFormComponent;
@@ -27,6 +31,9 @@ export class BlogModalComponent implements OnInit, AfterViewInit {
   blogType: Blog;
 
   constructor(
+    
+    private blogCategoryApiService: BlogCategoryApiService,
+      
     private dialogRef: MatDialogRef<BlogModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Blog
   ) { }
@@ -36,6 +43,12 @@ export class BlogModalComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     // empty meta data object for making new meta object
     this.metas = {};
+
+    
+    this.blogCategoryApiService.getByQuery({all: true}).subscribe((data: any) => {
+        this.categories = data.items;
+    });
+  
   }
 
   ngAfterViewInit(): void {

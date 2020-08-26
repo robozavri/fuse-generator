@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { <%=nameSingularFUC%> } from 'app/shared/models/<%=singularFileName%>';
 import { FormComponent as _FormComponent } from '../../../../../../shared/components/form.component';
 import { MatSnackBar } from '@angular/material';
+<%=imports%>
 <%=socialsImport%>
 
 @Component({
@@ -21,15 +22,18 @@ export class FormComponent extends _FormComponent implements OnInit {
   selectedImage: any;
   filesToCreate: any[] = [];
   filesToDestroy: any[] = [];
+  <%=classProperties%>
   <%=imagesProperties%>
 
   constructor(
     private fb: FormBuilder,
+    <%=constructorArtuments%>
   ) {
     super();
   }
 
   ngOnInit(): void {
+    <%=onInitBody%>
     <%=formEmptyObjects%>
 
     this.form = <%=formGroup%>
