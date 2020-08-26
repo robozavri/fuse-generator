@@ -12,6 +12,7 @@ export interface Blog {
     images?: any;
     createAt?: any;
     socialAccounts?: any;
-    category?: any; 
+    category?: any;
+    blogType?: any; 
     meta?: any; 
 }

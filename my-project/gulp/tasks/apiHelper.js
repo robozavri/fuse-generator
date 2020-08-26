@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { availableLangs, refFields } from './fields';
+import { availableLangs, refFields, selectFields } from './fields';
 
 export function generateSchema(fields = false) {
     if(!fields) {
@@ -33,11 +33,21 @@ export function generateSchema(fields = false) {
               break;
             case 'Reference': template += buildReference(key);
               break;
+            case 'Select': template += buildSelect(key);
+              break;
             case 'Meta': template += build(key, 'metaTagsSchema');
               break;
         }
     });
     return template;
+}
+
+
+function buildSelect(key) {
+  if ( selectFields[key].selectType === 'multiple' ) {
+    return build(key, `[String]`);
+  }
+  return build(key, `String`);
 }
 
 function buildReference(key) {
@@ -160,10 +170,12 @@ templateContent += `{
         case 'Number':  templateContent += `_.random(1, 20)`;
           break;
 
-        case 'imageSchema':  templateContent += `{ url:  generateImage()}`;
+        case 'imageSchema':  templateContent += `{ url: generateImage()}`;
           break;
 
         case 'Date': templateContent += `new Date()`;
+          break;
+        case 'Select': templateContent += generateSelect(key);
           break;
         case 'Meta': templateContent += generateMetaObj(key);
           break;
@@ -223,3 +235,16 @@ function generateMetaObj(key) {
       image: { url: generateImage() },
   }`;
 }
+
+function generateSelect(key) {
+
+  if( selectFields[key].selectType === 'multiple' ) {
+      let template = '';
+      selectFields[key].values.map( (value) => {
+        template += `'${value}',`;
+      });
+      return `[${template}]`;
+  }
+  const randomValue = selectFields[key].values[Math.floor(Math.random() * selectFields[key].values.length)];
+  return `'${randomValue}'`;
+ }

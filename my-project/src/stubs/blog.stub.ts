@@ -52,7 +52,7 @@ function getCountObject(i: number = 0): any {
 }
 
 function getThumbnailObject(i: number = 0): any {
-    return { url:  generateImage()};
+    return { url: generateImage()};
 }
 
 function getImagesObject(i: number = 0): any {
@@ -77,6 +77,10 @@ function getSocialAccountsObject(i: number = 0): any {
 
 function getCategoryObject(i: number = 0): any {
     return ;
+}
+
+function getBlogTypeObject(i: number = 0): any {
+    return 'black';
 }
 
 function getMetaObject(i: number = 0): any {
@@ -110,6 +114,7 @@ const BlogStub = {
     createAt: getCreateAtObject(),
     socialAccounts: getSocialAccountsObject(),
     category: getCategoryObject(),
+    blogType: getBlogTypeObject(),
     meta: getMetaObject(),
 };
 
@@ -137,6 +142,7 @@ export function getMany(count: number, fields?: any) {
     createAt: getCreateAtObject(i),
     socialAccounts: getSocialAccountsObject(i),
     category: getCategoryObject(i),
+    blogType: getBlogTypeObject(i),
     meta: getMetaObject(i),
   }));
 }

@@ -18,6 +18,7 @@ export class BasicInfoComponent extends _FormComponent implements OnInit {
 
 
   form: FormGroup;
+  <%=selectProperty%>
   <%=classProperties%>
   <%=imagesProperties%>
 

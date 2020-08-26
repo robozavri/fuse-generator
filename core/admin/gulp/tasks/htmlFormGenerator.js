@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { availableLangs, refFields } from './fields';
+import { availableLangs, refFields, selectFields } from './fields';
 import {firstUC, firstLC, plural, singular} from '../helpers';
 
 
@@ -36,6 +36,8 @@ export function generateFormHtml(fields = false) {
               break;
             case 'Reference': emptyObj[key] = reference(key); 
               break;
+            case 'Select': emptyObj[key] = Select(key); 
+              break;
         }
     });
     Object.keys(emptyObj).map((key, index) => {
@@ -43,6 +45,20 @@ export function generateFormHtml(fields = false) {
     });
    
     return formTemplate;
+}
+
+function Select(key) {
+    const pluralName = plural(key);
+    const multiple = selectFields[key].selectType === 'multiple' ? 'multiple': '';
+
+    return `
+        <mat-form-field [style.width.px]=500 *ngIf="${pluralName}">
+            <mat-label>${_.kebabCase(key)}</mat-label>
+            <mat-select formControlName="${key}" ${multiple}>
+                <mat-option *ngFor="let item of ${pluralName}" [value]="item">{{ item }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+`;
 }
 
 function reference(key) {
@@ -57,7 +73,6 @@ function reference(key) {
             </mat-select>
         </mat-form-field>
 `;
-
 }
 
 function textarea(key) {

@@ -64,6 +64,7 @@ export class BlogsComponent {
       name: '',
       title: {},
       description: {},
+      smallDescription: {},
       content: {},
       aboutQuili: '',
       aboutPrimitive: '',
@@ -72,7 +73,8 @@ export class BlogsComponent {
       images: [],
       createAt: new Date(),
       socialAccounts: [],
-            category: '', 
+      category: [],
+      blogType: [], 
     };
     this.dialog
       .open(BlogModalComponent, { data })

@@ -132,8 +132,15 @@
     
         <mat-form-field [style.width.px]=500 *ngIf="categories">
             <mat-label>category</mat-label>
-            <mat-select formControlName="category" >
+            <mat-select formControlName="category" multiple>
                 <mat-option *ngFor="let item of categories" [value]="item._id">{{ item.title?.ge }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field [style.width.px]=500 *ngIf="blogTypes">
+            <mat-label>blog-type</mat-label>
+            <mat-select formControlName="blogType" multiple>
+                <mat-option *ngFor="let item of blogTypes" [value]="item">{{ item }}</mat-option>
             </mat-select>
         </mat-form-field>
 

@@ -52,7 +52,7 @@ function getCountObject(i: number = 0): any {
 }
 
 function getThumbnailObject(i: number = 0): any {
-    return { url:  generateImage()};
+    return { url: generateImage()};
 }
 
 function getImagesObject(i: number = 0): any {
@@ -79,12 +79,24 @@ function getCategoryObject(i: number = 0): any {
     return ;
 }
 
-function getMeta(i: number = 0): any {
-  return {
-    title: { en: `Blog meta title en ${i}`, ge: `Blog meta title ge ${i}`, ru: `Blog meta title ru ${i}`},
-    description: { en: `Blog meta description en ${i}`, ge: `Blog meta description ge ${i}`, ru: `Blog meta description ru ${i}`},
-    keywords: ['Blog meta keyword1', 'Blog meta keyword2', 'Blog meta keyword3'],
-    image: { url: '' },
+function getBlogTypeObject(i: number = 0): any {
+    return ['metal','rock','classic','black',];
+}
+
+function getMetaObject(i: number = 0): any {
+    return {
+      title : {
+         
+        en: `meta en ${i}`,
+        ge: `meta ge ${i}`,
+      },
+      description : {
+         
+        en: `meta en ${i}`,
+        ge: `meta ge ${i}`,
+      },
+      keywords: ['meta meta keyword1', 'meta meta keyword2', 'meta meta keyword3'],
+      image: { url: generateImage() },
   };
 }
 
@@ -102,7 +114,8 @@ const BlogStub = {
     createAt: getCreateAtObject(),
     socialAccounts: getSocialAccountsObject(),
     category: getCategoryObject(),
-    meta: getMeta(),
+    blogType: getBlogTypeObject(),
+    meta: getMetaObject(),
 };
 
 export function getSingle(fields?: any): any {
@@ -129,6 +142,7 @@ export function getMany(count: number, fields?: any) {
     createAt: getCreateAtObject(i),
     socialAccounts: getSocialAccountsObject(i),
     category: getCategoryObject(i),
-    meta: getMeta(i),
+    blogType: getBlogTypeObject(i),
+    meta: getMetaObject(i),
   }));
 }

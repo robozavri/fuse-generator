@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { availableLangs, refFields } from './fields';
+import { availableLangs, refFields, selectFields } from './fields';
 
 export function generateImageMethods(fields = false) {
     let template = '';
@@ -80,6 +80,8 @@ export function generateFormGroup(fields = false) {
             break;
             case 'Reference': formTemplate += detectReference(key); 
             break;
+            case 'Select': formTemplate += detectSelect(key); 
+            break;
         }
     });
 
@@ -87,6 +89,16 @@ export function generateFormGroup(fields = false) {
         ${formTemplate}
     });
     `;
+}
+
+function detectSelect(key) {
+    if (selectFields[key].selectType === 'single') {
+          return   `
+            ${key}: [this.formData.${key} || ''],`;
+    }
+
+    return   `
+            ${key}: [this.formData.${key} || []],`;  
 }
 
 function detectReference(key) {

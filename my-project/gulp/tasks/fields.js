@@ -35,6 +35,14 @@ export const refFields = {
      }
 }
 
+export const selectFields = {
+     blogType: {
+          //  single/multiple
+          selectType: 'single',
+          values: ['metal', 'rock', 'classic', 'black']
+     }
+}
+
 export const fields = {
      name: 'String',
      title: 'multilingualSchema', 
@@ -49,5 +57,6 @@ export const fields = {
      createAt: 'Date',
      socialAccounts: 'Socials',
      category: 'Reference',
+     blogType: 'Select',
      meta: 'Meta',
 };

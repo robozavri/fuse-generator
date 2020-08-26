@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { <%=nameSingularFUC%> } from 'app/shared/models/<%=singularFileName%>';
 import { FormComponent as _FormComponent } from '../../../../../../shared/components/form.component';
 import { MatSnackBar } from '@angular/material';
-<%=imports%>
 <%=socialsImport%>
 
 @Component({
@@ -13,6 +12,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class FormComponent extends _FormComponent implements OnInit {
 
+  <%=formInputs%>
   @Input() formData: <%=nameSingularFUC%>;
   @Input() showSubmit = true;
   @Output() submitForm = new EventEmitter<<%=nameSingularFUC%>>();
@@ -22,18 +22,17 @@ export class FormComponent extends _FormComponent implements OnInit {
   selectedImage: any;
   filesToCreate: any[] = [];
   filesToDestroy: any[] = [];
-  <%=classProperties%>
+  <%=selectProperty%>
   <%=imagesProperties%>
 
   constructor(
     private fb: FormBuilder,
-    <%=constructorArtuments%>
   ) {
     super();
   }
 
   ngOnInit(): void {
-    <%=onInitBody%>
+  
     <%=formEmptyObjects%>
 
     this.form = <%=formGroup%>

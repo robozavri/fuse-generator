@@ -5,8 +5,8 @@ import path from 'path';
 import runSequence from 'run-sequence';
 import paths from '../paths';
 import * as _ from 'lodash';
-import { fields, refFields } from './fields';
-import { generateListPropeties, genrateRefernce } from './adminHelper';
+import { fields, refFields, selectFields } from './fields';
+import { generateListPropeties, genrateRefernce, generateSelect } from './adminHelper';
 import { generateEmptyObjModal } from './emptyObjGenerator';
 import { 
   generateFormGroup,
@@ -85,6 +85,7 @@ gulp.task('generateEditPage', () => {
 function insertEditPageTemplate(name, src, dest, fields) {
   const imagesMethods = generateImagesMethods(fields);
   const referObject = genrateRefernce(fields,refFields);
+  const selectProperty = generateSelect(fields,selectFields);
 
   return gulp.src(src)
         .pipe($.template({
@@ -113,6 +114,8 @@ function insertEditPageTemplate(name, src, dest, fields) {
             classProperties: referObject.classProperties,
             constructorArtuments: referObject.constructorArtuments,
             onInitBody: referObject.onInitBody,
+
+            selectProperty: selectProperty,
         }, {
             interpolate: /<%=([\s\S]+?)%>/g
         }))
@@ -126,6 +129,7 @@ function insertArticlesTemplate(name, src, dest, fields) {
     const imagesMethods = generateImagesMethods(fields);
     const listProperties = generateListPropeties();
     const referObject = genrateRefernce(fields,refFields);
+    const selectProperty = generateSelect(fields,selectFields);
 
     return gulp.src(src)
         .pipe($.template({
@@ -152,10 +156,19 @@ function insertArticlesTemplate(name, src, dest, fields) {
             socialsGetter: getterForSocials(fields),
             socialsImport: importsForSocials(fields),
 
-            imports: referObject.imports,
-            classProperties: referObject.classProperties,
-            constructorArtuments: referObject.constructorArtuments,
-            onInitBody: referObject.onInitBody,
+            modalImports: referObject.imports,
+            modalClassProperties: referObject.classProperties,
+            modalConstructorArtuments: referObject.constructorArtuments,
+            modalOnInitBody: referObject.onInitBody,
+
+            listImports: referObject.imports,
+            formInputs: referObject.inputs,
+            ListClassProperties: referObject.classProperties,
+            listConstructorArtuments: referObject.constructorArtuments,
+            listOnInitBody: referObject.onInitBody,
+            listComponentBindParams: referObject.componentBindParams,
+
+            selectProperty: selectProperty,
         }, {
             interpolate: /<%=([\s\S]+?)%>/g
         }))

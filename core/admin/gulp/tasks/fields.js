@@ -11,6 +11,7 @@
  multilingualSchema-quill-editor
  quill-editor
  Textarea
+ Meta
 */
 // notie objet key titles must be camelCase
 
@@ -28,9 +29,17 @@ export const refFields = {
           //  reference must be camelCase
           reference: 'blogCategory',
           //  single/multiple
-          referenceType: 'single',
+          referenceType: 'multiple',
           value: '_id',
           displayFieldName: 'title?.ge',
+     }
+}
+
+export const selectFields = {
+     blogType: {
+          //  single/multiple
+          selectType: 'single',
+          values: ['metal', 'rock', 'classic', 'black']
      }
 }
 
@@ -47,5 +56,7 @@ export const fields = {
      images: '[imageSchema]' ,
      createAt: 'Date',
      socialAccounts: 'Socials',
-     category: 'Reference'
+     category: 'Reference',
+     blogType: 'Select',
+     meta: 'Meta',
 };

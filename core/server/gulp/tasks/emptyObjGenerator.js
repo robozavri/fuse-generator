@@ -1,4 +1,4 @@
-import { availableLangs, refFields } from './fields';
+import { availableLangs, refFields, selectFields } from './fields';
 
 export function generateEmptyObjModal(fields = false) {
     let template = 'meta: {},';
@@ -11,7 +11,7 @@ export function generateEmptyObjModal(fields = false) {
             case 'multilingualSchema-quill-editor': template += `
       ${key}: {},`;
             break;
-            case 'multmultilingualSchema-TextareailingualSchema': template += `
+            case 'multilingualSchema-Textarea': template += `
       ${key}: {},`;
             break;
             case 'multilingualSchema': template += `
@@ -44,11 +44,24 @@ export function generateEmptyObjModal(fields = false) {
             case 'Reference':
                    template += detectReference(key);
               break;
+            case 'Select':
+                   template += detectSelect(key);
+              break;
         }
     });
     return template;
   }
   
+  function detectSelect(key) {
+      if (selectFields[key].selectType === 'single') {
+            return  `
+            ${key}: '',`;
+      }
+
+      return  `
+      ${key}: [],`;   
+  }
+
   function detectReference(key) {
       if (refFields[key].referenceType === 'single') {
             return  `

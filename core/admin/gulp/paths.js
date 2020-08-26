@@ -29,6 +29,7 @@ const paths = {
     service: `${root}/gulp/generator/service/**`,
     articles: `${root}/gulp/generator/admin/source/articles/**`,
     articlesWithModal: `${root}/gulp/generator/admin/source/articles-with-modal/**`,
+    articlesWithModalTest: `${root}/gulp/generator/admin/source/articles-with-modal-test/**`,
     editPage: `${root}/gulp/generator/admin/source/edit-page/**`,
     http: `${root}/gulp/generator/admin/source/http/**`,
     model: `${root}/gulp/generator/admin/source/model/**`,

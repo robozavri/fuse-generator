@@ -22,6 +22,7 @@ export class FormComponent extends _FormComponent implements OnInit {
   selectedImage: any;
   filesToCreate: any[] = [];
   filesToDestroy: any[] = [];
+  <%=selectProperty%>
   <%=imagesProperties%>
 
   constructor(

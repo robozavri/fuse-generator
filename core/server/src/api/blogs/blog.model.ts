@@ -17,7 +17,8 @@ const BlogSchema = new Schema({
   images: [imageSchema],
   createAt: Date,
   socialAccounts: [{ account: String, link: String }],
-  category: { type: Schema.Types.ObjectId, ref: 'blogCategory'},
+  category: [{ type: Schema.Types.ObjectId, ref: 'blogCategory' }],
+  blogType: [String],
   meta: metaTagsSchema,
   position: Number,
 });

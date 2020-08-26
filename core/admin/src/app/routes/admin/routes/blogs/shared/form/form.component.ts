@@ -25,6 +25,7 @@ export class FormComponent extends _FormComponent implements OnInit {
   selectedImage: any;
   filesToCreate: any[] = [];
   filesToDestroy: any[] = [];
+  blogTypes = ['metal','rock','classic','black',];
   
   public images = [];
   public items: FormArray;
@@ -86,7 +87,8 @@ export class FormComponent extends _FormComponent implements OnInit {
             images: this.fb.array(this.formData.images || []),
             createAt: [this.formData.createAt || new Date()],
             socialAccounts: this.fb.array( socialArray ),
-            category: [this.formData.category || ''],
+            category: [this.formData.category || []],
+            blogType: [this.formData.blogType || []],
     });
     
   }

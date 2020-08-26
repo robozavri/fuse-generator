@@ -83,6 +83,7 @@ function parseBaseProps(body: any) {
     'createAt',
     'socialAccounts',
     'category',
+    'blogType',
     'meta',
     'position',
   ]);

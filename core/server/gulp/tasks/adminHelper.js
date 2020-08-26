@@ -1,4 +1,4 @@
-import { listFields, availableLangs } from './fields';
+import { listFields, availableLangs, selectFields } from './fields';
 import * as _ from 'lodash';
 import { firstUC, firstLC, plural, singular} from '../helpers';
 
@@ -46,9 +46,32 @@ function listColumnHtmlString(key){
 }
 
 
+export function generateSelect(fields) {
+  let template = '';
+  if(!fields) {
+      return '';
+  }
+
+  Object.keys(fields).map((key, index) => {
+    if (fields[key] === 'Select' ) {
+      template += generateSelectArray(key);
+    }
+  });
+  return template;
+}
+
+function generateSelectArray(key) {
+  let template = '';
+  selectFields[key].values.map( (value) => {
+    template += `'${value}',`;
+  });
+  return `${ plural(key) } = [${template}];`;
+}
+
 export function genrateRefernce(fields, refFields) {
   let obj = {
     imports: '',
+    inputs: '',
     classProperties: '',
     constructorArtuments: '',
     onInitBody: '',
@@ -61,12 +84,24 @@ export function genrateRefernce(fields, refFields) {
   Object.keys(fields).map((key, index) => {
       if (fields[key] === 'Reference' ) {
           obj.imports = generateImport(key, refFields);
+          obj.inputs = generateInputs(key, refFields);
           obj.classProperties = generateClassProperties(key, refFields);
           obj.constructorArtuments = generateConstructorArgument(key, refFields);
           obj.onInitBody = generateApiCall(key, refFields);
+          obj.componentBindParams = generateBindParams(key, refFields);
       }
   });
   return obj;
+}
+
+function generateInputs(key, refFields) {
+  return  `  
+  @Input() ${ plural(key) }: any;
+   `
+}
+
+function generateBindParams(key, refFields) {
+  return  ` [${ plural(key) }]="${ plural(key) }" `;
 }
 
 function generateImport(key, refFields) {

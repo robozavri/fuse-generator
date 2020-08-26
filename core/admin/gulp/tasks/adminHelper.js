@@ -1,4 +1,4 @@
-import { listFields, availableLangs } from './fields';
+import { listFields, availableLangs, selectFields } from './fields';
 import * as _ from 'lodash';
 import { firstUC, firstLC, plural, singular} from '../helpers';
 
@@ -45,6 +45,28 @@ function listColumnHtmlString(key){
   `;
 }
 
+
+export function generateSelect(fields) {
+  let template = '';
+  if(!fields) {
+      return '';
+  }
+
+  Object.keys(fields).map((key, index) => {
+    if (fields[key] === 'Select' ) {
+      template += generateSelectArray(key);
+    }
+  });
+  return template;
+}
+
+function generateSelectArray(key) {
+  let template = '';
+  selectFields[key].values.map( (value) => {
+    template += `'${value}',`;
+  });
+  return `${ plural(key) } = [${template}];`;
+}
 
 export function genrateRefernce(fields, refFields) {
   let obj = {
