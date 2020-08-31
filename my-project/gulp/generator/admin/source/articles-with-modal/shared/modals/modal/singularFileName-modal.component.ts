@@ -4,7 +4,7 @@ import { <%=nameSingularFUC%> } from 'app/shared/models/<%=singularFileName%>';
 import { FormComponent } from 'app/shared/components/form.component';
 import { FormComponent as _FormComponent } from '../../form/form.component';
 import * as _ from 'lodash';
-import { MetaFormComponent } from '../../../../../../../shared/components/meta-form/meta-form.component';
+<%=MetaModalImports%>
 <%=modalImports%>
 
 @Component({
@@ -14,7 +14,7 @@ import { MetaFormComponent } from '../../../../../../../shared/components/meta-f
 })
 export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit {
 
-  metas: any; // metas -> meta
+  <%=MetaModalClassProperties%>
   filesToCreate: any[] = []; // remove
   filesToDestroy: any[] = []; // remove 
   showFormWarning = false;
@@ -23,7 +23,7 @@ export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit
   <%=modalClassProperties%>
 
   @ViewChild('<%=nameSingularLC%>Form', { static: false }) <%=nameSingularLC%>FormComponent: _FormComponent;
-  @ViewChild('<%=nameSingularLC%>MetaForm', { static: false }) <%=nameSingularLC%>MetaComponent: MetaFormComponent;
+  <%=MetaModalViewChild%>
 
   <%=nameSingularLC%>Type: <%=nameSingularFUC%>;
 
@@ -36,8 +36,7 @@ export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit
   formComponents: FormComponent[];
 
   ngOnInit(): void {
-    // empty meta data object for making new meta object
-    this.metas = {};
+    <%=MetaModalOnInitBody%>
 
     <%=modalOnInitBody%>
   }
@@ -45,7 +44,7 @@ export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit
   ngAfterViewInit(): void {
     this.formComponents = [
       this.<%=nameSingularLC%>FormComponent,
-      this.<%=nameSingularLC%>MetaComponent,
+      <%=MetaModalNgAfterViewInit%>
     ];
   }
 
@@ -66,7 +65,7 @@ export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit
   get<%=nameSingularFUC%>Data(): any {
     const data = _.cloneDeep(_.merge(
       this.<%=nameSingularLC%>Type,
-      this.<%=nameSingularLC%>MetaComponent.getFormValue(),
+      <%=MetaModalMerge%>
       this.<%=nameSingularLC%>FormComponent.getFormValue(),
     ));
     return data;

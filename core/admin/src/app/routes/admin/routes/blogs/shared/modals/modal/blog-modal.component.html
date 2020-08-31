@@ -7,12 +7,14 @@
                     <app-form [formData]="data"  [categories]="categories"  #blogForm [showSubmit]="showSubmit"></app-form>
                 </div>
             </mat-tab>
+            
             <mat-tab label="metas">
                 <div class="page_body">
-                    <app-meta-form [meta]="metas" [showSubmit]="showSubmit" #blogMetaForm>
+                    <app-meta-form [meta]="metas" [showSubmit]="showSubmit" #MetaForm>
                     </app-meta-form>
                 </div>
             </mat-tab>
+    
         </mat-tab-group>
     </div>
     <mat-dialog-actions>

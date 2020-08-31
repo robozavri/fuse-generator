@@ -38,6 +38,8 @@ export function generateFormHtml(fields = false) {
               break;
             case 'Select': emptyObj[key] = Select(key); 
               break;
+            case 'Slide-toggle': emptyObj[key] = slideToggle(key); 
+              break;
         }
     });
     Object.keys(emptyObj).map((key, index) => {
@@ -45,6 +47,14 @@ export function generateFormHtml(fields = false) {
     });
    
     return formTemplate;
+}
+
+function slideToggle(key) {
+    return `
+        <div class="custom-slied-toggle">
+            <mat-slide-toggle formControlName="${key}">${_.kebabCase(key)}</mat-slide-toggle>
+        </div>
+`;
 }
 
 function Select(key) {

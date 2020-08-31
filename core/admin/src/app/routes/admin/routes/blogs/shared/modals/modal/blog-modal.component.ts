@@ -15,7 +15,7 @@ import { BlogCategoryApiService } from 'app/shared/http/blog-category-api.servic
 })
 export class BlogModalComponent implements OnInit, AfterViewInit {
 
-  metas: any; // metas -> meta
+  metas: any;
   filesToCreate: any[] = []; // remove
   filesToDestroy: any[] = []; // remove 
   showFormWarning = false;
@@ -26,7 +26,7 @@ export class BlogModalComponent implements OnInit, AfterViewInit {
    
 
   @ViewChild('blogForm', { static: false }) blogFormComponent: _FormComponent;
-  @ViewChild('blogMetaForm', { static: false }) blogMetaComponent: MetaFormComponent;
+  @ViewChild('MetaForm', { static: false }) MetaComponent: MetaFormComponent;
 
   blogType: Blog;
 
@@ -41,6 +41,7 @@ export class BlogModalComponent implements OnInit, AfterViewInit {
   formComponents: FormComponent[];
 
   ngOnInit(): void {
+      
     // empty meta data object for making new meta object
     this.metas = {};
 
@@ -54,7 +55,7 @@ export class BlogModalComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.formComponents = [
       this.blogFormComponent,
-      this.blogMetaComponent,
+      this.MetaComponent,
     ];
   }
 
@@ -75,7 +76,7 @@ export class BlogModalComponent implements OnInit, AfterViewInit {
   getBlogData(): any {
     const data = _.cloneDeep(_.merge(
       this.blogType,
-      this.blogMetaComponent.getFormValue(),
+      this.MetaComponent.getFormValue(),
       this.blogFormComponent.getFormValue(),
     ));
     return data;

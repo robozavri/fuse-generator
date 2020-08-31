@@ -139,10 +139,14 @@
 
         <mat-form-field [style.width.px]=500 *ngIf="blogTypes">
             <mat-label>blog-type</mat-label>
-            <mat-select formControlName="blogType" multiple>
+            <mat-select formControlName="blogType" >
                 <mat-option *ngFor="let item of blogTypes" [value]="item">{{ item }}</mat-option>
             </mat-select>
         </mat-form-field>
+
+        <div class="custom-slied-toggle">
+            <mat-slide-toggle formControlName="isFeatured">is-featured</mat-slide-toggle>
+        </div>
 
 
         <div>

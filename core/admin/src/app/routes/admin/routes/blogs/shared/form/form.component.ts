@@ -88,7 +88,8 @@ export class FormComponent extends _FormComponent implements OnInit {
             createAt: [this.formData.createAt || new Date()],
             socialAccounts: this.fb.array( socialArray ),
             category: [this.formData.category || []],
-            blogType: [this.formData.blogType || []],
+            blogType: [this.formData.blogType || ''],
+            isFeatured: [this.formData.isFeatured ],
     });
     
   }

@@ -84,6 +84,7 @@ function parseBaseProps(body: any) {
     'socialAccounts',
     'category',
     'blogType',
+    'isFeatured',
     'meta',
     'position',
   ]);

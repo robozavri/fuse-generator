@@ -80,7 +80,11 @@ function getCategoryObject(i: number = 0): any {
 }
 
 function getBlogTypeObject(i: number = 0): any {
-    return ['metal','rock','classic','black',];
+    return 'classic';
+}
+
+function getIsFeaturedObject(i: number = 0): any {
+    return false;
 }
 
 function getMetaObject(i: number = 0): any {
@@ -115,6 +119,7 @@ const BlogStub = {
     socialAccounts: getSocialAccountsObject(),
     category: getCategoryObject(),
     blogType: getBlogTypeObject(),
+    isFeatured: getIsFeaturedObject(),
     meta: getMetaObject(),
 };
 
@@ -143,6 +148,7 @@ export function getMany(count: number, fields?: any) {
     socialAccounts: getSocialAccountsObject(i),
     category: getCategoryObject(i),
     blogType: getBlogTypeObject(i),
+    isFeatured: getIsFeaturedObject(i),
     meta: getMetaObject(i),
   }));
 }

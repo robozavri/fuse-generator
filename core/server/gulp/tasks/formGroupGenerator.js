@@ -75,6 +75,9 @@ export function generateFormGroup(fields = false) {
             case 'Date': formTemplate += `
             ${key}: [this.formData.${key} || new Date()],`;
             break;
+            case 'Slide-toggle': formTemplate += `
+            ${key}: [this.formData.${key} ],`;
+            break;
             case 'Socials': formTemplate += `
             ${key}: this.fb.array( socialArray ),`;  
             break;

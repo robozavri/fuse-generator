@@ -18,7 +18,8 @@ const BlogSchema = new Schema({
   createAt: Date,
   socialAccounts: [{ account: String, link: String }],
   category: [{ type: Schema.Types.ObjectId, ref: 'blogCategory' }],
-  blogType: [String],
+  blogType: String,
+  isFeatured: Boolean,
   meta: metaTagsSchema,
   position: Number,
 });

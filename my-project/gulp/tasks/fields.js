@@ -11,6 +11,7 @@
  multilingualSchema-quill-editor
  quill-editor
  Textarea
+ Slide-toggle
  Meta
 */
 // notie objet key titles must be camelCase
@@ -58,5 +59,6 @@ export const fields = {
      socialAccounts: 'Socials',
      category: 'Reference',
      blogType: 'Select',
+     isFeatured: 'Slide-toggle',
      meta: 'Meta',
 };

@@ -6,7 +6,7 @@ import runSequence from 'run-sequence';
 import paths from '../paths';
 import * as _ from 'lodash';
 import { fields, refFields, selectFields } from './fields';
-import { generateListPropeties, genrateRefernce, generateSelect } from './adminHelper';
+import { generateListPropeties, genrateRefernce, generateSelect, generateMeta } from './adminHelper';
 import { generateEmptyObjModal } from './emptyObjGenerator';
 import { 
   generateFormGroup,
@@ -86,6 +86,7 @@ function insertEditPageTemplate(name, src, dest, fields) {
   const imagesMethods = generateImagesMethods(fields);
   const referObject = genrateRefernce(fields,refFields);
   const selectProperty = generateSelect(fields,selectFields);
+  const meta = generateMeta(fields);
 
   return gulp.src(src)
         .pipe($.template({
@@ -116,6 +117,15 @@ function insertEditPageTemplate(name, src, dest, fields) {
             onInitBody: referObject.onInitBody,
 
             selectProperty: selectProperty,
+
+            editPageImports: meta.editPageImports,
+            editPageViewChild: meta.editPageViewChild,
+            editPageNgAfterViewInit: meta.editPageNgAfterViewInit,
+            editPageMerge: meta.editPageMerge,
+            editPageHtml: meta.editPageHtml,
+            editPageClassProperties: meta.editPageClassProperties,
+            editPageOnInitBody: meta.editPageOnInitBody, 
+            editPageLoadDataMeta: meta.editPageLoadDataMeta, 
         }, {
             interpolate: /<%=([\s\S]+?)%>/g
         }))
@@ -130,6 +140,7 @@ function insertArticlesTemplate(name, src, dest, fields) {
     const listProperties = generateListPropeties();
     const referObject = genrateRefernce(fields,refFields);
     const selectProperty = generateSelect(fields,selectFields);
+    const meta = generateMeta(fields);
 
     return gulp.src(src)
         .pipe($.template({
@@ -169,6 +180,16 @@ function insertArticlesTemplate(name, src, dest, fields) {
             listComponentBindParams: referObject.componentBindParams,
 
             selectProperty: selectProperty,
+
+            MetaModalImports: meta.modalImports,
+            MetaModalViewChild: meta.modalViewChild,
+            MetaModalNgAfterViewInit: meta.modalNgAfterViewInit,
+            MetaModalMerge: meta.modalMerge,
+            MetaModalHtml: meta.modalHtml,
+            MetaModalClassProperties: meta.modalClassProperties,
+            MetaModalOnInitBody: meta.modalOnInitBody,  
+      
+            listComponentMetaHtml: meta.listComponentMetaHtml, 
         }, {
             interpolate: /<%=([\s\S]+?)%>/g
         }))

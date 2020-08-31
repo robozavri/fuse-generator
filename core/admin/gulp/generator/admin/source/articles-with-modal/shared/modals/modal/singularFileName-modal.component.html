@@ -7,12 +7,7 @@
                     <app-form [formData]="data" <%=listComponentBindParams%> #<%=nameSingularLC%>Form [showSubmit]="showSubmit"></app-form>
                 </div>
             </mat-tab>
-            <mat-tab label="metas">
-                <div class="page_body">
-                    <app-meta-form [meta]="metas" [showSubmit]="showSubmit" #<%=nameSingularLC%>MetaForm>
-                    </app-meta-form>
-                </div>
-            </mat-tab>
+            <%=MetaModalHtml%>
         </mat-tab-group>
     </div>
     <mat-dialog-actions>

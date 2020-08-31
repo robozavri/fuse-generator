@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SnackBarService } from 'app/shared/services/snack-bar.service';
 import { <%=nameSingularUC%>ApiService } from 'app/shared/http/<%=singularFileName%>-api.service';
-import { MetaFormComponent } from '../../../../shared/components/meta-form/meta-form.component';
+<%=editPageImports%>
 
 @Component({
   selector: 'app-<%=singularFileName%>',
@@ -21,11 +21,11 @@ export class <%=nameSingularUC%>Component implements OnInit, AfterViewInit {
   loadpage: boolean;
   mainData: any;
   editMode: boolean;
-  meta: any;
+  <%=editPageClassProperties%>
 
 
   @ViewChild('basicInfoForm', { static: false }) basicInfoForm: BasicInfoComponent;
-  @ViewChild('MetaForm', { static: false }) MetaComponent: MetaFormComponent;
+  <%=editPageViewChild%>
 
 
   constructor(
@@ -36,7 +36,7 @@ export class <%=nameSingularUC%>Component implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    this.meta = {};
+    <%=editPageOnInitBody%>
     setTimeout(() => {
       this.loadpage = true;
     });
@@ -50,7 +50,7 @@ export class <%=nameSingularUC%>Component implements OnInit, AfterViewInit {
       this.editMode = true;
       this.api.getByQuery({ _id: this.route.snapshot.params.id }).subscribe((data) => {
         this.mainData = data.items[0] || {}; 
-        this.meta = this.mainData.hasOwnProperty('meta') ? this.mainData.meta : {};
+        <%=editPageLoadDataMeta%>
       });
 
     } else {
@@ -62,7 +62,7 @@ export class <%=nameSingularUC%>Component implements OnInit, AfterViewInit {
   ngAfterViewInit(): void  {
     this.formComponents = [
       this.basicInfoForm,
-      this.MetaComponent,
+      <%=editPageNgAfterViewInit%>
     ];
   }
 
@@ -100,7 +100,7 @@ export class <%=nameSingularUC%>Component implements OnInit, AfterViewInit {
   getFormData(): any {
     return _.cloneDeep(_.merge(
       this.basicInfoForm.getFormValue(),
-      this.MetaComponent.getFormValue(),
+      <%=editPageMerge%>
     ));
   }
 }

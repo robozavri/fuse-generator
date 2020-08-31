@@ -37,15 +37,17 @@ gulp.task('generateArticlesAdminComponent2', () => {
     const name = getNameFromArgv();
     let src,dest;
     
-    // if('false' === getIsGeenerateArgv()) { 
+    if('false' === getIsGeenerateArgv()) { 
        src = paths.adminGeneratorTemplates.articlesWithModalTest;
+      //  src = paths.adminGeneratorTemplates.articlesTest;
+      //  src = paths.adminGeneratorTemplates.editPageTest;
        dest = path.join(paths.admin.adminModules, _.kebabCase(plural(name)));
-    // } else {
-    //    src = paths.adminGeneratorTemplates.articles;
-    //    dest = path.join(paths.admin.adminModules, _.kebabCase(plural(name)));
-    // }
+    } else {
+      //  src = paths.adminGeneratorTemplates.articlesTest;
+      //  dest = path.join(paths.admin.adminModules, _.kebabCase(plural(name)));
+    }
 
-    return insertArticlesTemplate(name, src, dest);
+    return insertArticlesTemplate2(name, src, dest);
 });
 /*
 gulp.task('generateHttp', () => {
@@ -119,65 +121,78 @@ function insertEditPageTemplate(name, src, dest, fields) {
         .pipe(gulp.dest(dest));
 }
 */
-function insertArticlesTemplate(name, src, dest) {
+function insertArticlesTemplate2(name, src, dest) {
     const articlesList = generateArticlesList(fields, refFields);
-    const data = mergeProperties(articlesList);
-    
-    return;
-    // const imagesMethods = generateImagesMethods(fields);
-    // const listProperties = generateListPropeties();
-    // const referObject = genrateRefernce(fields,refFields);
-    //  აქ ფუნქცია რომელის ყველა ობიექტებს ამოიღებს და არეების მიხედვით გაერთიანებს მაგათ ფილდებს
-    /*
+    // ყველა ობიექტებს ამოიღებს და არეების მიხედვით გაერთიანებს მაგათ ფილდებს
+    const data = mergeProperties(articlesList,name);
+      // displayedColumns = [<%=listColumntTitles%> 'active'];
+
     return gulp.src(src)
-        .pipe($.template({
-            nameUC: firstUC(name),
-            nameLC: firstLC(name),
-            namePlural: plural(name),
-            namePluralLC: plural(name.toLowerCase()),
-            namePluralFUC: firstUC(plural(name)),
-            nameSingularLC: singular(name),
-            nameSingularFUC: firstUC(singular(name)),
-            singularFileName: _.kebabCase(singular(name)),
-            pluralFileName: _.kebabCase(plural(name)),
-
-            formModalEmptyObj: generateEmptyObjModal(fields),
-            formGroup: generateFormGroup(fields),
-            formEmptyObjects: generateFormEmptyObjects(fields),
-            formHtml: generateFormHtml(fields),
-            imageMethods: generateImageMethods(fields),
-            imagesMethods: imagesMethods.methods,
-            imagesProperties: imagesMethods.properties,
-            listColumnsHtml: listProperties.template,
-            listColumntTitles: listProperties.columns,
-
-            socialsMethods: generateSocialMethods(fields),
-            socialsGetter: getterForSocials(fields),
-            socialsImport: importsForSocials(fields),
-
-            modalImports: referObject.imports,
-            modalClassProperties: referObject.classProperties,
-            modalConstructorArtuments: referObject.constructorArtuments,
-            modalOnInitBody: referObject.onInitBody,
-
-            listImports: referObject.imports,
-            formInputs: referObject.inputs,
-            ListClassProperties: referObject.classProperties,
-            listConstructorArtuments: referObject.constructorArtuments,
-            listOnInitBody: referObject.onInitBody,
-            listComponentBindParams: referObject.componentBindParams,
-        }, {
+        .pipe($.template(data, {
             interpolate: /<%=([\s\S]+?)%>/g
         }))
         .pipe($.rename(path => {
             path.basename = getFileName(name, path.basename);
         }))
         .pipe(gulp.dest(dest));
-        */
+      
 }
 
-function mergeProperties(data) {
-    console.log('mergeProperties data',data);
+function mergeProperties(data,name) {
+
+  const names = {
+    namePluralLC: plural(name.toLowerCase()),
+    namePluralFUC: firstUC(plural(name)),
+    nameSingularLC: singular(name),
+    nameSingularFUC: firstUC(singular(name)),
+    singularFileName: _.kebabCase(singular(name)),
+    pluralFileName: _.kebabCase(plural(name)),
+  };
+
+  const areas = [
+    'formComponentImporArea',
+    'formComponentClassInputArea',
+    'formComponentClassPropertiesArea',
+    'formComponentClassConstructorArgumentsArea',
+    'formComponentClassOnInitBodyArea',
+
+    'formComponentFormGroupArea',
+
+    'formComponentClassBodyArea',
+    'formComponentHtmlArea',
+
+    'emptyObjectsForOpenModal',
+    'modalImportsArea',
+    'modalComponentClassPropertiesArea',
+    'modalComponentClassViewChildArea',
+    'modalComponentClassConstructorArtumentsArea',
+    'modalComponentClassOnInitBodyArea',
+    'modalComponentClassNgAfterViewInitArrayArea',
+    'modalComponentClassFormValuesMergeArea',
+    'formComponentBindParams',
+    'modalHtmlTabArea',
+
+    'listImportsArea',
+    'listComponentClassPropertiesArea',
+    'listComponentClassConstructorArtumentsArea',
+    'listComponentClassOnInitBodyArea',
+    'listHtmlColumnsArea',
+    'listformComponentBindParams',
+    'listHtmlTabArea',
+  ];
+
+  const areasObj = {};
+  areas.map((area) => { areasObj[area] = ''});
+ 
+  _.forEach(data, function (obj, key) {
+        areas.map( (area) => {
+            if (_.has(obj, area)) {
+              areasObj[area] += obj[area];
+            }
+        });
+  });
+  
+  return _.merge(areasObj,names);
 }
 /*
 function insertModelTemplate(name, src, dest, fields) {
@@ -217,7 +232,7 @@ function insertHttpTemplate(name, src, dest) {
     }))
     .pipe(gulp.dest(dest));
 }
-
+*/
 function getFileName(name, basename) {
   if (basename.includes('pluralFileName')) {
     return basename.replace('pluralFileName', _.kebabCase(plural(name)));
@@ -229,4 +244,3 @@ function getFileName(name, basename) {
     return basename.replace('name', name);
   }
 }
-*/

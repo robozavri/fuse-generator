@@ -13,6 +13,7 @@ export interface Blog {
     createAt?: any;
     socialAccounts?: any;
     category?: any;
-    blogType?: any; 
+    blogType?: any;
+    isFeatured?: any;
     meta?: any; 
 }

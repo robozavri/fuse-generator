@@ -35,6 +35,8 @@ export function generateSchema(fields = false) {
               break;
             case 'Select': template += buildSelect(key);
               break;
+            case 'Slide-toggle': template += build(key, 'Boolean');
+              break;
             case 'Meta': template += build(key, 'metaTagsSchema');
               break;
         }
@@ -174,6 +176,8 @@ templateContent += `{
           break;
 
         case 'Date': templateContent += `new Date()`;
+          break;
+        case 'Slide-toggle': templateContent += `false`;
           break;
         case 'Select': templateContent += generateSelect(key);
           break;

@@ -45,6 +45,78 @@ function listColumnHtmlString(key){
   `;
 }
 
+export function generateMeta(fields){
+  let obj = {
+    modalImports: `import { MetaFormComponent } from '../../../../../../../shared/components/meta-form/meta-form.component';`,
+    modalViewChild: `@ViewChild('MetaForm', { static: false }) MetaComponent: MetaFormComponent;`,
+    modalNgAfterViewInit: `this.MetaComponent,`,
+    modalMerge: `this.MetaComponent.getFormValue(),`,
+    modalHtml: `
+            <mat-tab label="metas">
+                <div class="page_body">
+                    <app-meta-form [meta]="metas" [showSubmit]="showSubmit" #MetaForm>
+                    </app-meta-form>
+                </div>
+            </mat-tab>
+    `,
+    modalClassProperties: `metas: any;`,
+    modalOnInitBody: `  
+    // empty meta data object for making new meta object
+    this.metas = {};`,  
+
+    editPageImports: `import { MetaFormComponent } from '../../../../shared/components/meta-form/meta-form.component';`,
+    editPageViewChild: `@ViewChild('MetaForm', { static: false }) MetaComponent: MetaFormComponent;`,
+    editPageNgAfterViewInit: `this.MetaComponent,`,
+    editPageMerge: `this.MetaComponent.getFormValue(),`,
+    editPageHtml: `
+                    <mat-tab label="metas">
+                        <div class="page_body">
+                            <app-meta-form [meta]="meta" [showSubmit]="showSubmit" #MetaForm></app-meta-form>
+                        </div>
+                    </mat-tab>
+`,
+    editPageClassProperties: `meta: any;`,
+    editPageOnInitBody: `this.meta = {};`, 
+    editPageLoadDataMeta: `this.meta = this.mainData.hasOwnProperty('meta') ? this.mainData.meta : {};`, 
+
+    listComponentMetaHtml: `<mat-tab label="Meta">
+                                <app-meta-form [meta]="item.meta" (submitMeta)="submitMeta($event, item._id)">
+                                </app-meta-form>
+                            </mat-tab>`, 
+  };
+  
+  let hasMeta = false;
+  Object.keys(fields).map((key, index) => {
+      if (fields[key] === 'Meta' ) {
+        hasMeta = true;
+      }
+  });
+
+  if(hasMeta) {
+    return obj;
+  }
+     return {
+        modalImports: ``,
+        modalViewChild: ``,
+        modalNgAfterViewInit: ``,
+        modalMerge: ``,
+        modalHtml: ``,
+        modalClassProperties: ``,
+        modalOnInitBody: ``,  
+    
+        editPageImports: ``,
+        editPageViewChild: ``,
+        editPageNgAfterViewInit: ``,
+        editPageMerge: ``,
+        editPageHtml: ``,
+        editPageClassProperties: ``,
+        editPageOnInitBody: ``, 
+        editPageLoadDataMeta: ``, 
+        listComponentMetaHtml: ``, 
+      };
+}
+
+
 
 export function generateSelect(fields) {
   let template = '';
@@ -75,6 +147,7 @@ export function genrateRefernce(fields, refFields) {
     classProperties: '',
     constructorArtuments: '',
     onInitBody: '',
+    componentBindParams: '',
   };
   
   if(!fields) {

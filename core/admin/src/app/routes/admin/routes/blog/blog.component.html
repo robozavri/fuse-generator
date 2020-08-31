@@ -13,7 +13,7 @@
             <!-- APP TITLE -->
             <div fxLayout="row" fxLayoutAlign="start center">
 
-                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/admin/blog'">
+                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/admin/blogs'">
                     <mat-icon>arrow_back</mat-icon>
                 </button>
 
@@ -56,11 +56,13 @@
                             </app-basic-info>
                         </div>
                     </mat-tab>
+                    
                     <mat-tab label="metas">
                         <div class="page_body">
                             <app-meta-form [meta]="meta" [showSubmit]="showSubmit" #MetaForm></app-meta-form>
                         </div>
                     </mat-tab>
+
                 </mat-tab-group>
 
             </div>

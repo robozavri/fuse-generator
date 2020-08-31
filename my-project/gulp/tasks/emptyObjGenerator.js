@@ -1,7 +1,7 @@
 import { availableLangs, refFields, selectFields } from './fields';
 
 export function generateEmptyObjModal(fields = false) {
-    let template = 'meta: {},';
+    let template = '';
     if(!fields) {
         return '';
     }
@@ -40,6 +40,12 @@ export function generateEmptyObjModal(fields = false) {
               break;
             case 'Socials': template += `
       ${key}: [],`;
+            break;
+            case 'Meta': template += `
+      ${key}: {},`;
+            break;
+            case 'Slide-toggle': template += `
+      ${key}: false,`;
               break;
             case 'Reference':
                    template += detectReference(key);
@@ -55,7 +61,7 @@ export function generateEmptyObjModal(fields = false) {
   function detectSelect(key) {
       if (selectFields[key].selectType === 'single') {
             return  `
-            ${key}: '',`;
+      ${key}: '',`;
       }
 
       return  `
@@ -65,7 +71,7 @@ export function generateEmptyObjModal(fields = false) {
   function detectReference(key) {
       if (refFields[key].referenceType === 'single') {
             return  `
-            ${key}: '',`;
+      ${key}: '',`;
       }
 
       return  `

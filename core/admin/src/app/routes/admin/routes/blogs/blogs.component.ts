@@ -60,7 +60,7 @@ export class BlogsComponent {
 
   add(): void {
     const data: Blog = { 
-      meta: {},
+      
       name: '',
       title: {},
       description: {},
@@ -74,7 +74,9 @@ export class BlogsComponent {
       createAt: new Date(),
       socialAccounts: [],
       category: [],
-      blogType: [], 
+      blogType: '',
+      isFeatured: false,
+      meta: {}, 
     };
     this.dialog
       .open(BlogModalComponent, { data })
