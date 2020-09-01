@@ -80,7 +80,7 @@ function getCategoryObject(i: number = 0): any {
 }
 
 function getBlogTypeObject(i: number = 0): any {
-    return 'rock';
+    return 'black';
 }
 
 function getIsFeaturedObject(i: number = 0): any {

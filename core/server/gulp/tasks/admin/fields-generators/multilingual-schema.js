@@ -6,7 +6,7 @@ import {
 } from '../fields-helper';
 import { availableLangs } from '../../fields';
 
-export function multilingualTextareaBuilder(key) {
+export function multilingualSchemaBuilder(key) {
     return {
         formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key, '{}'),
         emptyObjectsForOpenModal: buildForModalEmpty(key, '{}'),
@@ -24,17 +24,28 @@ function buildFormGroup(key) {
 
 function buildHtml(key) {
     let templete = '';
+    let fxFlexSize = 100;
+    switch(availableLangs.length) {
+        case 1: fxFlexSize = 100;
+            break;
+        case 2: fxFlexSize = 50;
+            break;
+        case 3: fxFlexSize = 30;
+            break;
+        case 4: fxFlexSize = 15;
+            break;
+    }
+
     availableLangs.map((lang)=>{
-templete += 
-           `<mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+templete +=  `
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="${fxFlexSize}">
                 <mat-label> ${_.kebabCase(key)} ${lang} </mat-label>
-                <textarea matInput placeholder="${_.kebabCase(key)} ${lang}" formControlName="${lang}" rows="5">
-                </textarea>
+                <input matInput placeholder="${_.kebabCase(key)} ${lang}" formControlName="${lang}">
             </mat-form-field>
-            `;
+                `
     });
     return `
-        <div formGroupName='${key}'>
+        <div fxLayout="row" fxLayoutAlign="space-between" formGroupName='${key}'>
             ${templete}
         </div>
     `;
