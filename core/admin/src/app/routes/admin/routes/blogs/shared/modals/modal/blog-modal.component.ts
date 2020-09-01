@@ -4,9 +4,8 @@ import { Blog } from 'app/shared/models/blog';
 import { FormComponent } from 'app/shared/components/form.component';
 import { FormComponent as _FormComponent } from '../../form/form.component';
 import * as _ from 'lodash';
-import { MetaFormComponent } from '../../../../../../../shared/components/meta-form/meta-form.component';
-
 import { BlogCategoryApiService } from 'app/shared/http/blog-category-api.service';
+      import { MetaFormComponent } from '../../../../../../../shared/components/meta-form/meta-form.component';
 
 @Component({
   selector: 'app-blog-modal',
@@ -15,15 +14,14 @@ import { BlogCategoryApiService } from 'app/shared/http/blog-category-api.servic
 })
 export class BlogModalComponent implements OnInit, AfterViewInit {
 
-  metas: any;
-  filesToCreate: any[] = []; // remove
-  filesToDestroy: any[] = []; // remove 
+
   showFormWarning = false;
   submitted = false;
   showSubmit = false;
     
   categories: any;
    
+  metas: any;
 
   @ViewChild('blogForm', { static: false }) blogFormComponent: _FormComponent;
   @ViewChild('MetaForm', { static: false }) MetaComponent: MetaFormComponent;
@@ -31,7 +29,6 @@ export class BlogModalComponent implements OnInit, AfterViewInit {
   blogType: Blog;
 
   constructor(
-    
     private blogCategoryApiService: BlogCategoryApiService,
       
     private dialogRef: MatDialogRef<BlogModalComponent>,
@@ -41,15 +38,12 @@ export class BlogModalComponent implements OnInit, AfterViewInit {
   formComponents: FormComponent[];
 
   ngOnInit(): void {
-      
-    // empty meta data object for making new meta object
-    this.metas = {};
-
     
     this.blogCategoryApiService.getByQuery({all: true}).subscribe((data: any) => {
         this.categories = data.items;
     });
   
+      this.metas = {};
   }
 
   ngAfterViewInit(): void {
@@ -76,8 +70,8 @@ export class BlogModalComponent implements OnInit, AfterViewInit {
   getBlogData(): any {
     const data = _.cloneDeep(_.merge(
       this.blogType,
-      this.MetaComponent.getFormValue(),
       this.blogFormComponent.getFormValue(),
+      this.MetaComponent.getFormValue(),
     ));
     return data;
   }

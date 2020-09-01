@@ -12,6 +12,8 @@ import { socialsBuilder } from '../admin/fields-generators/socials';
 import { selectBuilder } from '../admin/fields-generators/select';
 import { slideToggleBuilder } from '../admin/fields-generators/slide-toggle';
 import { referenceBuilder } from '../admin/fields-generators/reference';
+import { buildListColumns } from '../admin/fields-generators/list';
+import { metaBuilder } from '../admin/fields-generators/meta';
 
 export function generateArticlesList(fields){
     let data = [];
@@ -46,7 +48,10 @@ export function generateArticlesList(fields){
               break;
             case 'Reference': data.push(referenceBuilder(key));
               break;
+            case 'Meta': data.push(metaBuilder(key));
+              break;
         }
     });
+    data.push(buildListColumns());
     return data;
 }

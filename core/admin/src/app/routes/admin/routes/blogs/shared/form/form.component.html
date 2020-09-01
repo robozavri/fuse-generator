@@ -7,15 +7,15 @@
                 <input matInput placeholder="name" formControlName="name">
             </mat-form-field>
         </div>
-    
+
         <div fxLayout="row" fxLayoutAlign="space-between" formGroupName='title'>
             
-            <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
                 <mat-label> title en </mat-label>
                 <input matInput placeholder="title en" formControlName="en">
             </mat-form-field>
                 
-            <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
                 <mat-label> title ge </mat-label>
                 <input matInput placeholder="title ge" formControlName="ge">
             </mat-form-field>
@@ -24,12 +24,12 @@
     
         <div fxLayout="row" fxLayoutAlign="space-between" formGroupName='description'>
             
-            <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
                 <mat-label> description en </mat-label>
                 <input matInput placeholder="description en" formControlName="en">
             </mat-form-field>
                 
-            <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
                 <mat-label> description ge </mat-label>
                 <input matInput placeholder="description ge" formControlName="ge">
             </mat-form-field>
@@ -79,7 +79,7 @@
                 <input matInput type="number" min="0" formControlName="count">
             </mat-form-field>
         </div>
-    
+
         <h3>thumbnail</h3>
         <div class="inputs_container">
             <app-image-upload [image]="formData.thumbnail" (uploadComplete)="onUploadCompleteThumbnail($event)"></app-image-upload>
@@ -98,7 +98,7 @@
             <mat-datepicker #startDatePicker></mat-datepicker>
             </mat-form-field>
         </div>
-   
+
         <h2>social-accounts</h2>
         <div formArrayName="socialAccounts">
             <mat-card *ngFor="let item of socials.controls; let i = index;" style="margin-bottom: 20px;">
@@ -129,13 +129,12 @@
             </button>
         </div>
 
-    
-        <mat-form-field [style.width.px]=500 *ngIf="categories">
-            <mat-label>category</mat-label>
-            <mat-select formControlName="category" multiple>
-                <mat-option *ngFor="let item of categories" [value]="item._id">{{ item.title?.ge }}</mat-option>
-            </mat-select>
-        </mat-form-field>
+      <mat-form-field [style.width.px]=500 *ngIf="categories">
+          <mat-label>category</mat-label>
+          <mat-select formControlName="category" multiple>
+              <mat-option *ngFor="let item of categories" [value]="item._id">{{ item.title?.ge }}</mat-option>
+          </mat-select>
+      </mat-form-field>
 
         <mat-form-field [style.width.px]=500 *ngIf="blogTypes">
             <mat-label>blog-type</mat-label>

@@ -6,6 +6,8 @@ import { FormComponent as _FormComponent } from '../../form/form.component';
 import * as _ from 'lodash';
 import { BlogCategoryApiService } from 'app/shared/http/blog-category-api.service';
 
+import { MetaFormComponent } from '../../../../../../../shared/components/meta-form/meta-form.component';
+
 @Component({
   selector: 'app-blog-modal',
   templateUrl: './blog-modal.component.html',
@@ -13,22 +15,21 @@ import { BlogCategoryApiService } from 'app/shared/http/blog-category-api.servic
 })
 export class BlogModalComponent implements OnInit, AfterViewInit {
 
-  metas: any; // metas -> meta
+
   showFormWarning = false;
   submitted = false;
   showSubmit = false;
     
   categories: any;
    
+  metas: any;
 
   @ViewChild('blogForm', { static: false }) blogFormComponent: _FormComponent;
-  // @ViewChild('blogMetaForm', { static: false }) blogMetaComponent: MetaFormComponent;
+  @ViewChild('MetaForm', { static: false }) MetaComponent: MetaFormComponent;
 
-  
   blogType: Blog;
 
   constructor(
-    
     private blogCategoryApiService: BlogCategoryApiService,
       
     private dialogRef: MatDialogRef<BlogModalComponent>,
@@ -38,19 +39,18 @@ export class BlogModalComponent implements OnInit, AfterViewInit {
   formComponents: FormComponent[];
 
   ngOnInit(): void {
-    // empty meta data object for making new meta object
-    //this.metas = {};
     
     this.blogCategoryApiService.getByQuery({all: true}).subscribe((data: any) => {
         this.categories = data.items;
     });
   
+    this.metas = {};
   }
 
   ngAfterViewInit(): void {
     this.formComponents = [
       this.blogFormComponent,
-      
+      this.MetaComponent,
     ];
   }
 
@@ -72,7 +72,7 @@ export class BlogModalComponent implements OnInit, AfterViewInit {
     const data = _.cloneDeep(_.merge(
       this.blogType,
       this.blogFormComponent.getFormValue(),
-      
+      this.MetaComponent.getFormValue(),
     ));
     return data;
   }

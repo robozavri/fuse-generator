@@ -1,35 +1,25 @@
 import * as _ from 'lodash';
-import { buildMultilingual } from '../fields-helper'
-import {  availableLangs } from '../../fields';
+import { 
+    buildMultilingual,
+    buildCheckFormElementEmpty,
+    buildForModalEmpty
+} from '../fields-helper';
+import { availableLangs } from '../../fields';
 
-export function multilingualQuillEditor(key) {
-    // modalImports: '',
-    // modalClassProperties: '',
-    // modalConstructorArtuments: '',
-    // modalOnInitBody: '',
-
-    // listImports: '',
-    // formInputs: '',
-    // ListClassProperties: '',
-    // listConstructorArtuments: '',
-    // listOnInitBody: '',
-    // listComponentBindParams: '',
+export function multilingualQuillEditorBuilder(key) {
     return {
-        formEmptyObject:  buildEmpty(key),
-        formGroupElement: buildFormGroup(key),
-        html: buildHtml(key),
+        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key, '{}'),
+        emptyObjectsForOpenModal:  buildForModalEmpty(key, '{}'),
+        formComponentFormGroupArea: buildFormGroup(key),
+        formComponentHtmlArea: buildHtml(key),
     }
-}
-
-function buildEmpty(key){
-    return ` ${key}: {},`;
 }
 
 function buildFormGroup(key) {
     return `
-            ${key}: this.fb.group({
-                ${buildMultilingual(key)}
-            }),`;
+        ${key}: this.fb.group({
+            ${buildMultilingual(key)}
+        }),`;
 }
 
 function buildHtml(key) {

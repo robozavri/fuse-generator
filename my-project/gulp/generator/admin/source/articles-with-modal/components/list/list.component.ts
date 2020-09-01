@@ -42,7 +42,7 @@ export class ListComponent implements OnInit {
   <%=ListClassProperties%>
 
   constructor(
-    <%=listConstructorArtuments%>
+    <%=listConstructorArgumentsArea%>
   ) { }
 
   ngOnInit(): void {

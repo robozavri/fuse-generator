@@ -32,7 +32,7 @@ export class FormComponent extends _FormComponent implements OnInit {
       return this.form.get('socialAccounts') as FormArray;
   }
     
-  blogTypes = ['metal','rock','classic','black',];
+  blogTypes = ['metal', 'rock', 'classic', 'black', ];
 
   constructor(
     private fb: FormBuilder,
@@ -59,7 +59,7 @@ export class FormComponent extends _FormComponent implements OnInit {
     
     this.formData.category = this.formData.category || [];
     this.formData.blogType = this.formData.blogType || '';
-    this.formData.isFeatured = this.formData.isFeatured || '';
+    this.formData.isFeatured = this.formData.isFeatured === undefined ? false : this.formData.isFeatured;
 
     this.form = this.fb.group({ 
         name: [this.formData.name || ''],

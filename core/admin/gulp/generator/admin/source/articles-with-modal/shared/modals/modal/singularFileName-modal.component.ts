@@ -28,7 +28,7 @@ export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit
   <%=nameSingularLC%>Type: <%=nameSingularFUC%>;
 
   constructor(
-    <%=modalConstructorArtuments%>
+    <%=modalConstructorArgumentsArea%>
     private dialogRef: MatDialogRef<<%=nameSingularFUC%>ModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: <%=nameSingularFUC%>
   ) { }

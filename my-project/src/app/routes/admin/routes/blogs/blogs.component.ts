@@ -74,7 +74,7 @@ export class BlogsComponent {
         socialAccounts: [],
         category: [],
         blogType: '',
-        isFeatured: '',
+        isFeatured: false,
     };
     this.dialog
       .open(BlogModalComponent, { data })

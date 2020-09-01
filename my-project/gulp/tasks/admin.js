@@ -7,64 +7,42 @@ import paths from '../paths';
 import * as _ from 'lodash';
 import { fields, refFields } from './fields';
 import { generateArticlesList } from './admin/articles-list';
-
-
-import { generateListPropeties, genrateRefernce } from './adminHelper';
-import { generateEmptyObjModal } from './emptyObjGenerator';
-import { 
-  generateFormGroup,
-  generateImageMethods, 
-  generateImagesMethods, 
-  generateFormEmptyObjects, 
-  generateSocialMethods,
-  getterForSocials,
-  importsForSocials
- } from './formGroupGenerator';
-import { generateFormHtml } from './htmlFormGenerator';
 import { generateInterface } from './admin/model';
-import { getIsGeenerateArgv, getNameFromArgv, getDefFieldsFromArgv, getDirFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
+import { getIsGeenerateArgv, getNameFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
 const $ = require('gulp-load-plugins')();
-const argv = $.util.env;
-
 
 gulp.task('admin', (done) => {
-  runSequence('generateArticlesAdminComponent2');
-//   runSequence('generateArticlesAdminComponent', 'generateHttp', 'generateModel', 'generateEditPage', done);
+  runSequence('generateArticlesAdminComponent2', 'generateHttp2', 'generateModel2', 'generateEditPage2', done);
 });
-
 
 gulp.task('generateArticlesAdminComponent2', () => {
     const name = getNameFromArgv();
-    let src,dest;
-    
+    let src, dest = path.join(paths.admin.adminModules, _.kebabCase(plural(name)));
+
     if('false' === getIsGeenerateArgv()) { 
        src = paths.adminGeneratorTemplates.articlesWithModalTest;
-      //  src = paths.adminGeneratorTemplates.articlesTest;
-      //  src = paths.adminGeneratorTemplates.editPageTest;
-       dest = path.join(paths.admin.adminModules, _.kebabCase(plural(name)));
     } else {
-      //  src = paths.adminGeneratorTemplates.articlesTest;
-      //  dest = path.join(paths.admin.adminModules, _.kebabCase(plural(name)));
+       src = paths.adminGeneratorTemplates.articlesTest;
     }
 
     return insertArticlesTemplate2(name, src, dest);
 });
-/*
-gulp.task('generateHttp', () => {
+
+gulp.task('generateHttp2', () => {
   const name = getNameFromArgv();
   const src = paths.adminGeneratorTemplates.http;
   const dest = paths.admin.http; 
   return insertHttpTemplate(name, src, dest, true);
 });
 
-gulp.task('generateModel', () => {
+gulp.task('generateModel2', () => {
   const name = getNameFromArgv();
   const src = paths.adminGeneratorTemplates.model;
   const dest = paths.admin.model;
   return insertModelTemplate(name, src, dest, fields);
 });
 
-gulp.task('generateEditPage', () => {
+gulp.task('generateEditPage2', () => {
   let name = getNameFromArgv();
   if('false' === getIsGeenerateArgv()) { 
       return;
@@ -76,43 +54,18 @@ gulp.task('generateEditPage', () => {
   }else{
       destDirName = singular(name);
   }
-  const src = paths.adminGeneratorTemplates.editPage;
+  const src = paths.adminGeneratorTemplates.editPageTest;
   const dest = path.join(paths.admin.adminModules, _.kebabCase(destDirName));
   return insertEditPageTemplate(name, src, dest, fields);
 });
 
 function insertEditPageTemplate(name, src, dest, fields) {
-  const imagesMethods = generateImagesMethods(fields);
-  const referObject = genrateRefernce(fields,refFields);
+  const articlesList = generateArticlesList(fields, refFields);
+  // ყველა ობიექტებს ამოიღებს და არეების მიხედვით გაერთიანებს მაგათ ფილდებს
+  const data = mergeProperties(articlesList,name);
 
   return gulp.src(src)
-        .pipe($.template({
-            nameUC: firstUC(name),
-            nameLC: firstLC(name),
-            namePlural: plural(name),
-            namePluralLC: plural(name.toLowerCase()),
-            namePluralFUC: firstUC(plural(name)),
-            nameSingularUC: firstUC(singular(name)),
-            nameSingularLC: singular(name),
-            nameSingularFUC: firstUC(singular(name)),
-            singularFileName: _.kebabCase(singular(name)),
-            pluralFileName: _.kebabCase(plural(name)),
-            formModalEmptyObj: generateEmptyObjModal(fields),
-            formGroup: generateFormGroup(fields),
-            formEmptyObjects: generateFormEmptyObjects(fields),
-            formHtml: generateFormHtml(fields),
-            imageMethods: generateImageMethods(fields),
-            imagesMethods: imagesMethods.methods,
-            imagesProperties: imagesMethods.properties,
-            socialsMethods: generateSocialMethods(fields),
-            socialsGetter: getterForSocials(fields),
-            socialsImport: importsForSocials(fields),
-
-            imports: referObject.imports,
-            classProperties: referObject.classProperties,
-            constructorArtuments: referObject.constructorArtuments,
-            onInitBody: referObject.onInitBody,
-        }, {
+        .pipe($.template(data, {
             interpolate: /<%=([\s\S]+?)%>/g
         }))
         .pipe($.rename(path => {
@@ -120,12 +73,11 @@ function insertEditPageTemplate(name, src, dest, fields) {
         }))
         .pipe(gulp.dest(dest));
 }
-*/
+
 function insertArticlesTemplate2(name, src, dest) {
     const articlesList = generateArticlesList(fields, refFields);
     // ყველა ობიექტებს ამოიღებს და არეების მიხედვით გაერთიანებს მაგათ ფილდებს
     const data = mergeProperties(articlesList,name);
-      // displayedColumns = [<%=listColumntTitles%> 'active'];
 
     return gulp.src(src)
         .pipe($.template(data, {
@@ -135,12 +87,12 @@ function insertArticlesTemplate2(name, src, dest) {
             path.basename = getFileName(name, path.basename);
         }))
         .pipe(gulp.dest(dest));
-      
 }
 
 function mergeProperties(data,name) {
 
   const names = {
+    nameSingularUC: firstUC(singular(name)),
     namePluralLC: plural(name.toLowerCase()),
     namePluralFUC: firstUC(plural(name)),
     nameSingularLC: singular(name),
@@ -165,7 +117,7 @@ function mergeProperties(data,name) {
     'modalImportsArea',
     'modalComponentClassPropertiesArea',
     'modalComponentClassViewChildArea',
-    'modalComponentClassConstructorArtumentsArea',
+    'modalComponentClassConstructorArgumentsArea',
     'modalComponentClassOnInitBodyArea',
     'modalComponentClassNgAfterViewInitArrayArea',
     'modalComponentClassFormValuesMergeArea',
@@ -174,11 +126,20 @@ function mergeProperties(data,name) {
 
     'listImportsArea',
     'listComponentClassPropertiesArea',
-    'listComponentClassConstructorArtumentsArea',
+    'listComponentClassConstructorArgumentsArea',
     'listComponentClassOnInitBodyArea',
     'listHtmlColumnsArea',
-    'listformComponentBindParams',
     'listHtmlTabArea',
+
+    'editPageComponentImportsArea',
+    'editPageComponentClassPropertiesArea',
+    'editPageComponentClassViewChildArea',
+    'editPageComponentClassNgAfterViewInitArrayArea',
+    'editPageComponentClassFormValuesMergeArea',
+    'editPageComponentClassConstructorArgumentsArea',
+    'editPageComponentClassOnInitBodyArea',
+    'editPageComponentClassPageLoadDataMeta',
+    'editPageHtmlTabArea',
   ];
 
   const areasObj = {};
@@ -194,7 +155,7 @@ function mergeProperties(data,name) {
   
   return _.merge(areasObj,names);
 }
-/*
+
 function insertModelTemplate(name, src, dest, fields) {
   return gulp.src(src)
     .pipe($.template({
@@ -232,7 +193,7 @@ function insertHttpTemplate(name, src, dest) {
     }))
     .pipe(gulp.dest(dest));
 }
-*/
+
 function getFileName(name, basename) {
   if (basename.includes('pluralFileName')) {
     return basename.replace('pluralFileName', _.kebabCase(plural(name)));
