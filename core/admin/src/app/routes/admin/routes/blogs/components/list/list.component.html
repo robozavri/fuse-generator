@@ -4,22 +4,6 @@
         fusePerfectScrollbar cdkDropList (cdkDropListDropped)="drop($event)">
 
         
-        <!-- name Column -->
-        <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef #nameLabel>Name</mat-header-cell>
-            <mat-cell *matCellDef="let item">
-                <p class="text-truncate">{{item?.name}}</p>
-            </mat-cell>
-        </ng-container>
-    
-        <!-- title Column -->
-        <ng-container matColumnDef="title">
-            <mat-header-cell *matHeaderCellDef #titleLabel>Title</mat-header-cell>
-            <mat-cell *matCellDef="let item">
-                <p class="text-truncate">{{item.title?.en}}</p>
-            </mat-cell>
-        </ng-container>
-    
 
         <!-- Active Column -->
         <ng-container matColumnDef="active">

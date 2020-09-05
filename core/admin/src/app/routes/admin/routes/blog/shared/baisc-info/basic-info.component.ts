@@ -12,9 +12,7 @@ import { accounts } from '../../../../../../shared/constants/socials';
 })
 export class BasicInfoComponent extends _FormComponent implements OnInit {
 
-    
-  @Input() categories: any;
-   
+  
   @Input() formData: Blog;
   @Input() showSubmit = true;
   @Output() submitForm = new EventEmitter<Blog>();
@@ -23,16 +21,16 @@ export class BasicInfoComponent extends _FormComponent implements OnInit {
  
   form: FormGroup;
   
+    
+  blogTypes = ['metal', 'rock', 'classic', 'black', ];
   public images = [];
   public items: FormArray;
     
   get accounts(): any { return accounts; }
 
   get socials(): FormArray {
-      return this.form.get('socialAccounts') as FormArray;
+      return this.form.get('about.socialAccounts') as FormArray;
   }
-    
-  blogTypes = ['metal', 'rock', 'classic', 'black', ];
 
   constructor(
     private fb: FormBuilder,
@@ -44,71 +42,68 @@ export class BasicInfoComponent extends _FormComponent implements OnInit {
   ngOnInit(): void {
 
     
-    this.formData.name = this.formData.name || '';
-    this.formData.title = this.formData.title || {};
-    this.formData.description = this.formData.description || {};
-    this.formData.smallDescription = this.formData.smallDescription || {};
-    this.formData.content = this.formData.content || {};
-    this.formData.aboutQuili = this.formData.aboutQuili || '';
-    this.formData.aboutPrimitive = this.formData.aboutPrimitive || '';
-    this.formData.count = this.formData.count || '';
-    this.formData.thumbnail = this.formData.thumbnail || {};
-    this.formData.images = this.formData.images || [];
-    this.formData.createAt = this.formData.createAt || '';
-    const socialObj = { account: '', link: ''};
-    const socialArray = (this.formData.socialAccounts || [socialObj]).map((socialItem: any) => this.createSocials(socialItem));
-    
-    this.formData.category = this.formData.category || [];
+    this.formData.about.contact.street.title = this.formData.about.contact.street.title || '';
     this.formData.blogType = this.formData.blogType || '';
-    this.formData.isFeatured = this.formData.isFeatured === undefined ? false : this.formData.isFeatured;
+    this.formData.about.contact.street.peoples.human.age = this.formData.about.contact.street.peoples.human.age || {};
+    this.formData.about.contact.street.peoples.human.age4 = this.formData.about.contact.street.peoples.human.age4 || {};
+    this.formData.about.contact.street.peoples.anumal.age2 = this.formData.about.contact.street.peoples.anumal.age2 || {};
+    this.formData.about.contact.street.peoples.anumal.age3 = this.formData.about.contact.street.peoples.anumal.age3 || {};
+    this.formData.about.contact.images = this.formData.about.contact.images || [];
+    const socialObj = { account: '', link: ''};
+    const socialArray = (this.formData.about.socialAccounts || [socialObj]).map((socialItem: any) => this.createSocials(socialItem));
+    
 
     this.form = this.fb.group({
-        name: [this.formData.name || ''],
-        title: this.fb.group({
-            
-           en: [this.formData.title.en || ''],
-           ge: [this.formData.title.ge || ''],
-        }),
-        description: this.fb.group({
-            
-           en: [this.formData.description.en || ''],
-           ge: [this.formData.description.ge || ''],
-        }),
-        smallDescription: this.fb.group({
-            
-           en: [this.formData.smallDescription.en || ''],
-           ge: [this.formData.smallDescription.ge || ''],
-        }),
-        content: this.fb.group({
-            
-           en: [this.formData.content.en || ''],
-           ge: [this.formData.content.ge || ''],
-        }),
-        aboutQuili: [this.formData.aboutQuili || ''],
-        aboutPrimitive: [this.formData.aboutPrimitive || ''],
-        count: [this.formData.count || ''], 
-        thumbnail: this.fb.group({
-            url: [this.formData.thumbnail.url || '']
-        }),
-        images: this.fb.array(this.formData.images || []),
-        createAt: [this.formData.createAt || new Date()],
-        socialAccounts: this.fb.array( socialArray ),
-        category: [this.formData.category || []],
+      about: this.fb.group({
+      
+      contact: this.fb.group({
+      
+      street: this.fb.group({
+      
+        title: [this.formData.title || ''],
         blogType: [this.formData.blogType || ''],
-        isFeatured: [this.formData.isFeatured],
+      peoples: this.fb.group({
+      
+      human: this.fb.group({
+      
+        age: this.fb.group({
+            
+           en: [this.formData.age.en || ''],
+           ge: [this.formData.age.ge || ''],
+        }),
+        age4: this.fb.group({
+            
+           en: [this.formData.age4.en || ''],
+           ge: [this.formData.age4.ge || ''],
+        }), 
+      }),
+      anumal: this.fb.group({
+      
+        age2: this.fb.group({
+            
+           en: [this.formData.age2.en || ''],
+           ge: [this.formData.age2.ge || ''],
+        }),
+        age3: this.fb.group({
+            
+           en: [this.formData.age3.en || ''],
+           ge: [this.formData.age3.ge || ''],
+        }), 
+      }), 
+      }), 
+      }),
+        images: this.fb.array(this.formData.images || []), 
+      }),
+        socialAccounts: this.fb.array( socialArray ), 
+      }),
     });
   }
 
   
-  onUploadCompleteThumbnail(data: any): void {
-      this.form.get('thumbnail').get('url').markAsTouched();
-      this.form.get('thumbnail').get('url').setValue(data.url);
-  }
-     
   // images upload methods
   deleteImageImages(index: any): void {
      this.images.splice(index, 1);
-     this.items = this.form.get('images') as FormArray;
+     this.items = this.form.get('about.contact.images') as FormArray;
      this.items.removeAt(index);
   }
 
@@ -119,7 +114,7 @@ export class BasicInfoComponent extends _FormComponent implements OnInit {
   }
 
   addItemImages(url: any): void {
-       this.items = this.form.get('images') as FormArray;
+       this.items = this.form.get('about.contact.images') as FormArray;
        this.items.push(this.createItemImages(url));
        this.images.push({ url: url });
   }

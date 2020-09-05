@@ -31,14 +31,6 @@ function parseSearch({ keyword }: { keyword?: string }) {
       
         { 'name': { $regex: keyword, $options: 'i' } },
         
-        { 'title.en': { $regex: keyword, $options: 'i' } },
-       
-        { 'title.ge': { $regex: keyword, $options: 'i' } },
-       
-        { 'description.en': { $regex: keyword, $options: 'i' } },
-       
-        { 'description.ge': { $regex: keyword, $options: 'i' } },
-       
     ],
   } : {};
 }
@@ -71,21 +63,7 @@ function parseBaseProps(body: any) {
   return _.pick(body, [
     
     'name',
-    'title',
-    'description',
-    'smallDescription',
-    'content',
-    'aboutQuili',
-    'aboutPrimitive',
-    'count',
-    'thumbnail',
-    'images',
-    'createAt',
-    'socialAccounts',
-    'category',
-    'blogType',
-    'isFeatured',
-    'meta',
+    'about',
     'position',
   ]);
 }

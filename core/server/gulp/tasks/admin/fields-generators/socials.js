@@ -6,14 +6,17 @@ import {
 } from '../fields-helper';
 import { availableLangs } from '../../fields';
 
-export function socialsBuilder(key) {
+export function socialsBuilder(key, nested = null) {
+    if (nested === null) {
+        nested = key;
+    }
     return {
-        formComponentClassOnInitBodyArea: generateFormEmptyObject(key),
+        formComponentClassOnInitBodyArea: generateFormEmptyObject(nested),
         emptyObjectsForOpenModal:  buildForModalEmpty(key,"[]"),
         formComponentFormGroupArea: buildFormGroup(key),
         formComponentHtmlArea: buildHtml(key),
         formComponentImporArea: importsForSocials(),
-        formComponentClassPropertiesArea: getterForSocials(key),
+        formComponentClassPropertiesArea: getterForSocials(nested),
         formComponentClassBodyArea: generateSocialMethods(key)
     }
 }

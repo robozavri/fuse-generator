@@ -6,13 +6,16 @@ import {
 } from '../fields-helper';
 import { availableLangs } from '../../fields';
 
-export function imagesBuilder(key) {
+export function imagesBuilder(key, nested = null) {
+    if (nested === null) {
+        nested = key;
+    }
     return {
-        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key,"[]"),
+        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(nested,"[]"),
         emptyObjectsForOpenModal:  buildForModalEmpty(key,"[]"),
         formComponentFormGroupArea: buildFormGroup(key),
         formComponentHtmlArea: buildHtml(key),
-        formComponentClassBodyArea: imagesMethodTemplate(key),
+        formComponentClassBodyArea: imagesMethodTemplate(key, nested),
         formComponentClassPropertiesArea: properties()
     }
 }
@@ -39,12 +42,12 @@ function buildHtml(key) {
 }
 
 
-function imagesMethodTemplate(key) {
+function imagesMethodTemplate(key, nested) {
     return `
   // ${key} upload methods
   deleteImage${_.upperFirst(key)}(index: any): void {
      this.images.splice(index, 1);
-     this.items = this.form.get('${key}') as FormArray;
+     this.items = this.form.get('${nested}') as FormArray;
      this.items.removeAt(index);
   }
 
@@ -55,7 +58,7 @@ function imagesMethodTemplate(key) {
   }
 
   addItem${_.upperFirst(key)}(url: any): void {
-       this.items = this.form.get('images') as FormArray;
+       this.items = this.form.get('${nested}') as FormArray;
        this.items.push(this.createItem${_.upperFirst(key)}(url));
        this.images.push({ url: url });
   }

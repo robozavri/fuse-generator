@@ -9,10 +9,13 @@ import { plural } from '../../../helpers';
 
 
 
-export function selectBuilder(key) {
+export function selectBuilder(key, nested = null) {
     const selectType = selectFields[key].selectType === 'single' ? "''" : '[]';
+    if (nested === null) {
+        nested = key;
+    }
     return {
-        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key,selectType),
+        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(nested,selectType),
         emptyObjectsForOpenModal:  buildForModalEmpty(key,selectType),
         formComponentFormGroupArea: buildFormGroup(key),
         formComponentHtmlArea: buildHtml(key),

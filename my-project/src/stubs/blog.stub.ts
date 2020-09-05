@@ -6,121 +6,37 @@ import { cloneStub, generateImage, generateSocials }  from '../helpers/stub-help
 function getNameObject(i: number = 0): any {
     return 'name';
 }
-
-function getTitleObject(i: number = 0): any {
-    return {
+function getAboutObject(i: number = 0): any {
+    return { contact: { street: { title: 'title', blogType: 'rock', peoples: { human: { age: {
         
-        en: `title en ${i}`,
-        ge: `title ge ${i}`,
-    };
-}
-
-function getDescriptionObject(i: number = 0): any {
-    return {
+        en: `age en ${i}`,
+        ge: `age ge ${i}`,
+    }, age4: {
         
-        en: `description en ${i}`,
-        ge: `description ge ${i}`,
-    };
-}
-
-function getSmallDescriptionObject(i: number = 0): any {
-    return {
+        en: `age4 en ${i}`,
+        ge: `age4 ge ${i}`,
+    },}, anumal: { age2: {
         
-        en: `smallDescription en ${i}`,
-        ge: `smallDescription ge ${i}`,
-    };
-}
-
-function getContentObject(i: number = 0): any {
-    return {
+        en: `age2 en ${i}`,
+        ge: `age2 ge ${i}`,
+    }, age3: {
         
-        en: `content en ${i}`,
-        ge: `content ge ${i}`,
-    };
-}
-
-function getAboutQuiliObject(i: number = 0): any {
-    return 'aboutQuili';
-}
-
-function getAboutPrimitiveObject(i: number = 0): any {
-    return 'aboutPrimitive';
-}
-
-function getCountObject(i: number = 0): any {
-    return _.random(1, 20);
-}
-
-function getThumbnailObject(i: number = 0): any {
-    return { url: generateImage()};
-}
-
-function getImagesObject(i: number = 0): any {
-    return [
+        en: `age3 en ${i}`,
+        ge: `age3 ge ${i}`,
+    },},},}, images: [
         { url:  generateImage()},
         { url:  generateImage()},
         { url:  generateImage()}
-    ];
-}
-
-function getCreateAtObject(i: number = 0): any {
-    return new Date();
-}
-function getSocialAccountsObject(i: number = 0): any {
-    const social = generateSocials();
-    return [
-          { account: social, link: `https://www.${social}.com/` },
-          { account: social, link: `https://www.${social}.com/` },
-          { account: social, link: `https://www.${social}.com/` }
-    ];
-}
-
-function getCategoryObject(i: number = 0): any {
-    return ;
-}
-
-function getBlogTypeObject(i: number = 0): any {
-    return 'black';
-}
-
-function getIsFeaturedObject(i: number = 0): any {
-    return false;
-}
-
-function getMetaObject(i: number = 0): any {
-    return {
-      title : {
-         
-        en: `meta en ${i}`,
-        ge: `meta ge ${i}`,
-      },
-      description : {
-         
-        en: `meta en ${i}`,
-        ge: `meta ge ${i}`,
-      },
-      keywords: ['meta meta keyword1', 'meta meta keyword2', 'meta meta keyword3'],
-      image: { url: generateImage() },
-  };
+    ],}, socialAccounts: [
+          { account: generateSocials(), link: `https://www.${generateSocials()}.com/` },
+          { account: generateSocials(), link: `https://www.${generateSocials()}.com/` },
+          { account: generateSocials(), link: `https://www.${generateSocials()}.com/` }
+    ],};
 }
 
 const BlogStub = {
     name: getNameObject(),
-    title: getTitleObject(),
-    description: getDescriptionObject(),
-    smallDescription: getSmallDescriptionObject(),
-    content: getContentObject(),
-    aboutQuili: getAboutQuiliObject(),
-    aboutPrimitive: getAboutPrimitiveObject(),
-    count: getCountObject(),
-    thumbnail: getThumbnailObject(),
-    images: getImagesObject(),
-    createAt: getCreateAtObject(),
-    socialAccounts: getSocialAccountsObject(),
-    category: getCategoryObject(),
-    blogType: getBlogTypeObject(),
-    isFeatured: getIsFeaturedObject(),
-    meta: getMetaObject(),
+    about: getAboutObject(),
 };
 
 export function getSingle(fields?: any): any {
@@ -135,20 +51,6 @@ export function getMany(count: number, fields?: any) {
     ...getSingle(),
     ...fields,
     name: getNameObject(i),
-    title: getTitleObject(i),
-    description: getDescriptionObject(i),
-    smallDescription: getSmallDescriptionObject(i),
-    content: getContentObject(i),
-    aboutQuili: getAboutQuiliObject(i),
-    aboutPrimitive: getAboutPrimitiveObject(i),
-    count: getCountObject(i),
-    thumbnail: getThumbnailObject(i),
-    images: getImagesObject(i),
-    createAt: getCreateAtObject(i),
-    socialAccounts: getSocialAccountsObject(i),
-    category: getCategoryObject(i),
-    blogType: getBlogTypeObject(i),
-    isFeatured: getIsFeaturedObject(i),
-    meta: getMetaObject(i),
+    about: getAboutObject(i),
   }));
 }

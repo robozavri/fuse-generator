@@ -1,0 +1,139 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="tab-content p-24" fusePerfectScrollbar fxLayout="column">
+        
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label> name</mat-label>
+                <input matInput placeholder="name" formControlName="name">
+            </mat-form-field>
+        </div>
+   
+    <div formGroupName='about'>
+       
+    <div formGroupName='contact'>
+       
+    <div formGroupName='street'>
+    
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label> title</mat-label>
+                <input matInput placeholder="title" formControlName="title">
+            </mat-form-field>
+        </div>
+
+        <mat-form-field [style.width.px]=500 *ngIf="blogTypes">
+            <mat-label>blog-type</mat-label>
+            <mat-select formControlName="blogType" >
+                <mat-option *ngFor="let item of blogTypes" [value]="item">{{ item }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+   
+    <div formGroupName='peoples'>
+       
+    <div formGroupName='human'>
+    
+        <div fxLayout="row" fxLayoutAlign="space-between" formGroupName='age'>
+            
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label> age en </mat-label>
+                <input matInput placeholder="age en" formControlName="en">
+            </mat-form-field>
+                
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label> age ge </mat-label>
+                <input matInput placeholder="age ge" formControlName="ge">
+            </mat-form-field>
+                
+        </div>
+    
+        <div fxLayout="row" fxLayoutAlign="space-between" formGroupName='age4'>
+            
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label> age-4 en </mat-label>
+                <input matInput placeholder="age-4 en" formControlName="en">
+            </mat-form-field>
+                
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label> age-4 ge </mat-label>
+                <input matInput placeholder="age-4 ge" formControlName="ge">
+            </mat-form-field>
+                
+        </div>
+    
+    </div>   
+    <div formGroupName='anumal'>
+    
+        <div fxLayout="row" fxLayoutAlign="space-between" formGroupName='age2'>
+            
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label> age-2 en </mat-label>
+                <input matInput placeholder="age-2 en" formControlName="en">
+            </mat-form-field>
+                
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label> age-2 ge </mat-label>
+                <input matInput placeholder="age-2 ge" formControlName="ge">
+            </mat-form-field>
+                
+        </div>
+    
+        <div fxLayout="row" fxLayoutAlign="space-between" formGroupName='age3'>
+            
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label> age-3 en </mat-label>
+                <input matInput placeholder="age-3 en" formControlName="en">
+            </mat-form-field>
+                
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label> age-3 ge </mat-label>
+                <input matInput placeholder="age-3 ge" formControlName="ge">
+            </mat-form-field>
+                
+        </div>
+    
+    </div>
+    </div>
+    </div>
+        <h3>images</h3>
+        <div class="inputs_container">
+            <app-images-upload *ngIf="images" [images]="images" (removeImage)="deleteImageImages($event)" (uploadComplete)="onUploadCompleteImages($event)"></app-images-upload>
+        </div>
+  
+    </div>
+        <h2>social-accounts</h2>
+        <div formArrayName="socialAccounts">
+            <mat-card *ngFor="let item of socials.controls; let i = index;" style="margin-bottom: 20px;">
+                <h2>Account {{i + 1}}</h2>
+                <div [formGroupName]="i" style="margin: 20px">
+                    <div fxLayout="column" fxLayoutAlign="">
+
+                        <mat-form-field  [style.width.px]=300 >
+                            <mat-label>Account</mat-label>
+                            <mat-select  formControlName="account">
+                                <mat-option *ngFor="let account of accounts" [value]="account">{{ account }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" floatLabel="always" fxFlex="40">
+                            <mat-label> link </mat-label>
+                            <input matInput placeholder="link" name="link" formControlName="link">
+                        </mat-form-field>
+                    </div>
+                    <button type="button" mat-raised-button color="warn" (click)="deleteSocials(i)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </mat-card>
+            <button type="button" mat-raised-button color="accent" (click)="addSocials('socials')"
+                    style="margin-bottom: 30px;">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+
+    </div>
+
+        <div>
+            <button mat-raised-button color="primary" *ngIf="showSubmit"> Submit </button>
+        </div>
+    </div>
+</form>

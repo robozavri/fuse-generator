@@ -7,8 +7,11 @@ import {
 import { availableLangs } from '../../fields';
 
 export function multilingualQuillEditorBuilder(key) {
+    if (nested === null) {
+        nested = key;
+    }
     return {
-        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key, '{}'),
+        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(nested, '{}'),
         emptyObjectsForOpenModal:  buildForModalEmpty(key, '{}'),
         formComponentFormGroupArea: buildFormGroup(key),
         formComponentHtmlArea: buildHtml(key),

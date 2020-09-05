@@ -6,19 +6,29 @@ import {
 } from '../fields-helper';
 import { availableLangs } from '../../fields';
 
-export function multilingualSchemaBuilder(key) {
+export function multilingualSchemaBuilder(key, nested = null) {
+    if (nested === null) {
+        nested = key;
+    }
     return {
-        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key, '{}'),
+        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(nested, '{}'),
         emptyObjectsForOpenModal: buildForModalEmpty(key, '{}'),
-        formComponentFormGroupArea: buildFormGroup(key),
+        formComponentFormGroupArea: buildFormGroup(key, nested),
         formComponentHtmlArea: buildHtml(key),
     }
 }
 
-function buildFormGroup(key) {
+function buildFormGroup(key, nested = null) {
+    if (nested === null) {
+        nested = key;
+    }else{
+        // // nested = nested.substring(0, nested.length - 1);
+        // console.log('cuted', nested.substring(0, nested.length - 1))
+        // console.log('multy', nested)
+    }
     return `
         ${key}: this.fb.group({
-            ${buildMultilingual(key)}
+            ${buildMultilingual(nested)}
         }),`;
 }
 

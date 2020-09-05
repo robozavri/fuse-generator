@@ -5,9 +5,12 @@ import {
     buildForModalEmpty
 } from '../fields-helper';
 
-export function slideToggleBuilder(key) {
+export function slideToggleBuilder(key, nested = null) {
+    if (nested === null) {
+        nested = key;
+    }
     return {
-        formComponentClassOnInitBodyArea: buildCheckEmptyObj(key),
+        formComponentClassOnInitBodyArea: buildCheckEmptyObj(nested),
         emptyObjectsForOpenModal:  buildForModalEmpty(key,"false"),
         formComponentFormGroupArea: buildFormGroup(key),
         formComponentHtmlArea: buildHtml(key),

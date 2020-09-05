@@ -46,19 +46,53 @@ export const selectFields = {
 
 export const fields = {
      name: 'String',
-     title: 'multilingualSchema', 
-     description: 'multilingualSchema', 
-     smallDescription: 'multilingualSchema-Textarea', 
-     content: 'multilingualSchema-quill-editor', 
-     aboutQuili: 'quill-editor',
-     aboutPrimitive: 'Textarea',
-     count: 'Number', 
-     thumbnail: 'imageSchema', 
-     images: '[imageSchema]' ,
-     createAt: 'Date',
-     socialAccounts: 'Socials',
-     category: 'Reference',
-     blogType: 'Select',
-     isFeatured: 'Slide-toggle',
-     meta: 'Meta',
+     // title: 'multilingualSchema', 
+     // description: 'multilingualSchema', 
+     // smallDescription: 'multilingualSchema-Textarea', 
+     // content: 'multilingualSchema-quill-editor', 
+     // aboutQuili: 'quill-editor',
+     // aboutPrimitive: 'Textarea',
+     // count: 'Number', 
+     // thumbnail: 'imageSchema', 
+     // images: '[imageSchema]' ,
+     // createAt: 'Date',
+     // socialAccounts: 'Socials',
+     // category: 'Reference',
+     // blogType: 'Select',
+     // isFeatured: 'Slide-toggle',
+     // meta: 'Meta',
+     about: {
+          contact: {
+               street: {
+                    title:'String', 
+                    blogType: 'Select',
+                    // category: 'Reference', 
+                    peoples: {
+                         human: {
+                              age : 'multilingualSchema',
+                              age4 : 'multilingualSchema'
+                         },
+                         anumal: {
+                              age2 : 'multilingualSchema',
+                              age3 : 'multilingualSchema'
+                         }
+                    }
+               },
+               images: '[imageSchema]', 
+          },
+          socialAccounts: 'Socials',
+     }
+     // about: {
+     //      contact: {
+     //           street: {
+     //                title:'multilingualSchema', 
+     //                description: 'multilingualSchema', 
+     //           },
+     //           title: 'multilingualSchema', 
+     //           address: 'multilingualSchema', 
+     //           images: '[imageSchema]', 
+     //      },
+     //      phone: 'String',
+     //      socialAccounts: 'Socials',
+     // }
 };

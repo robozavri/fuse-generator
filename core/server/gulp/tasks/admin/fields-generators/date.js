@@ -6,9 +6,12 @@ import {
 } from '../fields-helper';
 import { availableLangs } from '../../fields';
 
-export function dateBuilder(key) {
+export function dateBuilder(key, nested = null) {
+    if (nested === null) {
+        nested = key;
+    }
     return {
-        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key,"''"),
+        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(nested,"''"),
         emptyObjectsForOpenModal:  buildForModalEmpty(key,"''"),
         formComponentFormGroupArea: buildFormGroup(key),
         formComponentHtmlArea: buildHtml(key),

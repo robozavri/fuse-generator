@@ -5,22 +5,7 @@ import imageSchema from '../../schemas/image.schema';
 
 const BlogSchema = new Schema({
   
-  name: String,
-  title: multilingualSchema,
-  description: multilingualSchema,
-  smallDescription: multilingualSchema,
-  content: multilingualSchema,
-  aboutQuili: String,
-  aboutPrimitive: String,
-  count: Number,
-  thumbnail: imageSchema,
-  images: [imageSchema],
-  createAt: Date,
-  socialAccounts: [{ account: String, link: String }],
-  category: [{ type: Schema.Types.ObjectId, ref: 'blogCategory' }],
-  blogType: String,
-  isFeatured: Boolean,
-  meta: metaTagsSchema,
+  name: String,about: { contact: { street: { title: String, blogType: String, peoples: { human: { age: multilingualSchema, age4: multilingualSchema,}, anumal: { age2: multilingualSchema, age3: multilingualSchema,},},}, images: [imageSchema],}, socialAccounts: [{ account: String, link: String }],},
   position: Number,
 });
 

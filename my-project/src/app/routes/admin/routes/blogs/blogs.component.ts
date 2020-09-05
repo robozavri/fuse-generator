@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { <%=nameSingularFUC%>ModalComponent } from './shared/modals/modal/<%=singularFileName%>-modal.component';
+import { BlogModalComponent } from './shared/modals/modal/blog-modal.component';
 import { Query } from '../../../../shared/models/query';
 import { Subject, BehaviorSubject, Observable } from 'rxjs';
-import { <%=nameSingularFUC%> } from '../../../../shared/models/<%=singularFileName%>';
+import { Blog } from '../../../../shared/models/blog';
 import { Router, ActivatedRoute } from '@angular/router';
-import { <%=nameSingularFUC%>ApiService } from '../../../../shared/http/<%=singularFileName%>-api.service';
+import { BlogApiService } from '../../../../shared/http/blog-api.service';
 import { ConfirmDeleteModalComponent } from '../../../../shared/modals/confirm-delete/confirm-delete-modal.component';
 import { filter, switchMap, share, map } from 'rxjs/operators';
 import { fuseAnimations } from '../../../../../@fuse/animations';
@@ -13,26 +13,26 @@ import { FileApiService } from 'app/shared/http/files-api.service';
 import { SnackBarService } from 'app/shared/services/snack-bar.service';
 
 @Component({
-  selector: 'app-<%=pluralFileName%>',
-  templateUrl: './<%=pluralFileName%>.component.html',
-  styleUrls: ['./<%=pluralFileName%>.component.scss'],
+  selector: 'app-blogs',
+  templateUrl: './blogs.component.html',
+  styleUrls: ['./blogs.component.scss'],
   animations: fuseAnimations,
   encapsulation: ViewEncapsulation.None
 })
-export class <%=namePluralFUC%>Component {
+export class BlogsComponent {
 
   query: Query;
-  items$: Observable<<%=nameSingularFUC%>[]>;
+  items$: Observable<Blog[]>;
   numTotal$: Observable<number>;
   loadData$: Subject<Query>;
 
-  dataSource: <%=nameSingularFUC%>[];
+  dataSource: Blog[];
   numTotal: number;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private api: <%=nameSingularFUC%>ApiService,
+    private api: BlogApiService,
     private dialog: MatDialog,
     public fileApiService: FileApiService,
     private snackBarService: SnackBarService,
@@ -42,7 +42,7 @@ export class <%=namePluralFUC%>Component {
     this.loadData$ = new BehaviorSubject(this.query);
 
     this.loadData$.subscribe((query: Query) => {
-      this.router.navigate(['/admin/<%=pluralFileName%>'], {
+      this.router.navigate(['/admin/blogs'], {
         queryParams: query,
         queryParamsHandling: 'merge',
       });
@@ -59,11 +59,11 @@ export class <%=namePluralFUC%>Component {
   }
 
   add(): void {
-    const data: <%=nameSingularFUC%> = { 
-      <%=formModalEmptyObj%> 
+    const data: Blog = { 
+        name: '',
     };
     this.dialog
-      .open(<%=nameSingularFUC%>ModalComponent, { data })
+      .open(BlogModalComponent, { data })
       .afterClosed()
       .pipe(
         filter(r => r),
@@ -97,7 +97,7 @@ export class <%=namePluralFUC%>Component {
   }
 
 
-  delete(data: <%=nameSingularFUC%>): void {
+  delete(data: Blog): void {
     this.dialog
       .open(ConfirmDeleteModalComponent, { data })
       .afterClosed()

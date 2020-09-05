@@ -6,9 +6,12 @@ import {
 } from '../fields-helper';
 import { availableLangs } from '../../fields';
 
-export function numberBuilder(key) {
+export function numberBuilder(key, nested = null) {
+    if (nested === null) {
+        nested = key;
+    }
     return {
-        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key,"''"),
+        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(nested,"''"),
         emptyObjectsForOpenModal:  buildForModalEmpty(key,"''"),
         formComponentFormGroupArea: buildFormGroup(key),
         formComponentHtmlArea: buildHtml(key),

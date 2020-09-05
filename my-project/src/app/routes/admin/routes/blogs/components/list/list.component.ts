@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { PageEvent, MatTable } from '@angular/material';
-import { <%=nameSingularFUC%> } from 'app/shared/models/<%=singularFileName%>';
+import { Blog } from 'app/shared/models/blog';
 import { Query } from 'app/shared/models/query';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-<%=listImports%>
+
 
 @Component({
   selector: 'app-list',
@@ -26,23 +26,20 @@ export class ListComponent implements OnInit {
 
   @Output() queryChange = new EventEmitter<Query>();
   @Output() updateForm = new EventEmitter<any>();
-  @Output() deleteForm = new EventEmitter<<%=nameSingularFUC%>>();
+  @Output() deleteForm = new EventEmitter<Blog>();
   @Output() updateMeta = new EventEmitter<any>();
   @Output() updatePositions = new EventEmitter<any>();
 
   @ViewChild('table', { static: false }) table: MatTable<ListComponent>;
   @ViewChild('nameLabel', { static: false }) nameLabel: ElementRef;
 
-  dataSource: <%=nameSingularFUC%>[];
+  dataSource: Blog[];
   pageLength: number;
   pageEvent: PageEvent;
   expandedElement: any;
-
-  displayedColumns = [<%=listColumntTitles%> 'active'];
-  <%=ListClassProperties%>
+  displayedColumns = ['name', ];
 
   constructor(
-    <%=listConstructorArtuments%>
   ) { }
 
   ngOnInit(): void {
@@ -50,8 +47,7 @@ export class ListComponent implements OnInit {
       this.dataSource = data;
     });
     this.numTotal.subscribe((data) => this.pageLength = data);
-
-    <%=listOnInitBody%>
+    
   }
 
   pagenatorEvent(pageData: any): any {

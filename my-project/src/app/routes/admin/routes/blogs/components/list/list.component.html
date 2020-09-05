@@ -3,7 +3,15 @@
     <mat-table class="products-table articles_table" #table [dataSource]="dataSource" multiTemplateDataRows
         fusePerfectScrollbar cdkDropList (cdkDropListDropped)="drop($event)">
 
-        <%=listColumnsHtml%>
+        
+        <!-- name Column -->
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef #nameLabel>Name</mat-header-cell>
+            <mat-cell *matCellDef="let item">
+                <p class="text-truncate">{{item?.name}}</p>
+            </mat-cell>
+        </ng-container>
+    
 
         <!-- Active Column -->
         <ng-container matColumnDef="active">
@@ -32,12 +40,9 @@
                     <!-- *ngIf="expandedElement && item._id === expandedElement._id " -->
                     <mat-tab-group>
                         <mat-tab label="Information">
-                            <app-form [formData]="item" <%=listComponentBindParams%> (submitForm)="submitFormData($event, item._id)"></app-form>
+                            <app-form [formData]="item"  (submitForm)="submitFormData($event, item._id)"></app-form>
                         </mat-tab>
-                        <mat-tab label="Meta">
-                            <app-meta-form [meta]="item.meta" (submitMeta)="submitMeta($event, item._id)">
-                            </app-meta-form>
-                        </mat-tab>
+                        
                     </mat-tab-group>
                 </div>
             </td>

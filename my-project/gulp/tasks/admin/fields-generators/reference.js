@@ -7,10 +7,13 @@ import {
 import { availableLangs, refFields } from '../../fields';
 import { plural, firstLC, firstUC, singular } from '../../../helpers';
 
-export function referenceBuilder(key) {
+export function referenceBuilder(key, nested = null) {
   const selectType = refFields[key].referenceType === 'single' ? "''" : '[]';
+    if (nested === null) {
+        nested = key;
+    }
     return {
-        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key,selectType),
+        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(nested,selectType),
         emptyObjectsForOpenModal:  buildForModalEmptyObj(key),
         formComponentFormGroupArea: buildFormGroup(key),
         formComponentHtmlArea: buildHtml(key),
