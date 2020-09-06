@@ -119,16 +119,13 @@ function nestedStubBuilder(key, obj) {
     temp += `},`
   } else {
     temp += `${buildStubObj(key, obj)},`;
-    // console.log('buildStubObj:',buildStubObj(key, obj))
   }
   return temp;
 }
 
 function buildStubObj(key, type) {
   let templateContent = '';
-  let socialGenHelper;
-// console.log('key:',key, 'type:',type)
-//   return;
+
       switch( type ) {
         case 'multilingualSchema-Textarea':   
     templateContent += `{
@@ -163,6 +160,8 @@ function buildStubObj(key, type) {
         case 'Slide-toggle': templateContent += `false`;
           break;
         case 'Select': templateContent += generateSelect(key);
+          break;
+          case 'Reference': templateContent += `null`;
           break;
         case 'Meta': templateContent += generateMetaObj(key);
           break;
@@ -328,6 +327,8 @@ templateContent += `{
         case 'Slide-toggle': templateContent += `false`;
           break;
         case 'Select': templateContent += generateSelect(key);
+          break;
+        case 'Reference': templateContent += '';
           break;
         case 'Meta': templateContent += generateMetaObj(key);
           break;

@@ -7,20 +7,22 @@ import {
 import { availableLangs } from '../../fields';
 
 export function stringBuilder(key, nested = null) { 
-    if (nested === null) {
-        nested = key;
-    }
     return {
-        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(nested,"''"),
+        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key, nested,"''"),
         emptyObjectsForOpenModal:  buildForModalEmpty(key,"''"),
-        formComponentFormGroupArea: buildFormGroup(key),
+        formComponentFormGroupArea: buildFormGroup(key, nested),
         formComponentHtmlArea: buildHtml(key),
     }
 }
 
-function buildFormGroup(key) {
+function buildFormGroup(key, nested = null) {
+    if (nested === null) {
+        nested = key;
+    }else{
+        nested += key;
+    }
     return `
-        ${key}: [this.formData.${key} || ''],`;
+        ${key}: [this.formData.${nested} || ''],`;
 }
 
 function buildHtml(key) {

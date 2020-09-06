@@ -7,22 +7,19 @@ import {
 import { availableLangs } from '../../fields';
 
 export function multilingualTextareaBuilder(key, nested = null) {
-    if (nested === null) {
-        nested = key;
-    }
     return {
-        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(nested, '{}'),
+        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key, nested, '{}'),
         emptyObjectsForOpenModal: buildForModalEmpty(key, '{}'),
         formComponentFormGroupArea: buildFormGroup(key, nested),
         formComponentHtmlArea: buildHtml(key),
     }
 }
 
-function buildFormGroup(key, nested) {
+function buildFormGroup(key, nested = null) {
     if (nested === null) {
         nested = key;
     }else{
-        nested = nested.substring(0, str.length - 1);
+        nested += key;
     }
     return `
         ${key}: this.fb.group({

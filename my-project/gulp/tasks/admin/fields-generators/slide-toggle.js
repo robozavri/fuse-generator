@@ -6,26 +6,33 @@ import {
 } from '../fields-helper';
 
 export function slideToggleBuilder(key, nested = null) {
-    if (nested === null) {
-        nested = key;
-    }
     return {
-        formComponentClassOnInitBodyArea: buildCheckEmptyObj(nested),
+        formComponentClassOnInitBodyArea: buildCheckEmptyObj(key, nested),
         emptyObjectsForOpenModal:  buildForModalEmpty(key,"false"),
-        formComponentFormGroupArea: buildFormGroup(key),
+        formComponentFormGroupArea: buildFormGroup(key, nested),
         formComponentHtmlArea: buildHtml(key),
     }
 }
 
-function buildCheckEmptyObj(key) {
+function buildCheckEmptyObj(key, nested = null) {
+    if (nested === null) {
+        nested = key;
+    }else{
+        nested += key;
+    }
     return `
-    this.formData.${key} = this.formData.${key} === undefined ? false : this.formData.${key};`;
+    this.formData.${nested} = this.formData.${nested} === undefined ? false : this.formData.${nested};`;
 }
 
 
-function buildFormGroup(key) {
+function buildFormGroup(key, nested) {
+    if (nested === null) {
+        nested = key;
+    }else{
+        nested += key;
+    }
   return  `
-        ${key}: [this.formData.${key}],`;
+        ${key}: [this.formData.${nested}],`;
 }
 
 function buildHtml(key) {

@@ -9,13 +9,10 @@ import { plural, firstLC, firstUC, singular } from '../../../helpers';
 
 export function referenceBuilder(key, nested = null) {
   const selectType = refFields[key].referenceType === 'single' ? "''" : '[]';
-    if (nested === null) {
-        nested = key;
-    }
     return {
-        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(nested,selectType),
+        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key, nested,selectType),
         emptyObjectsForOpenModal:  buildForModalEmptyObj(key),
-        formComponentFormGroupArea: buildFormGroup(key),
+        formComponentFormGroupArea: buildFormGroup(key, nested),
         formComponentHtmlArea: buildHtml(key),
         
         formComponentClassInputArea: generateInputs(key),
@@ -50,14 +47,19 @@ function buildForModalEmptyObj(key) {
         ${key}: [],`;   
 }
 
-function buildFormGroup(key) {
+function buildFormGroup(key, nested = null) {
+  if (nested === null) {
+      nested = key;
+  }else{
+      nested += key;
+  }
   if (refFields[key].referenceType === 'single') {
     return   `
-        ${key}: [this.formData.${key} || ''],`;
+        ${key}: [this.formData.${nested} || ''],`;
 }
 
     return   `
-        ${key}: [this.formData.${key} || []],`;  
+        ${key}: [this.formData.${nested} || []],`;  
 }
 
 function buildHtml(key) {

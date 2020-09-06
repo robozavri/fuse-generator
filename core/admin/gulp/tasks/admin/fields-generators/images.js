@@ -7,13 +7,10 @@ import {
 import { availableLangs } from '../../fields';
 
 export function imagesBuilder(key, nested = null) {
-    if (nested === null) {
-        nested = key;
-    }
     return {
-        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(nested,"[]"),
+        formComponentClassOnInitBodyArea: buildCheckImagesEmpty(key, nested,"[]"),
         emptyObjectsForOpenModal:  buildForModalEmpty(key,"[]"),
-        formComponentFormGroupArea: buildFormGroup(key),
+        formComponentFormGroupArea: buildFormGroup(key, nested),
         formComponentHtmlArea: buildHtml(key),
         formComponentClassBodyArea: imagesMethodTemplate(key, nested),
         formComponentClassPropertiesArea: properties()
@@ -27,9 +24,24 @@ function properties(){
     `;
 }
 
-function buildFormGroup(key) {
+function buildCheckImagesEmpty(key, nested = null, obj){
+    if (nested === null) {
+        nested = key;
+    }else{
+        nested += key;
+    }
+    return `
+    this.images = this.formData.${nested} || ${obj};`;
+}
+
+function buildFormGroup(key, nested = null) {
+    if (nested === null) {
+        nested = key;
+    }else{
+        nested += key;
+    }
     return  `
-        ${key}: this.fb.array(this.formData.${key} || []),`;
+        ${key}: this.fb.array(this.formData.${nested} || []),`;
 }
 
 function buildHtml(key) {
@@ -43,6 +55,11 @@ function buildHtml(key) {
 
 
 function imagesMethodTemplate(key, nested) {
+    if (nested === null) {
+        nested = key;
+    }else{
+        nested += key;
+    }
     return `
   // ${key} upload methods
   deleteImage${_.upperFirst(key)}(index: any): void {

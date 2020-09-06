@@ -15,6 +15,9 @@ import { slideToggleBuilder } from '../admin/fields-generators/slide-toggle';
 import { referenceBuilder } from '../admin/fields-generators/reference';
 import { buildListColumns } from '../admin/fields-generators/list';
 import { metaBuilder } from '../admin/fields-generators/meta';
+const $ = require('gulp-load-plugins')();
+const log = $.util.log;
+const colors = $.util.colors;
 
 export function generateArticlesList(fields){
     let data = [];
@@ -22,8 +25,8 @@ export function generateArticlesList(fields){
     for (let key in fields) {
         if (typeof fields[key] === 'object') {
           data.push(buildTree(key, fields[key]));
-       } else {
-          data.push(detectFieldType(key, fields[key]));
+       } else {  
+          data.push(detectFieldType(key, fields[key], null));
        }
     }
     data.push(buildListColumns());
@@ -35,13 +38,16 @@ function buildTree(key, obj) {
   const allObjs = [];
   const formComponentFormGroupArea = nestedForGroupBuilder(key, obj);
   const formComponentHtmlArea = nestedHtmlForGroupBuilder(key, obj);
+  const emptyObjectsForOpenModal = nestedemptyObjectsForOpenModal(key, obj);
   let restored = {};
   restored[key] = obj;
   const objectKeys = _.flattenDeep(getStringOutOfHierarchy(restored));
 
   _.forEach(objectKeys, function(keys) {
-    const type = _.get(restored, keys);
-    const objAreas =  detectFieldType(_.last(keys.split(".")), type, keys) ;
+    const type = _.get(restored, keys);  
+    let property = _.last(keys.split("."));
+    let preparedKeys =  keys.substring(0, keys.indexOf(property));
+    const objAreas =  detectFieldType(_.last(keys.split(".")), type, preparedKeys) ;
     allObjs.push( objAreas );
   });
 
@@ -53,6 +59,7 @@ function buildTree(key, obj) {
 
   mergedAreas.formComponentFormGroupArea = formComponentFormGroupArea;
   mergedAreas.formComponentHtmlArea = formComponentHtmlArea;
+  mergedAreas.emptyObjectsForOpenModal = emptyObjectsForOpenModal;
 
   return mergedAreas;
 }
@@ -132,75 +139,120 @@ function getStringOutOfHierarchy(obj){
   }
 }
 
-function nestedHtmlForGroupBuilder(key, obj) {
+let nestedHtml = '';
+function nestedHtmlForGroupBuilder(key, obj, parent = null) {
   let temp = '';
+  if (parent !== null) {
+     nestedHtml = nestedHtml.substring(0, nestedHtml.indexOf(parent) + parent.length + 1);
+  }
+
   if (typeof obj == "object") {
+    nestedHtml += `${key}.`;
     temp +=  `   
     <div formGroupName='${key}'>
     `;
     for (let property in obj) {
-      temp += nestedHtmlForGroupBuilder(property, obj[property]);
+      temp += nestedHtmlForGroupBuilder(property, obj[property], key);
     }
     temp += `
     </div>`;
   } else {
-    const { formComponentHtmlArea } = detectFieldType(key, obj);
+    const { formComponentHtmlArea } = detectFieldType(key, obj, nestedHtml);
     temp += formComponentHtmlArea;
   }
   return temp;
 }
+
 let nested = '';
-function nestedForGroupBuilder(key, obj) {
+function nestedForGroupBuilder(key, obj, parent = null) {
   let temp = '';
-  if (typeof obj == "object") { nested += `${key}.`;
+
+  if (parent !== null) {
+      nested = nested.substring(0, nested.indexOf(parent) + parent.length + 1);
+  }
+
+  if (typeof obj == "object") { 
+    nested += `${key}.`;
     temp +=  `
     ${key}: this.fb.group({
     `;
     for (let property in obj) {
-      temp += nestedForGroupBuilder(property, obj[property]);
+      temp += nestedForGroupBuilder(property, obj[property], key);
     }
     temp += ` 
     }),`;
-  } else { //console.log('nested: ',nested, key)
-    const { formComponentFormGroupArea } = detectFieldType(key, obj, nested); // nested = '';
-    temp += formComponentFormGroupArea;
+  } else {
+    const { formComponentFormGroupArea } = detectFieldType(key, obj, nested);
+    temp += formComponentFormGroupArea;  
+  }
+  return temp;
+}
+
+let nestedForModal = '';
+function nestedemptyObjectsForOpenModal(key, obj, parent = null) {
+  let temp = '';
+
+  if (parent !== null) {
+    nestedForModal = nestedForModal.substring(0, nestedForModal.indexOf(parent) + parent.length + 1);
+  }
+
+  if (typeof obj == "object") { 
+    nestedForModal += `${key}.`;
+    temp +=  `
+    ${key}: {
+    `;
+    for (let property in obj) {
+      temp += nestedemptyObjectsForOpenModal(property, obj[property], key);
+    }
+    temp += ` 
+    },`;
+  } else {
+    const { emptyObjectsForOpenModal } = detectFieldType(key, obj, nestedForModal);
+    temp += emptyObjectsForOpenModal;  
   }
   return temp;
 }
 
 function detectFieldType(key, type, nested = null) {
-  switch( type ) { 
-    case 'multilingualSchema-quill-editor': return multilingualQuillEditorBuilder(key, nested);
-    break;
-    case 'multilingualSchema-Textarea': return multilingualTextareaBuilder(key, nested);
-    break;
-    case 'multilingualSchema': return multilingualSchemaBuilder(key, nested);
-      break;
-    case 'quill-editor': return quillEditorBuilder(key, nested);
-      break;
-    case 'Textarea': return textareaBuilder(key, nested);
-      break;
-    case 'String': return stringBuilder(key, nested);
-      break;
-    case 'Number': return numberBuilder(key, nested);
-      break;
-    case 'imageSchema': return imageBuilder(key, nested);
-      break;
-    case '[imageSchema]': return imagesBuilder(key, nested);
-      break;
-    case 'Date': return dateBuilder(key, nested);
-      break;
-    case 'Socials': return socialsBuilder(key, nested);
-      break;
-    case 'Select': return selectBuilder(key, nested);
-      break;
-    case 'Slide-toggle': return slideToggleBuilder(key, nested);
-      break;
-    case 'Reference': return referenceBuilder(key, nested);
-      break;
-    case 'Meta': return metaBuilder(key, nested);
-      break;
+  try { 
+      switch( type ) { 
+        case 'multilingualSchema-quill-editor': return multilingualQuillEditorBuilder(key, nested);
+        break;
+        case 'multilingualSchema-Textarea': return multilingualTextareaBuilder(key, nested);
+        break;
+        case 'multilingualSchema': return multilingualSchemaBuilder(key, nested);
+          break;
+        case 'quill-editor': return quillEditorBuilder(key, nested);
+          break;
+        case 'Textarea': return textareaBuilder(key, nested);
+          break;
+        case 'String': return stringBuilder(key, nested);
+          break;
+        case 'Number': return numberBuilder(key, nested);
+          break;
+        case 'imageSchema': return imageBuilder(key, nested);
+          break;
+        case '[imageSchema]': return imagesBuilder(key, nested);
+          break;
+        case 'Date': return dateBuilder(key, nested);
+          break;
+        case 'Socials': return socialsBuilder(key, nested);
+          break;
+        case 'Select': return selectBuilder(key, nested);
+          break;
+        case 'Slide-toggle': return slideToggleBuilder(key, nested);
+          break;
+        case 'Reference': return referenceBuilder(key, nested);
+          break;
+        case 'Meta': return metaBuilder(key, nested);
+          break;
+        break;
+      }
+  } catch (err) {
+      log(colors.red(`FIELD TYPE ERROR, check field: ${key}`));
+      process.exit(1);
   }
+ 
 }
 
 function mergeProperties(data, excludes) {

@@ -12,7 +12,9 @@ import { accounts } from '../../../../../../shared/constants/socials';
 })
 export class BasicInfoComponent extends _FormComponent implements OnInit {
 
-  
+    
+  @Input() categories: any;
+   
   @Input() formData: Blog;
   @Input() showSubmit = true;
   @Output() submitForm = new EventEmitter<Blog>();
@@ -42,68 +44,89 @@ export class BasicInfoComponent extends _FormComponent implements OnInit {
   ngOnInit(): void {
 
     
+    this.formData.name = this.formData.name || '';
+    this.formData.about.contact.category = this.formData.about.contact.category || [];
     this.formData.about.contact.street.title = this.formData.about.contact.street.title || '';
-    this.formData.blogType = this.formData.blogType || '';
+    this.formData.about.contact.street.blogType = this.formData.about.contact.street.blogType || '';
     this.formData.about.contact.street.peoples.human.age = this.formData.about.contact.street.peoples.human.age || {};
-    this.formData.about.contact.street.peoples.human.age4 = this.formData.about.contact.street.peoples.human.age4 || {};
-    this.formData.about.contact.street.peoples.anumal.age2 = this.formData.about.contact.street.peoples.anumal.age2 || {};
-    this.formData.about.contact.street.peoples.anumal.age3 = this.formData.about.contact.street.peoples.anumal.age3 || {};
-    this.formData.about.contact.images = this.formData.about.contact.images || [];
+    this.formData.about.contact.street.peoples.human.age4 = this.formData.about.contact.street.peoples.human.age4 || '';
+    this.formData.about.contact.street.peoples.isFeatured = this.formData.about.contact.street.peoples.isFeatured === undefined ? false : this.formData.about.contact.street.peoples.isFeatured;
+    this.formData.about.contact.street.desc = this.formData.about.contact.street.desc || '';
+    this.formData.about.contact.image = this.formData.about.contact.image || {};
+    this.formData.about.behemoth.ambum = this.formData.about.behemoth.ambum || '';
+    this.formData.about.behemoth.songs.oneSong = this.formData.about.behemoth.songs.oneSong || {};
+    this.formData.about.behemoth.songs.oneSong2 = this.formData.about.behemoth.songs.oneSong2 || {};
+    this.images = this.formData.about.behemoth.blackmetal.images || [];
     const socialObj = { account: '', link: ''};
     const socialArray = (this.formData.about.socialAccounts || [socialObj]).map((socialItem: any) => this.createSocials(socialItem));
     
 
     this.form = this.fb.group({
-      about: this.fb.group({
-      
-      contact: this.fb.group({
-      
-      street: this.fb.group({
-      
-        title: [this.formData.title || ''],
-        blogType: [this.formData.blogType || ''],
-      peoples: this.fb.group({
-      
-      human: this.fb.group({
-      
+        name: [this.formData.name || ''],
+    about: this.fb.group({
+    
+    contact: this.fb.group({
+    
+        category: [this.formData.about.contact.category || []],
+    street: this.fb.group({
+    
+        title: [this.formData.about.contact.street.title || ''],
+        blogType: [this.formData.about.contact.street.blogType || ''],
+    peoples: this.fb.group({
+    
+    human: this.fb.group({
+    
         age: this.fb.group({
             
-           en: [this.formData.age.en || ''],
-           ge: [this.formData.age.ge || ''],
+           en: [this.formData.about.contact.street.peoples.human.age.en || ''],
+           ge: [this.formData.about.contact.street.peoples.human.age.ge || ''],
         }),
-        age4: this.fb.group({
-            
-           en: [this.formData.age4.en || ''],
-           ge: [this.formData.age4.ge || ''],
+        age4: [this.formData.about.contact.street.peoples.human.age4 || ''], 
+    }),
+        isFeatured: [this.formData.about.contact.street.peoples.isFeatured], 
+    }),
+        desc: [this.formData.about.contact.street.desc || ''], 
+    }), 
+        image: this.fb.group({
+            url: [this.formData.about.contact.image.url || '']
         }), 
-      }),
-      anumal: this.fb.group({
-      
-        age2: this.fb.group({
+    }),
+    behemoth: this.fb.group({
+    
+        ambum: [this.formData.about.behemoth.ambum || ''],
+    songs: this.fb.group({
+    
+        oneSong: this.fb.group({
             
-           en: [this.formData.age2.en || ''],
-           ge: [this.formData.age2.ge || ''],
+           en: [this.formData.about.behemoth.songs.oneSong.en || ''],
+           ge: [this.formData.about.behemoth.songs.oneSong.ge || ''],
         }),
-        age3: this.fb.group({
+        oneSong2: this.fb.group({
             
-           en: [this.formData.age3.en || ''],
-           ge: [this.formData.age3.ge || ''],
+           en: [this.formData.about.behemoth.songs.oneSong2.en || ''],
+           ge: [this.formData.about.behemoth.songs.oneSong2.ge || ''],
         }), 
-      }), 
-      }), 
-      }),
-        images: this.fb.array(this.formData.images || []), 
-      }),
+    }),
+    blackmetal: this.fb.group({
+    
+        images: this.fb.array(this.formData.about.behemoth.blackmetal.images || []), 
+    }), 
+    }),
         socialAccounts: this.fb.array( socialArray ), 
-      }),
+    }),
     });
   }
 
   
+  onUploadCompleteImage(data: any): void {
+      this.form.get('about.contact.image').get('url').markAsTouched();
+      this.form.get('about.contact.image').get('url').setValue(data.url);
+  }
+     
   // images upload methods
   deleteImageImages(index: any): void {
      this.images.splice(index, 1);
-     this.items = this.form.get('about.contact.images') as FormArray;
+     this.items = this.form.get('about.behemoth.blackmetal.images') as FormArray;
      this.items.removeAt(index);
   }
 
@@ -114,7 +137,7 @@ export class BasicInfoComponent extends _FormComponent implements OnInit {
   }
 
   addItemImages(url: any): void {
-       this.items = this.form.get('about.contact.images') as FormArray;
+       this.items = this.form.get('about.behemoth.blackmetal.images') as FormArray;
        this.items.push(this.createItemImages(url));
        this.images.push({ url: url });
   }

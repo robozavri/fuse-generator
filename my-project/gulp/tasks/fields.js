@@ -46,6 +46,7 @@ export const selectFields = {
 
 export const fields = {
      name: 'String',
+     // gogola: 'String',
      // title: 'multilingualSchema', 
      // description: 'multilingualSchema', 
      // smallDescription: 'multilingualSchema-Textarea', 
@@ -63,6 +64,7 @@ export const fields = {
      // meta: 'Meta',
      about: {
           contact: {
+               category: 'Reference',
                street: {
                     title:'String', 
                     blogType: 'Select',
@@ -70,15 +72,23 @@ export const fields = {
                     peoples: {
                          human: {
                               age : 'multilingualSchema',
-                              age4 : 'multilingualSchema'
+                              age4 : 'String'
                          },
-                         anumal: {
-                              age2 : 'multilingualSchema',
-                              age3 : 'multilingualSchema'
-                         }
-                    }
+                         isFeatured: 'Slide-toggle',
+                    },
+                    desc: 'String', 
                },
-               images: '[imageSchema]', 
+               image: 'imageSchema', 
+          },
+          behemoth: {
+               ambum: 'String',
+               songs: {
+                    oneSong: 'multilingualSchema',
+                    oneSong2: 'multilingualSchema',
+               },
+               blackmetal: {
+                    images: '[imageSchema]', 
+               }
           },
           socialAccounts: 'Socials',
      }
@@ -95,4 +105,4 @@ export const fields = {
      //      phone: 'String',
      //      socialAccounts: 'Socials',
      // }
-};
+}

@@ -11,26 +11,28 @@ import { plural } from '../../../helpers';
 
 export function selectBuilder(key, nested = null) {
     const selectType = selectFields[key].selectType === 'single' ? "''" : '[]';
-    if (nested === null) {
-        nested = key;
-    }
     return {
-        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(nested,selectType),
+        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key, nested, selectType),
         emptyObjectsForOpenModal:  buildForModalEmpty(key,selectType),
-        formComponentFormGroupArea: buildFormGroup(key),
+        formComponentFormGroupArea: buildFormGroup(key, nested),
         formComponentHtmlArea: buildHtml(key),
         formComponentClassPropertiesArea: generateSelectArray(key)
     }
 }
 
-function buildFormGroup(key) {
+function buildFormGroup(key, nested = null) {
+    if (nested === null) {
+        nested = key;
+    }else{
+        nested += key;
+    }
     if (selectFields[key].selectType === 'single') {
         return   `
-        ${key}: [this.formData.${key} || ''],`;
-  }
+        ${key}: [this.formData.${nested} || ''],`;
+    }
 
   return   `
-        ${key}: [this.formData.${key} || []],`;  
+        ${key}: [this.formData.${nested} || []],`;  
 }
 
 function buildHtml(key) {

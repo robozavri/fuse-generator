@@ -40,7 +40,7 @@
                     <!-- *ngIf="expandedElement && item._id === expandedElement._id " -->
                     <mat-tab-group>
                         <mat-tab label="Information">
-                            <app-form [formData]="item"  (submitForm)="submitFormData($event, item._id)"></app-form>
+                            <app-form [formData]="item"  [categories]="categories"  (submitForm)="submitFormData($event, item._id)"></app-form>
                         </mat-tab>
                         
                     </mat-tab-group>

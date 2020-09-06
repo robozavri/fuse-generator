@@ -7,27 +7,23 @@ function getNameObject(i: number = 0): any {
     return 'name';
 }
 function getAboutObject(i: number = 0): any {
-    return { contact: { street: { title: 'title', blogType: 'rock', peoples: { human: { age: {
+    return { contact: { category: '', street: { title: 'title', blogType: 'classic', peoples: { human: { age: {
         
         en: `age en ${i}`,
         ge: `age ge ${i}`,
-    }, age4: {
+    }, age4: 'age4',}, isFeatured: false,}, desc: 'desc',}, image: { url: generateImage()},}, behemoth: { ambum: 'ambum', songs: { oneSong: {
         
-        en: `age4 en ${i}`,
-        ge: `age4 ge ${i}`,
-    },}, anumal: { age2: {
+        en: `oneSong en ${i}`,
+        ge: `oneSong ge ${i}`,
+    }, oneSong2: {
         
-        en: `age2 en ${i}`,
-        ge: `age2 ge ${i}`,
-    }, age3: {
-        
-        en: `age3 en ${i}`,
-        ge: `age3 ge ${i}`,
-    },},},}, images: [
+        en: `oneSong2 en ${i}`,
+        ge: `oneSong2 ge ${i}`,
+    },}, blackmetal: { images: [
         { url:  generateImage()},
         { url:  generateImage()},
         { url:  generateImage()}
-    ],}, socialAccounts: [
+    ],},}, socialAccounts: [
           { account: generateSocials(), link: `https://www.${generateSocials()}.com/` },
           { account: generateSocials(), link: `https://www.${generateSocials()}.com/` },
           { account: generateSocials(), link: `https://www.${generateSocials()}.com/` }

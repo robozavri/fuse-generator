@@ -5,9 +5,14 @@ export function buildForModalEmpty(key, value){
         ${key}: ${value},`;
 }
 
-export function buildCheckFormElementEmpty(key, obj){
+export function buildCheckFormElementEmpty(key, nested = null, obj){
+    if (nested === null) {
+        nested = key;
+    }else{
+        nested += key;
+    }
     return `
-    this.formData.${key} = this.formData.${key} || ${obj};`;
+    this.formData.${nested} = this.formData.${nested} || ${obj};`;
 }
 
 export function buildMultilingual(key) {

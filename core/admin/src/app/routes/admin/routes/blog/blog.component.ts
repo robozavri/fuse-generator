@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SnackBarService } from 'app/shared/services/snack-bar.service';
 import { BlogApiService } from 'app/shared/http/blog-api.service';
 
+import { BlogCategoryApiService } from 'app/shared/http/blog-category-api.service';
+
 
 @Component({
   selector: 'app-blog',
@@ -21,7 +23,9 @@ export class BlogComponent implements OnInit, AfterViewInit {
   loadpage: boolean;
   mainData: any;
   editMode: boolean;
-  
+    
+  categories: any;
+   
 
 
   @ViewChild('basicInfoForm', { static: false }) basicInfoForm: BasicInfoComponent;
@@ -34,10 +38,16 @@ export class BlogComponent implements OnInit, AfterViewInit {
     private api: BlogApiService,
     private snackBarService: SnackBarService,
     
+    private blogCategoryApiService: BlogCategoryApiService,
+      
   ) { }
 
   ngOnInit(): void {
     
+    this.blogCategoryApiService.getByQuery({all: true}).subscribe((data: any) => {
+        this.categories = data.items;
+    });
+  
 
     setTimeout(() => {
       this.loadpage = true;

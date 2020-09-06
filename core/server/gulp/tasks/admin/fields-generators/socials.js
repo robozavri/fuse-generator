@@ -7,16 +7,13 @@ import {
 import { availableLangs } from '../../fields';
 
 export function socialsBuilder(key, nested = null) {
-    if (nested === null) {
-        nested = key;
-    }
     return {
-        formComponentClassOnInitBodyArea: generateFormEmptyObject(nested),
+        formComponentClassOnInitBodyArea: generateFormEmptyObject(key, nested),
         emptyObjectsForOpenModal:  buildForModalEmpty(key,"[]"),
         formComponentFormGroupArea: buildFormGroup(key),
         formComponentHtmlArea: buildHtml(key),
         formComponentImporArea: importsForSocials(),
-        formComponentClassPropertiesArea: getterForSocials(nested),
+        formComponentClassPropertiesArea: getterForSocials(key, nested),
         formComponentClassBodyArea: generateSocialMethods(key)
     }
 }
@@ -88,18 +85,28 @@ function generateSocialMethods(key){
   }`;
 }
 
-function getterForSocials(key){
+function getterForSocials(key, nested){
+    if (nested === null) {
+        nested = key;
+    }else{
+        nested += key;
+    }
    return `
   get accounts(): any { return accounts; }
 
   get socials(): FormArray {
-      return this.form.get('${key}') as FormArray;
+      return this.form.get('${nested}') as FormArray;
   }`;
 }
 
-function generateFormEmptyObject(key){
+function generateFormEmptyObject(key, nested){
+    if (nested === null) {
+        nested = key;
+    }else{
+        nested += key;
+    }
   return  `
     const socialObj = { account: '', link: ''};
-    const socialArray = (this.formData.${key} || [socialObj]).map((socialItem: any) => this.createSocials(socialItem));
+    const socialArray = (this.formData.${nested} || [socialObj]).map((socialItem: any) => this.createSocials(socialItem));
     `;
 }

@@ -7,11 +7,8 @@ import {
 import { availableLangs } from '../../fields';
 
 export function multilingualSchemaBuilder(key, nested = null) {
-    if (nested === null) {
-        nested = key;
-    }
     return {
-        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(nested, '{}'),
+        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key, nested, '{}'),
         emptyObjectsForOpenModal: buildForModalEmpty(key, '{}'),
         formComponentFormGroupArea: buildFormGroup(key, nested),
         formComponentHtmlArea: buildHtml(key),
@@ -22,9 +19,7 @@ function buildFormGroup(key, nested = null) {
     if (nested === null) {
         nested = key;
     }else{
-        // // nested = nested.substring(0, nested.length - 1);
-        // console.log('cuted', nested.substring(0, nested.length - 1))
-        // console.log('multy', nested)
+        nested += key;
     }
     return `
         ${key}: this.fb.group({

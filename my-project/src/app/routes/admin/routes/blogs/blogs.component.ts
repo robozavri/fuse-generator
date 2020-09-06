@@ -61,6 +61,43 @@ export class BlogsComponent {
   add(): void {
     const data: Blog = { 
         name: '',
+    about: {
+    
+    contact: {
+    
+        category: [],
+    street: {
+    
+        title: '',
+        blogType: '',
+    peoples: {
+    
+    human: {
+    
+        age: {},
+        age4: '', 
+    },
+        isFeatured: false, 
+    },
+        desc: '', 
+    },
+        image: {}, 
+    },
+    behemoth: {
+    
+        ambum: '',
+    songs: {
+    
+        oneSong: {},
+        oneSong2: {}, 
+    },
+    blackmetal: {
+    
+        images: [], 
+    }, 
+    },
+        socialAccounts: [], 
+    },
     };
     this.dialog
       .open(BlogModalComponent, { data })
