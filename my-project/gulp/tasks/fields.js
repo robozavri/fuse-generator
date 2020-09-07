@@ -61,7 +61,7 @@ export const fields = {
      // category: 'Reference',
      // blogType: 'Select',
      // isFeatured: 'Slide-toggle',
-     // meta: 'Meta',
+     meta: 'Meta',
      about: {
           contact: {
                category: 'Reference',

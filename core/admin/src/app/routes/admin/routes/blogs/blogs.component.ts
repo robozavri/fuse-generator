@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { BlogModalComponent } from './shared/modals/modal/blog-modal.component';
 import { Query } from '../../../../shared/models/query';
 import { Subject, BehaviorSubject, Observable } from 'rxjs';
 import { Blog } from '../../../../shared/models/blog';
@@ -10,7 +11,6 @@ import { filter, switchMap, share, map } from 'rxjs/operators';
 import { fuseAnimations } from '../../../../../@fuse/animations';
 import { FileApiService } from 'app/shared/http/files-api.service';
 import { SnackBarService } from 'app/shared/services/snack-bar.service';
-
 
 @Component({
   selector: 'app-blogs',
@@ -56,6 +56,63 @@ export class BlogsComponent {
     this.items$ = data$.pipe(map(d => d.items));
     this.numTotal$ = data$.pipe(map(d => d.numTotal));
 
+  }
+
+  add(): void {
+    const data: Blog = { 
+        name: '',
+    about: {
+    
+    contact: {
+    
+        category: [],
+    street: {
+    
+        title: '',
+        blogType: '',
+    peoples: {
+    
+    human: {
+    
+        age: {},
+        age4: '', 
+    },
+        isFeatured: false, 
+    },
+        desc: '', 
+    },
+        image: {}, 
+    },
+    behemoth: {
+    
+        ambum: '',
+    songs: {
+    
+        oneSong: {},
+        oneSong2: {}, 
+    },
+    blackmetal: {
+    
+        images: [], 
+    }, 
+    },
+        socialAccounts: [], 
+    },
+    };
+    this.dialog
+      .open(BlogModalComponent, { data })
+      .afterClosed()
+      .pipe(
+        filter(r => r),
+        switchMap(d => {
+          return this.api.create(d);
+        }),
+      )
+      .subscribe(
+        () => this.snackBarService.open('Created Successfully'),
+        () => this.snackBarService.open('Creation Failed'),
+        () => this.loadData$.next(this.query)
+      );
   }
 
   update(data: any): void {

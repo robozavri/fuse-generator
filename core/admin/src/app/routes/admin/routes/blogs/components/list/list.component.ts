@@ -43,7 +43,6 @@ export class ListComponent implements OnInit {
    
   displayedColumns = ['name', ];
 
-
   constructor(
     private blogCategoryApiService: BlogCategoryApiService,
       

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BlogModalComponent } from './modals/modal/blog-modal.component';
+import { FormComponent } from './form/form.component';
 import { ConfirmDeleteModalComponent } from '../../../../../shared/modals/confirm-delete/confirm-delete-modal.component';
 import { SharedModule as _SharedModule } from '../../../../../shared/shared.module';
 
@@ -9,8 +11,8 @@ import { SharedModule as _SharedModule } from '../../../../../shared/shared.modu
       CommonModule,
       _SharedModule,
    ],
-   exports: [_SharedModule],
-   declarations: [],
-   entryComponents: [ConfirmDeleteModalComponent],
+   exports: [_SharedModule, FormComponent],
+   declarations: [FormComponent, BlogModalComponent],
+   entryComponents: [BlogModalComponent, ConfirmDeleteModalComponent],
 })
 export class SharedModule { }

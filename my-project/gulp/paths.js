@@ -20,7 +20,10 @@ const paths = {
     validator: `${root}/gulp/generator/validator/**`,
     mainComponent: `${root}/gulp/generator/main-component/**`,
     adminComponent: `${root}/gulp/generator/admin-component/**`,
-    api: `${root}/gulp/generator/api/**`,
+    api: {
+      standart : `${root}/gulp/generator/api/standar/**`,
+      common : `${root}/gulp/generator/api/common/**`,
+    },    
     stub: `${root}/gulp/generator/stub/**`
   },
 

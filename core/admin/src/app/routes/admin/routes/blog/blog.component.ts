@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SnackBarService } from 'app/shared/services/snack-bar.service';
 import { BlogApiService } from 'app/shared/http/blog-api.service';
 
+import { MetaFormComponent } from '../../../../shared/components/meta-form/meta-form.component';
 import { BlogCategoryApiService } from 'app/shared/http/blog-category-api.service';
 
 
@@ -23,13 +24,14 @@ export class BlogComponent implements OnInit, AfterViewInit {
   loadpage: boolean;
   mainData: any;
   editMode: boolean;
-    
+  
+  meta: any;  
   categories: any;
    
 
 
   @ViewChild('basicInfoForm', { static: false }) basicInfoForm: BasicInfoComponent;
-  
+  @ViewChild('MetaForm', { static: false }) MetaComponent: MetaFormComponent;
 
 
   constructor(
@@ -44,6 +46,7 @@ export class BlogComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     
+    this.meta = {};
     this.blogCategoryApiService.getByQuery({all: true}).subscribe((data: any) => {
         this.categories = data.items;
     });
@@ -62,7 +65,7 @@ export class BlogComponent implements OnInit, AfterViewInit {
       this.editMode = true;
       this.api.getByQuery({ _id: this.route.snapshot.params.id }).subscribe((data: any) => {
         this.mainData = data.items[0] || {}; 
-        
+        this.meta = this.mainData.hasOwnProperty('meta') ? this.mainData.meta : {};
       });
 
     } else {
@@ -74,7 +77,7 @@ export class BlogComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void  {
     this.formComponents = [
       this.basicInfoForm,
-      
+      this.MetaComponent,
     ];
   }
 
@@ -112,7 +115,7 @@ export class BlogComponent implements OnInit, AfterViewInit {
   getFormData(): any {
     return _.cloneDeep(_.merge(
       this.basicInfoForm.getFormValue(),
-      
+      this.MetaComponent.getFormValue(),
     ));
   }
 }

@@ -6,8 +6,25 @@ import { cloneStub, generateImage, generateSocials }  from '../helpers/stub-help
 function getNameObject(i: number = 0): any {
     return 'name';
 }
+
+function getMetaObject(i: number = 0): any {
+    return {
+      title : {
+         
+        en: `meta en ${i}`,
+        ge: `meta ge ${i}`,
+      },
+      description : {
+         
+        en: `meta en ${i}`,
+        ge: `meta ge ${i}`,
+      },
+      keywords: ['meta meta keyword1', 'meta meta keyword2', 'meta meta keyword3'],
+      image: { url: generateImage() },
+  };
+}
 function getAboutObject(i: number = 0): any {
-    return { contact: { category: null, street: { title: 'title', blogType: 'black', peoples: { human: { age: {
+    return { contact: { category: null, street: { title: 'title', blogType: 'metal', peoples: { human: { age: {
         
         en: `age en ${i}`,
         ge: `age ge ${i}`,
@@ -32,6 +49,7 @@ function getAboutObject(i: number = 0): any {
 
 const BlogStub = {
     name: getNameObject(),
+    meta: getMetaObject(),
     about: getAboutObject(),
 };
 
@@ -47,6 +65,7 @@ export function getMany(count: number, fields?: any) {
     ...getSingle(),
     ...fields,
     name: getNameObject(i),
+    meta: getMetaObject(i),
     about: getAboutObject(i),
   }));
 }

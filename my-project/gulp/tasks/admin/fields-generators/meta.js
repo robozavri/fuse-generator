@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-export function metaBuilder(key) {
+export function metaBuilder(key) { console.log('movedit metashi')
     return {
         modalImportsArea: generateMeta('modalImports'),
         modalComponentClassPropertiesArea: generateMeta('modalClassProperties'),

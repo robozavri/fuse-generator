@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Query } from 'app/shared/models/query';
 import { fuseAnimations } from '../../../../../../../@fuse/animations';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-filters',
@@ -12,10 +11,9 @@ import {Router} from '@angular/router';
 export class FiltersComponent implements OnInit {
   @Input() query: Query;
   @Output() queryChange = new EventEmitter<Query>();
+  @Output() createNew = new EventEmitter<Query>();
 
-  constructor(
-    public router: Router,
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
@@ -25,4 +23,9 @@ export class FiltersComponent implements OnInit {
     const val = this.query.keyword;
     this.queryChange.emit({ keyword: val });
   }
+
+  add(): void {
+    this.createNew.emit({});
+  }
+
 }

@@ -9,6 +9,56 @@ import { generateSchema, generateKeywordSearch, generateBaseProps, generateSingl
 import {getNameFromArgv,  getDirFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
 const $ = require('gulp-load-plugins')();
 
+// commons
+gulp.task('apicommons', (done) => {
+  runSequence('generateApiCommon', 'generateCommonStub', done);
+});
+
+gulp.task('generateApiCommon', () => {
+  const name = getNameFromArgv();
+  const dir = getDirFromArgv();
+  const src = paths.generatorTemplates.api.common;
+  const dest = path.join(paths.server.src, 'api' + (dir ? '/' + dir : ''), plural(name));
+  return insertCommonsTemplates(name, src, dest, true);
+});
+
+function insertCommonsTemplates(name, src, dest) { 
+  const singleStub = generateSingleStub(fields);
+
+  return gulp.src(src)
+    .pipe($.template({
+      nameUC: firstUC(name),
+      nameLC: firstLC(name),
+      namePlural: plural(name),
+      namePluralLC: plural(name.toLowerCase()),
+      namePluralFUC: firstUC(plural(name)),
+      nameSingularLC: singular(name),
+      nameSingularFUC: firstUC(singular(name)),
+      schema: generateSchema(fields),
+      keywords: generateKeywordSearch(fields),
+      keybaseProps: generateBaseProps(fields),
+      objectNames: singleStub.objectNames,
+      stubObjectMethods: singleStub.stubObjectMethods,
+      objectNamesWithI: singleStub.objectNamesWithI,
+      defField: ''
+    }, {
+      interpolate: /<%=([\s\S]+?)%>/g
+    }))
+    .pipe($.rename(path => {
+      path.basename = getFileName(name, path.basename);
+    }))
+    .pipe(gulp.dest(dest));
+}
+
+gulp.task('generateCommonStub', () => {
+  const name = getNameFromArgv();
+  const src = paths.generatorTemplates.stub;
+  const dest = path.join(paths.server.src, 'stubs');
+  return insertTemplates(name, src, dest, true);
+});
+
+
+// articles with edit page
 gulp.task('api2', (done) => {
   runSequence('generateApi2', 'generateStub2', done);
 });
@@ -16,7 +66,7 @@ gulp.task('api2', (done) => {
 gulp.task('generateApi2', () => {
   const name = getNameFromArgv();
   const dir = getDirFromArgv();
-  const src = paths.generatorTemplates.api;
+  const src = paths.generatorTemplates.api.standart;
   const dest = path.join(paths.server.src, 'api' + (dir ? '/' + dir : ''), plural(name));
   return insertTemplates(name, src, dest, true);
 });

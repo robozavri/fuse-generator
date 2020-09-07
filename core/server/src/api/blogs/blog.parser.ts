@@ -63,6 +63,7 @@ function parseBaseProps(body: any) {
   return _.pick(body, [
     
     'name',
+    'meta',
     'about',
     'position',
   ]);
