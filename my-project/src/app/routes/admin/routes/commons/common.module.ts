@@ -14,4 +14,4 @@ import { SharedModule } from '../../../../shared/shared.module';
   ],
   exports: [CommonComponent]
 })
-export class CommonModule { }
+export class CommonsModule { }

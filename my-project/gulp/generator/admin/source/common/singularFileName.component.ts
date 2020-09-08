@@ -1,8 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
-import { FormComponent } from 'app/shared/components/form.component';
-import { MetaApiService } from 'app/shared/http/meta-api.service';
-import { FileApiService } from '../../../../shared/http/files-api.service';
 import { <%=nameSingularFUC%>ApiService } from '../../../../shared/http/<%=singularFileName%>-api.service';
 import { SnackBarService } from 'app/shared/services/snack-bar.service';
 
@@ -47,8 +44,8 @@ export class <%=nameSingularFUC%>Component implements OnInit {
   
   }
 
-  update(data: any, pageTitle: any): void {
-    this.api.update({ [pageTitle]: data.formData }).subscribe(
+  submit(): void {
+    this.api.update({ ...this.form.value }).subscribe(
       () => this.snackBarService.open('Updated Successfully'),
       () => this.snackBarService.open('Update Failed'),
     );

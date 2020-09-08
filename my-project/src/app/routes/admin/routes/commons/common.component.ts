@@ -5,18 +5,20 @@ import { MetaApiService } from 'app/shared/http/meta-api.service';
 import { FileApiService } from '../../../../shared/http/files-api.service';
 import { CommonApiService } from '../../../../shared/http/common-api.service';
 import { SnackBarService } from 'app/shared/services/snack-bar.service';
+
 import { accounts } from 'app/shared/constants/socials';
     
 
 @Component({
-  selector: 'app-meta',
-  templateUrl: './meta.component.html',
-  styleUrls: ['./meta.component.scss'],
+  selector: 'app-common',
+  templateUrl: './common.component.html',
+  styleUrls: ['./common.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class MetaComponent implements OnInit {
+export class CommonComponent implements OnInit {
 
-  formData: Common;
+  form: FormGroup;
+  formData: any = {};
   
   public images = [];
   public items: FormArray;
@@ -31,14 +33,68 @@ export class MetaComponent implements OnInit {
   constructor(
     
     private snackBarService: SnackBarService,
+    private fb: FormBuilder,
     public api: CommonApiService,
   ) {}
 
-  ngOnInit() {
-
+  ngOnInit(): void {
+    this.loadData();
     this.api.getOne().subscribe((data: any) => {
       this.formData = data;
+      this.loadData();
     });
+  }
+
+  
+  onUploadCompleteImage(data: any): void {
+      this.form.get('about.contact.image').get('url').markAsTouched();
+      this.form.get('about.contact.image').get('url').setValue(data.url);
+  }
+     
+  // images upload methods
+  deleteImageImages(index: any): void {
+     this.images.splice(index, 1);
+     this.items = this.form.get('about.behemoth.blackmetal.images') as FormArray;
+     this.items.removeAt(index);
+  }
+
+  createItemImages(url= ''): FormGroup {
+       return this.fb.group({
+           url: url,
+       });
+  }
+
+  addItemImages(url: any): void {
+       this.items = this.form.get('about.behemoth.blackmetal.images') as FormArray;
+       this.items.push(this.createItemImages(url));
+       this.images.push({ url: url });
+  }
+
+  onUploadCompleteImages(data: any): void {
+       this.addItemImages(data.url);
+  }
+   
+  // socialAccounts methods
+  createSocials(data: any): FormGroup {
+      return this.fb.group({
+          account: [ data.account || ''],
+          link: [ data.link || ''],
+      });
+  }
+  
+  addSocials(details: string): void {
+      const detailsForm = this.fb.group({
+          account: [''],
+          link: [''],
+      });
+      this[details].push(detailsForm);
+  }
+
+  deleteSocials(i: any): void{
+      this.socials.removeAt(i);
+  }
+  
+  loadData(): any {
 
     
     this.formData.name = this.formData.name || '';
@@ -116,66 +172,11 @@ export class MetaComponent implements OnInit {
         socialAccounts: this.fb.array( socialArray ), 
     }),
     });
-
-  }
-
   
-  onUploadCompleteImage(data: any): void {
-      this.form.get('about.contact.image').get('url').markAsTouched();
-      this.form.get('about.contact.image').get('url').setValue(data.url);
-  }
-     
-  // images upload methods
-  deleteImageImages(index: any): void {
-     this.images.splice(index, 1);
-     this.items = this.form.get('about.behemoth.blackmetal.images') as FormArray;
-     this.items.removeAt(index);
   }
 
-  createItemImages(url= ''): FormGroup {
-       return this.fb.group({
-           url: url,
-       });
-  }
-
-  addItemImages(url: any): void {
-       this.items = this.form.get('about.behemoth.blackmetal.images') as FormArray;
-       this.items.push(this.createItemImages(url));
-       this.images.push({ url: url });
-  }
-
-  onUploadCompleteImages(data: any): void {
-       this.addItemImages(data.url);
-  }
-   
-  // socialAccounts methods
-  createSocials(data: any): FormGroup {
-      return this.fb.group({
-          account: [ data.account || ''],
-          link: [ data.link || ''],
-      });
-  }
-  
-  addSocials(details: string): void {
-      const detailsForm = this.fb.group({
-          account: [''],
-          link: [''],
-      });
-      this[details].push(detailsForm);
-  }
-
-  deleteSocials(i: any): void{
-      this.socials.removeAt(i);
-  }
-  
-  // loadData(): any {
-  //   this.api.getOne().subscribe((data: any) => {
-  //     this.formData = data;
-  //   });
-  // }
-
-  update(data: any, pageTitle: any): void {
-    this.api.update({ [pageTitle]: data.formData }).subscribe(
+  submit(): void {
+    this.api.update({ ...this.FormData.value }).subscribe(
       () => this.snackBarService.open('Updated Successfully'),
       () => this.snackBarService.open('Update Failed'),
     );
