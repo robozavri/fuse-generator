@@ -16,7 +16,7 @@ gulp.task('api', (done) => {
 gulp.task('generateApi', () => {
   const name = getNameFromArgv();
   const dir = getDirFromArgv();
-  const src = paths.generatorTemplates.api;
+  const src = paths.generatorTemplates.api.standart;
   const dest = path.join(paths.server.src, 'api' + (dir ? '/' + dir : ''), plural(name));
   return insertTemplates(name, src, dest, true);
 });

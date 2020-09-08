@@ -19,9 +19,6 @@ export class FormComponent extends _FormComponent implements OnInit {
 
 
   form: FormGroup;
-  selectedImage: any;
-  filesToCreate: any[] = [];
-  filesToDestroy: any[] = [];
   <%=selectProperty%>
   <%=imagesProperties%>
 

@@ -1,10 +1,15 @@
 import Model from './common.model';
+import Promise from 'bluebird';
 import { assertFound } from '../../helpers/db-result-handler';
+
+// =============== Getters ===============
 
 export function getOne() {
   return Model.findOne({}).lean()
-    .then(assertFound(`Common was not found`));
+    .then(assertFound(`common  was not found`));
 }
+
+// =============== Setters ===============
 
 export function create(data: any) {
   return Model.create(data);
@@ -17,3 +22,4 @@ export function update(data: any) {
 export function destroyAll() {
   return Model.deleteMany({});
 }
+

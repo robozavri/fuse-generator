@@ -33,12 +33,22 @@ export function generateArticlesList(fields){
     return data;
 }
 
+let nestedArr = [];
 function buildTree(key, obj) {
 
   const allObjs = [];
   const formComponentFormGroupArea = nestedForGroupBuilder(key, obj);
   const formComponentHtmlArea = nestedHtmlForGroupBuilder(key, obj);
   const emptyObjectsForOpenModal = nestedemptyObjectsForOpenModal(key, obj);
+
+  checkNestedEmptyObjs(key, obj);
+  let formComponentClassOnInitBodyArea = '';
+  _.forEach(nestedArr, function(keys) {
+    let name = keys.substring(0, keys.length - 1);
+    formComponentClassOnInitBodyArea += `
+    this.formData.${name} = this.formData.${name} || {};`;
+  });
+
   let restored = {};
   restored[key] = obj;
   const objectKeys = _.flattenDeep(getStringOutOfHierarchy(restored));
@@ -60,8 +70,23 @@ function buildTree(key, obj) {
   mergedAreas.formComponentFormGroupArea = formComponentFormGroupArea;
   mergedAreas.formComponentHtmlArea = formComponentHtmlArea;
   mergedAreas.emptyObjectsForOpenModal = emptyObjectsForOpenModal;
+  mergedAreas.formComponentClassOnInitBodyArea = formComponentClassOnInitBodyArea += mergedAreas.formComponentClassOnInitBodyArea;
 
   return mergedAreas;
+}
+
+let nestedCheck = '';
+function checkNestedEmptyObjs(key, obj, parent = null) {
+  if (parent !== null) {
+    nestedCheck = nestedCheck.substring(0, nestedCheck.indexOf(parent) + parent.length + 1);
+  }
+  if (typeof obj == "object") {
+    nestedCheck += `${key}.`;
+    nestedArr.push(nestedCheck);
+    for (let property in obj) {
+      checkNestedEmptyObjs(property, obj[property], key);
+    }
+  } 
 }
 
 function getStringOutOfHierarchy(obj){
@@ -303,10 +328,7 @@ function mergeProperties(data, excludes) {
  
   _.forEach(data, function (obj, key) {
         areas.map( (area) => {
-          // console.log('CHECK: ', area)
             if (_.has(obj, area) && !_.includes(excludes, area)) {
-              // console.log('area: ', area)
-              // console.log('obj[area]: ', obj[area])
               areasObj[area] += obj[area];
             }
         });

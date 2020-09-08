@@ -6,6 +6,7 @@ import runSequence from 'run-sequence';
 import paths from '../paths';
 import * as _ from 'lodash';
 import { fields, refFields } from './fields';
+import { generateCommon } from './admin/common';
 import { generateArticlesList } from './admin/articles-list';
 import { generateInterface } from './admin/model';
 import { getIsGeenerateArgv, getNameFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
@@ -58,6 +59,39 @@ gulp.task('generateEditPage2', () => {
   const dest = path.join(paths.admin.adminModules, _.kebabCase(destDirName));
   return insertEditPageTemplate(name, src, dest, fields);
 });
+
+gulp.task('admincommon', (done) => {
+  runSequence('generateCommon', 'generateCommonHttp', 'generateModel2', done);
+});
+
+gulp.task('generateCommon', () => {
+  const name = getNameFromArgv();
+  let src, dest = path.join(paths.admin.adminModules, _.kebabCase(plural(name)));
+  src = paths.adminGeneratorTemplates.common;
+  return insertCommonTemplate(name, src, dest);
+});
+
+gulp.task('generateCommonHttp', () => {
+  const name = getNameFromArgv();
+  const src = paths.adminGeneratorTemplates.commonHttp;
+  const dest = paths.admin.http; 
+  return insertHttpTemplate(name, src, dest, true);
+});
+
+function insertCommonTemplate(name, src, dest) {
+  const common = generateCommon(fields, refFields);
+  // ყველა ობიექტებს ამოიღებს და არეების მიხედვით გაერთიანებს მაგათ ფილდებს
+  const data = mergeProperties(common,name);
+
+  return gulp.src(src)
+      .pipe($.template(data, {
+          interpolate: /<%=([\s\S]+?)%>/g
+      }))
+      .pipe($.rename(path => {
+          path.basename = getFileName(name, path.basename);
+      }))
+      .pipe(gulp.dest(dest));
+}
 
 function insertEditPageTemplate(name, src, dest, fields) {
   const articlesList = generateArticlesList(fields, refFields);

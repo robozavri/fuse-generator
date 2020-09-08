@@ -27,6 +27,8 @@ export class ContactsComponent implements OnInit {
   }
 
   initForm() {
+    this.data.contact = this.data.contact || {};
+    this.data.contact.address = this.data.contact.address || {};
     this.form = this.fb.group({
       contact: this.fb.group({
         phone: [this.data.contact.phone || '', Validators.required],

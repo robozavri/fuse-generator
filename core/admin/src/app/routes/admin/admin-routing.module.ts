@@ -107,6 +107,10 @@ const routes: Routes = [
         path: 'blog/:id',
         loadChildren: './routes/blog/blog.module#BlogModule'
       },
+      {
+        path: 'commons',
+        loadChildren: './routes/commons/common.module#CommonsModule'
+      },
     ]
   }
 ];

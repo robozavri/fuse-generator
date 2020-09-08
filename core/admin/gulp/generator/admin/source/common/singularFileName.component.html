@@ -1,0 +1,40 @@
+<div class="page-layout carded fullwidth inner-scroll">
+    <div class="top-bg accent"></div>
+    <div class="center">
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <div fxLayout="column" fxLayoutAlign="start start">
+                    <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
+                        <mat-icon class="logo-icon s-32 mr-16"> filter </mat-icon>
+                        <span class="logo-text h1"> <%=singularFileName%> </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="content">
+
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="tab-content p-24" fusePerfectScrollbar fxLayout="column">
+                        <%=formComponentHtmlArea%>
+                
+                        <div>
+                            <button mat-raised-button color="primary"> Submit </button>
+                        </div>
+                    </div>
+                </form>
+
+
+                <!-- <mat-tab-group fxLayout="column" fxFlex *ngIf="metas">
+
+                    <mat-tab label="Homepage">
+                        <app-meta-form [meta]="metas.home" pageTitle="home" (submitMeta)="update($event, 'home')">
+                        </app-meta-form>
+                    </mat-tab>
+
+                </mat-tab-group> -->
+            </div>
+        </div>
+    </div>
+</div>

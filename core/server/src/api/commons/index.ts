@@ -1,16 +1,16 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import * as commonDao from './common.dao';
-import * as commonParser from './common.parser';
+import * as commonParser  from './common.parser';
 import * as auth from '../../auth';
 import { sendClientMessage } from './common.messages';
 import { langs } from '../../constants/common';
+
 
 const commonRouter = Router();
 
 commonRouter.get('/one', getOne);
 commonRouter.put('/one', auth.isAdmin, commonParser.parseUpdate, update);
 commonRouter.post('/email/send', commonParser.parseSendEmail, sendEmail);
-
 
 export default commonRouter;
 

@@ -58,7 +58,7 @@ function buildHtml(key) {
 }
 
 function importsForSocials(){
-    return `import { accounts } from '../../../../../../shared/constants/socials';
+    return `import { accounts } from 'app/shared/constants/socials';
     `;
   }
 

@@ -10,7 +10,7 @@ import {getNameFromArgv,  getDirFromArgv, firstUC, firstLC, plural, singular} fr
 const $ = require('gulp-load-plugins')();
 
 // commons
-gulp.task('apicommons', (done) => {
+gulp.task('apicommon', (done) => {
   runSequence('generateApiCommon', 'generateCommonStub', done);
 });
 
