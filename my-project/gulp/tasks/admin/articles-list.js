@@ -38,6 +38,7 @@ let hierarchy = '';
 function buildTree(key, obj) {
 
   const allObjs = [];
+  // old methods. need to remove in future
   // const formComponentFormGroupArea = nestedForGroupBuilder(key, obj);
   // const formComponentHtmlArea = nestedHtmlForGroupBuilder(key, obj);
   // const emptyObjectsForOpenModal = nestedemptyObjectsForOpenModal(key, obj);
@@ -68,7 +69,6 @@ function nestedHierarchyBuilder(key, obj, parent = null) {
       hierarchy = hierarchy.substring(0, hierarchy.indexOf(parent) + parent.length + 1);
   }
 
-
   if (typeof obj == "object") { 
     hierarchy += `${key}.`;
     tempEmptyObj +=  `
@@ -97,8 +97,6 @@ function nestedHierarchyBuilder(key, obj, parent = null) {
   },`;
   } else {
     const fieldObj = detectFieldType(key, obj, hierarchy);
-    // console.log('hierarchy', hierarchy)
-    // console.log('formComponentClassOnInitBodyArea', fieldObj.formComponentClassOnInitBodyArea)
     allObjs.push( fieldObj );
     return fieldObj;
   }
@@ -109,9 +107,8 @@ function nestedHierarchyBuilder(key, obj, parent = null) {
   };
 }
 
-
+  // old code. need to remove in future
   // const objectKeys = _.flattenDeep(getStringOutOfHierarchy(restored));
-
   // _.forEach(objectKeys, function(keys) {
   //   const type = _.get(restored, keys);  
   //   let property = _.last(keys.split("."));
@@ -125,7 +122,6 @@ function nestedHierarchyBuilder(key, obj, parent = null) {
     'formComponentHtmlArea',
     'emptyObjectsForOpenModal',
   ]);
-  // console.log(':::::', mergedAreas.formComponentClassOnInitBodyArea);
   mergedAreas.formComponentFormGroupArea = formComponentFormGroupArea;
   mergedAreas.formComponentHtmlArea = formComponentHtmlArea;
   mergedAreas.emptyObjectsForOpenModal = emptyObjectsForOpenModal;
@@ -148,6 +144,8 @@ function checkNestedEmptyObjs(key, obj, parent = null) {
   } 
 }
 
+// old code. need to remove in future
+/*
 function getStringOutOfHierarchy(obj){
   let finalString = [];
   let lastString = [];
@@ -222,7 +220,7 @@ function getStringOutOfHierarchy(obj){
 
   }
 }
-/*
+
 let nestedHtml = '';
 function nestedHtmlForGroupBuilder(key, obj, parent = null) {
   let temp = '';
