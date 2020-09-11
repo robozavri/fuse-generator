@@ -1,6 +1,7 @@
 export interface Blog {
     _id?: any;
     name?: any;
-    meta?: any;
+    fullName?: any;
+    images?: any;
     about?: any; 
 }

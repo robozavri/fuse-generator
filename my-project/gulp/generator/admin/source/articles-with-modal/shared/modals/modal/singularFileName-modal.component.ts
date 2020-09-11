@@ -3,9 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { <%=nameSingularFUC%> } from 'app/shared/models/<%=singularFileName%>';
 import { FormComponent } from 'app/shared/components/form.component';
 import { FormComponent as _FormComponent } from '../../form/form.component';
-import * as _ from 'lodash';
-<%=MetaModalImports%>
-<%=modalImports%>
+import * as _ from 'lodash';<%=modalImportsArea%>
 
 @Component({
   selector: 'app-<%=singularFileName%>-modal',
@@ -14,21 +12,18 @@ import * as _ from 'lodash';
 })
 export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit {
 
-  <%=MetaModalClassProperties%>
-  filesToCreate: any[] = []; // remove
-  filesToDestroy: any[] = []; // remove 
+
   showFormWarning = false;
   submitted = false;
   showSubmit = false;
-  <%=modalClassProperties%>
+  <%=modalComponentClassPropertiesArea%>
 
   @ViewChild('<%=nameSingularLC%>Form', { static: false }) <%=nameSingularLC%>FormComponent: _FormComponent;
-  <%=MetaModalViewChild%>
+  <%=modalComponentClassViewChildArea%>
 
   <%=nameSingularLC%>Type: <%=nameSingularFUC%>;
 
-  constructor(
-    <%=modalConstructorArgumentsArea%>
+  constructor(<%=modalComponentClassConstructorArgumentsArea%>
     private dialogRef: MatDialogRef<<%=nameSingularFUC%>ModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: <%=nameSingularFUC%>
   ) { }
@@ -36,15 +31,13 @@ export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit
   formComponents: FormComponent[];
 
   ngOnInit(): void {
-    <%=MetaModalOnInitBody%>
-
-    <%=modalOnInitBody%>
+    <%=modalComponentClassOnInitBodyArea%>
   }
 
   ngAfterViewInit(): void {
     this.formComponents = [
       this.<%=nameSingularLC%>FormComponent,
-      <%=MetaModalNgAfterViewInit%>
+      <%=modalComponentClassNgAfterViewInitArrayArea%>
     ];
   }
 
@@ -65,8 +58,8 @@ export class <%=nameSingularFUC%>ModalComponent implements OnInit, AfterViewInit
   get<%=nameSingularFUC%>Data(): any {
     const data = _.cloneDeep(_.merge(
       this.<%=nameSingularLC%>Type,
-      <%=MetaModalMerge%>
       this.<%=nameSingularLC%>FormComponent.getFormValue(),
+      <%=modalComponentClassFormValuesMergeArea%>
     ));
     return data;
   }

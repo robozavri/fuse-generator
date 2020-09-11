@@ -59,8 +59,7 @@ export class <%=namePluralFUC%>Component {
   }
 
   add(): void {
-    const data: <%=nameSingularFUC%> = { 
-      <%=formModalEmptyObj%> 
+    const data: <%=nameSingularFUC%> = { <%=emptyObjectsForOpenModal%>
     };
     this.dialog
       .open(<%=nameSingularFUC%>ModalComponent, { data })

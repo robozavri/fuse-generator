@@ -3,13 +3,13 @@ import { cloneStub, generateImage, generateSocials }  from '../helpers/stub-help
 
 <%=stubObjectMethods%>
 
-const <%=nameUC%>Stub = {
+const <%=nameFUCCamel%>Stub = {
   <%=objectNames%>
 };
 
 export function getSingle(fields?: any): any {
   return {
-    ...cloneStub(<%=nameUC%>Stub),
+    ...cloneStub(<%=nameFUCCamel%>Stub),
     ...fields
   };
 }

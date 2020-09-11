@@ -1,24 +1,23 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import * as <%=nameLC%>Dao from './<%=nameLC%>.dao';
-import * as <%=nameLC%>Parser  from './<%=nameLC%>.parser';
+import * as <%=nameCamel%>Dao from './<%=nameLC%>.dao';
+import * as <%=nameCamel%>Parser  from './<%=nameLC%>.parser';
 import * as auth from '../../auth';
-import { sendClientMessage } from './common.messages';
-import { langs } from '../../constants/common';
+import { sendClientMessage } from './<%=nameLC%>.messages';
 
 
-const <%=nameLC%>Router = Router();
+const <%=nameCamel%>Router = Router();
 
-<%=nameLC%>Router.get('/one', getOne);
-<%=nameLC%>Router.put('/one', auth.isAdmin, <%=nameLC%>Parser.parseUpdate, update);
-<%=nameLC%>Router.post('/email/send', <%=nameLC%>Parser.parseSendEmail, sendEmail);
+<%=nameCamel%>Router.get('/one', getOne);
+<%=nameCamel%>Router.put('/one', auth.isAdmin, <%=nameCamel%>Parser.parseUpdate, update);
+<%=nameCamel%>Router.post('/email/send', <%=nameCamel%>Parser.parseSendEmail, sendEmail);
 
-export default <%=nameLC%>Router;
+export default <%=nameCamel%>Router;
 
 // =============== GET ===============
 
 async function getOne(req: Request, res: Response, next: NextFunction) {
   try {
-    const data = await <%=nameLC%>Dao.getOne();
+    const data = await <%=nameCamel%>Dao.getOne();
     res.json(data);
   } catch (e) {
     next(e);
@@ -30,7 +29,7 @@ async function getOne(req: Request, res: Response, next: NextFunction) {
 async function update(req: Request, res: Response, next: NextFunction) {
   try {
     const payload = req.body;
-    await <%=nameLC%>Dao.update(payload);
+    await <%=nameCamel%>Dao.update(payload);
     res.sendStatus(200);
   } catch (e) {
     next(e);
@@ -40,8 +39,8 @@ async function update(req: Request, res: Response, next: NextFunction) {
 async function sendEmail(req: Request, res: Response, next: NextFunction) {
   try {
     const payload = req.body;
-    const commonData: any = await <%=nameLC%>Dao.getOne();
-    await sendClientMessage(commonData.contact.adminEmail, payload);
+    const data: any = await <%=nameCamel%>Dao.getOne();
+    await sendClientMessage(data.contact.adminEmail, payload);
     res.sendStatus(200);
   } catch (e) {
     next(e);

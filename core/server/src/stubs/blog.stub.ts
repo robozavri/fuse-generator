@@ -7,24 +7,19 @@ function getNameObject(i: number = 0): any {
     return 'name';
 }
 
-function getMetaObject(i: number = 0): any {
-    return {
-      title : {
-         
-        en: `meta en ${i}`,
-        ge: `meta ge ${i}`,
-      },
-      description : {
-         
-        en: `meta en ${i}`,
-        ge: `meta ge ${i}`,
-      },
-      keywords: ['meta meta keyword1', 'meta meta keyword2', 'meta meta keyword3'],
-      image: { url: generateImage() },
-  };
+function getFullNameObject(i: number = 0): any {
+    return 'fullName';
+}
+
+function getImagesObject(i: number = 0): any {
+    return [
+        { url:  generateImage()},
+        { url:  generateImage()},
+        { url:  generateImage()}
+    ];
 }
 function getAboutObject(i: number = 0): any {
-    return { contact: { category: null, street: { title: 'title', blogType: 'metal', peoples: { human: { age: {
+    return { contact: { street: { title: 'title', peoples: { human: { age: {
         
         en: `age en ${i}`,
         ge: `age ge ${i}`,
@@ -49,7 +44,8 @@ function getAboutObject(i: number = 0): any {
 
 const BlogStub = {
     name: getNameObject(),
-    meta: getMetaObject(),
+    fullName: getFullNameObject(),
+    images: getImagesObject(),
     about: getAboutObject(),
 };
 
@@ -65,7 +61,8 @@ export function getMany(count: number, fields?: any) {
     ...getSingle(),
     ...fields,
     name: getNameObject(i),
-    meta: getMetaObject(i),
+    fullName: getFullNameObject(i),
+    images: getImagesObject(i),
     about: getAboutObject(i),
   }));
 }

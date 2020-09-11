@@ -24,7 +24,19 @@
                 <input matInput placeholder="name" formControlName="name">
             </mat-form-field>
         </div>
-   
+
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label> full-name</mat-label>
+                <input matInput placeholder="fullName" formControlName="fullName">
+            </mat-form-field>
+        </div>
+
+        <h3>images</h3>
+        <div class="inputs_container">
+            <app-images-upload *ngIf="images88" [images]="images88" (removeImage)="deleteImageImages88($event)" (uploadComplete)="onUploadCompleteImages88($event)"></app-images-upload>
+        </div>
+     
     <div formGroupName='about'>
        
     <div formGroupName='contact'>
@@ -127,7 +139,7 @@
     
         <h3>images</h3>
         <div class="inputs_container">
-            <app-images-upload *ngIf="images" [images]="images" (removeImage)="deleteImageImages($event)" (uploadComplete)="onUploadCompleteImages($event)"></app-images-upload>
+            <app-images-upload *ngIf="images44" [images]="images44" (removeImage)="deleteImageImages44($event)" (uploadComplete)="onUploadCompleteImages44($event)"></app-images-upload>
         </div>
   
     </div>

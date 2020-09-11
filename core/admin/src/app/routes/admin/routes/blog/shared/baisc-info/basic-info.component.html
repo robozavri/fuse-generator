@@ -7,18 +7,23 @@
                 <input matInput placeholder="name" formControlName="name">
             </mat-form-field>
         </div>
-   
+
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label> full-name</mat-label>
+                <input matInput placeholder="fullName" formControlName="fullName">
+            </mat-form-field>
+        </div>
+
+        <h3>images</h3>
+        <div class="inputs_container">
+            <app-images-upload *ngIf="images88" [images]="images88" (removeImage)="deleteImageImages88($event)" (uploadComplete)="onUploadCompleteImages88($event)"></app-images-upload>
+        </div>
+     
     <div formGroupName='about'>
        
     <div formGroupName='contact'>
-    
-      <mat-form-field [style.width.px]=500 *ngIf="categories">
-          <mat-label>category</mat-label>
-          <mat-select formControlName="category" multiple>
-              <mat-option *ngFor="let item of categories" [value]="item._id">{{ item.title?.ge }}</mat-option>
-          </mat-select>
-      </mat-form-field>
-   
+       
     <div formGroupName='street'>
     
         <div fxLayout="row" fxLayoutAlign="space-between">
@@ -27,13 +32,6 @@
                 <input matInput placeholder="title" formControlName="title">
             </mat-form-field>
         </div>
-
-        <mat-form-field [style.width.px]=500 *ngIf="blogTypes">
-            <mat-label>blog-type</mat-label>
-            <mat-select formControlName="blogType" >
-                <mat-option *ngFor="let item of blogTypes" [value]="item">{{ item }}</mat-option>
-            </mat-select>
-        </mat-form-field>
    
     <div formGroupName='peoples'>
        
@@ -122,9 +120,9 @@
     </div>   
     <div formGroupName='blackmetal'>
     
-        <h3>images</h3>
+        <h3>images 44</h3>
         <div class="inputs_container">
-            <app-images-upload *ngIf="images" [images]="images" (removeImage)="deleteImageImages($event)" (uploadComplete)="onUploadCompleteImages($event)"></app-images-upload>
+            <app-images-upload *ngIf="images44" [images]="images44" (removeImage)="deleteImageImages44($event)" (uploadComplete)="onUploadCompleteImages44($event)"></app-images-upload>
         </div>
   
     </div>

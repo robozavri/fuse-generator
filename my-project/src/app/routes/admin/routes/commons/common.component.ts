@@ -1,8 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
-import { FormComponent } from 'app/shared/components/form.component';
-import { MetaApiService } from 'app/shared/http/meta-api.service';
-import { FileApiService } from '../../../../shared/http/files-api.service';
 import { CommonApiService } from '../../../../shared/http/common-api.service';
 import { SnackBarService } from 'app/shared/services/snack-bar.service';
 
@@ -20,8 +17,11 @@ export class CommonComponent implements OnInit {
   form: FormGroup;
   formData: any = {};
   
-  public images = [];
-  public items: FormArray;
+  public images88 = [];
+  public items88: FormArray;
+    
+  public images44 = [];
+  public items44: FormArray;
     
   get accounts(): any { return accounts; }
 
@@ -46,32 +46,55 @@ export class CommonComponent implements OnInit {
   }
 
   
+  // images upload methods
+  deleteImageImages88(index: any): void {
+     this.images88.splice(index, 1);
+     this.items88 = this.form.get('images') as FormArray;
+     this.items88.removeAt(index);
+  }
+
+  createItemImages88(url= ''): FormGroup {
+       return this.fb.group({
+           url: url,
+       });
+  }
+
+  addItemImages88(url: any): void {
+       this.items88 = this.form.get('images') as FormArray;
+       this.items88.push(this.createItemImages88(url));
+       this.images88.push({ url: url });
+  }
+
+  onUploadCompleteImages88(data: any): void {
+       this.addItemImages88(data.url);
+  }
+   
   onUploadCompleteImage(data: any): void {
       this.form.get('about.contact.image').get('url').markAsTouched();
       this.form.get('about.contact.image').get('url').setValue(data.url);
   }
      
   // images upload methods
-  deleteImageImages(index: any): void {
-     this.images.splice(index, 1);
-     this.items = this.form.get('about.behemoth.blackmetal.images') as FormArray;
-     this.items.removeAt(index);
+  deleteImageImages44(index: any): void {
+     this.images44.splice(index, 1);
+     this.items44 = this.form.get('about.behemoth.blackmetal.images') as FormArray;
+     this.items44.removeAt(index);
   }
 
-  createItemImages(url= ''): FormGroup {
+  createItemImages44(url= ''): FormGroup {
        return this.fb.group({
            url: url,
        });
   }
 
-  addItemImages(url: any): void {
-       this.items = this.form.get('about.behemoth.blackmetal.images') as FormArray;
-       this.items.push(this.createItemImages(url));
-       this.images.push({ url: url });
+  addItemImages44(url: any): void {
+       this.items44 = this.form.get('about.behemoth.blackmetal.images') as FormArray;
+       this.items44.push(this.createItemImages44(url));
+       this.images44.push({ url: url });
   }
 
-  onUploadCompleteImages(data: any): void {
-       this.addItemImages(data.url);
+  onUploadCompleteImages44(data: any): void {
+       this.addItemImages44(data.url);
   }
    
   // socialAccounts methods
@@ -98,6 +121,8 @@ export class CommonComponent implements OnInit {
 
     
     this.formData.name = this.formData.name || '';
+    this.formData.fullName = this.formData.fullName || '';
+    this.images88 = this.formData.images || [];
     this.formData.about = this.formData.about || {};
     this.formData.about.contact = this.formData.about.contact || {};
     this.formData.about.contact.street = this.formData.about.contact.street || {};
@@ -115,13 +140,15 @@ export class CommonComponent implements OnInit {
     this.formData.about.behemoth.ambum = this.formData.about.behemoth.ambum || '';
     this.formData.about.behemoth.songs.oneSong = this.formData.about.behemoth.songs.oneSong || {};
     this.formData.about.behemoth.songs.oneSong2 = this.formData.about.behemoth.songs.oneSong2 || {};
-    this.images = this.formData.about.behemoth.blackmetal.images || [];
+    this.images44 = this.formData.about.behemoth.blackmetal.images || [];
     const socialObj = { account: '', link: ''};
     const socialArray = (this.formData.about.socialAccounts || [socialObj]).map((socialItem: any) => this.createSocials(socialItem));
     
 
     this.form = this.fb.group({
         name: [this.formData.name || ''],
+        fullName: [this.formData.fullName || ''],
+        images: this.fb.array(this.formData.images || []),
     about: this.fb.group({
     
     contact: this.fb.group({
@@ -176,7 +203,7 @@ export class CommonComponent implements OnInit {
   }
 
   submit(): void {
-    this.api.update({ ...this.FormData.value }).subscribe(
+    this.api.update({ ...this.form.value }).subscribe(
       () => this.snackBarService.open('Updated Successfully'),
       () => this.snackBarService.open('Update Failed'),
     );

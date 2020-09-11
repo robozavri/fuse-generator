@@ -2,8 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { <%=nameSingularFUC%> } from 'app/shared/models/<%=singularFileName%>';
 import { FormComponent as _FormComponent } from '../../../../../../shared/components/form.component';
-<%=imports%>
-<%=socialsImport%>
+<%=formComponentImporArea%>
 
 @Component({
   selector: 'app-basic-info',
@@ -12,39 +11,32 @@ import { FormComponent as _FormComponent } from '../../../../../../shared/compon
 })
 export class BasicInfoComponent extends _FormComponent implements OnInit {
 
+  <%=formComponentClassInputArea%>
   @Input() formData: <%=nameSingularFUC%>;
   @Input() showSubmit = true;
   @Output() submitForm = new EventEmitter<<%=nameSingularFUC%>>();
 
 
+ 
   form: FormGroup;
-  <%=selectProperty%>
-  <%=classProperties%>
-  <%=imagesProperties%>
+  <%=formComponentClassPropertiesArea%>
 
   constructor(
     private fb: FormBuilder,
-    <%=constructorArtuments%>
+    <%=formComponentClassConstructorArgumentsArea%>
   ) {
     super();
   }
 
   ngOnInit(): void {
 
-    <%=onInitBody%>
+    <%=formComponentClassOnInitBodyArea%>
 
-    <%=formEmptyObjects%>
-
-    this.form = <%=formGroup%>
+    this.form = this.fb.group({<%=formComponentFormGroupArea%>
+    });
   }
 
-  <%=socialsGetter%>
-
-  <%=socialsMethods%>
-
-  <%=imageMethods%>
-
-  <%=imagesMethods%>
+  <%=formComponentClassBodyArea%>
 
   submit(): void {
     if (this.form.valid) {

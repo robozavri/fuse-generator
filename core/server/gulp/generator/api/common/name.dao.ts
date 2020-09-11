@@ -6,7 +6,7 @@ import { assertFound } from '../../helpers/db-result-handler';
 
 export function getOne() {
   return Model.findOne({}).lean()
-    .then(assertFound(`<%=nameLC%>  was not found`));
+    .then(assertFound(`<%=nameCamel%>  was not found`));
 }
 
 // =============== Setters ===============

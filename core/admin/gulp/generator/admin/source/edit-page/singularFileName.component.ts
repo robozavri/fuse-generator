@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SnackBarService } from 'app/shared/services/snack-bar.service';
 import { <%=nameSingularUC%>ApiService } from 'app/shared/http/<%=singularFileName%>-api.service';
-<%=editPageImports%>
+<%=editPageComponentImportsArea%>
 
 @Component({
   selector: 'app-<%=singularFileName%>',
@@ -21,11 +21,11 @@ export class <%=nameSingularUC%>Component implements OnInit, AfterViewInit {
   loadpage: boolean;
   mainData: any;
   editMode: boolean;
-  <%=editPageClassProperties%>
+  <%=editPageComponentClassPropertiesArea%>
 
 
   @ViewChild('basicInfoForm', { static: false }) basicInfoForm: BasicInfoComponent;
-  <%=editPageViewChild%>
+  <%=editPageComponentClassViewChildArea%>
 
 
   constructor(
@@ -33,10 +33,12 @@ export class <%=nameSingularUC%>Component implements OnInit, AfterViewInit {
     private router: Router,
     private api: <%=nameSingularUC%>ApiService,
     private snackBarService: SnackBarService,
+    <%=editPageComponentClassConstructorArgumentsArea%>
   ) { }
 
   ngOnInit(): void {
-    <%=editPageOnInitBody%>
+    <%=editPageComponentClassOnInitBodyArea%>
+
     setTimeout(() => {
       this.loadpage = true;
     });
@@ -48,9 +50,9 @@ export class <%=nameSingularUC%>Component implements OnInit, AfterViewInit {
 
     if (this.route.snapshot.params.id && this.route.snapshot.params.id !== 'new') {
       this.editMode = true;
-      this.api.getByQuery({ _id: this.route.snapshot.params.id }).subscribe((data) => {
+      this.api.getByQuery({ _id: this.route.snapshot.params.id }).subscribe((data: any) => {
         this.mainData = data.items[0] || {}; 
-        <%=editPageLoadDataMeta%>
+        <%=editPageComponentClassPageLoadDataMeta%>
       });
 
     } else {
@@ -62,7 +64,7 @@ export class <%=nameSingularUC%>Component implements OnInit, AfterViewInit {
   ngAfterViewInit(): void  {
     this.formComponents = [
       this.basicInfoForm,
-      <%=editPageNgAfterViewInit%>
+      <%=editPageComponentClassNgAfterViewInitArrayArea%>
     ];
   }
 
@@ -100,7 +102,7 @@ export class <%=nameSingularUC%>Component implements OnInit, AfterViewInit {
   getFormData(): any {
     return _.cloneDeep(_.merge(
       this.basicInfoForm.getFormValue(),
-      <%=editPageMerge%>
+      <%=editPageComponentClassFormValuesMergeArea%>
     ));
   }
 }

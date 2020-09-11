@@ -238,15 +238,15 @@ export function generateSingleStub(fields = false) {
     Object.keys(fields).map((key, index) => {
       if (index == 0) {
         objectNames +=
-          `  ${key}: get${_.upperFirst(key)}Object(),`;
+          `  ${key}: get${_.upperFirst(_.camelCase(key))}Object(),`;
    objectNamesWithI +=
-          `${key}: get${_.upperFirst(key)}Object(i),`;
+          `${key}: get${_.upperFirst(_.camelCase(key))}Object(i),`;
             stubObjectMethods += buildSingleStubObject(key, fields[key]);
       } else {
           objectNames += `
-    ${key}: get${_.upperFirst(key)}Object(),`;
+    ${key}: get${_.upperFirst(_.camelCase(key))}Object(),`;
         objectNamesWithI += `
-    ${key}: get${_.upperFirst(key)}Object(i),`;
+    ${key}: get${_.upperFirst(_.camelCase(key))}Object(i),`;
             stubObjectMethods += buildSingleStubObject(key, fields[key]);
       }
     });
@@ -287,7 +287,7 @@ function buildSingleStubObject(key, type) {
     if (typeof type == "object") {
       let result = nestedStubBuilder(key, type);
       return `
-function get${_.upperFirst(key)}Object(i: number = 0): any {
+function get${_.upperFirst(_.camelCase(key))}Object(i: number = 0): any {
     return ${ result.substring(0, result.length - 1) };
 }`;
     }
@@ -352,14 +352,14 @@ templateContent += `{
 
     if ( socialGenHelper !== undefined ) {
       return `
-function get${_.upperFirst(key)}Object(i: number = 0): any {
+function get${_.upperFirst(_.camelCase(key))}Object(i: number = 0): any {
     ${socialGenHelper}
     return ${templateContent};
 }`;
     } else {
       return `
 
-function get${_.upperFirst(key)}Object(i: number = 0): any {
+function get${_.upperFirst(_.camelCase(key))}Object(i: number = 0): any {
     return ${templateContent};
 }`;
     }

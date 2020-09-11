@@ -3,7 +3,7 @@
     <mat-table class="products-table articles_table" #table [dataSource]="dataSource" multiTemplateDataRows
         fusePerfectScrollbar cdkDropList (cdkDropListDropped)="drop($event)">
 
-        <%=listColumnsHtml%>
+        <%=listHtmlColumnsArea%>
 
         <!-- Active Column -->
         <ng-container matColumnDef="active">

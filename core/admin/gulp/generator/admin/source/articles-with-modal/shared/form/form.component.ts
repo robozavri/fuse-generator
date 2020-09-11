@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { <%=nameSingularFUC%> } from 'app/shared/models/<%=singularFileName%>';
 import { FormComponent as _FormComponent } from '../../../../../../shared/components/form.component';
 import { MatSnackBar } from '@angular/material';
-<%=socialsImport%>
+<%=formComponentImporArea%>
 
 @Component({
   selector: 'app-form',
@@ -12,17 +12,16 @@ import { MatSnackBar } from '@angular/material';
 })
 export class FormComponent extends _FormComponent implements OnInit {
 
-  <%=formInputs%>
+  <%=formComponentClassInputArea%>
   @Input() formData: <%=nameSingularFUC%>;
   @Input() showSubmit = true;
   @Output() submitForm = new EventEmitter<<%=nameSingularFUC%>>();
 
 
   form: FormGroup;
-  <%=selectProperty%>
-  <%=imagesProperties%>
+  <%=formComponentClassPropertiesArea%>
 
-  constructor(
+  constructor(<%=formComponentClassConstructorArgumentsArea%>
     private fb: FormBuilder,
   ) {
     super();
@@ -30,18 +29,13 @@ export class FormComponent extends _FormComponent implements OnInit {
 
   ngOnInit(): void {
   
-    <%=formEmptyObjects%>
+  <%=formComponentClassOnInitBodyArea%>
 
-    this.form = <%=formGroup%>
+    this.form = this.fb.group({ <%=formComponentFormGroupArea%>
+    });
   }
 
-  <%=socialsGetter%>
-
-  <%=socialsMethods%>
-
-  <%=imageMethods%>
-
-  <%=imagesMethods%>
+  <%=formComponentClassBodyArea%>
 
   submit(): void {
     if (this.form.valid) {

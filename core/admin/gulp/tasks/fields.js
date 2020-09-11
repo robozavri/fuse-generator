@@ -46,7 +46,7 @@ export const selectFields = {
 
 export const fields = {
      name: 'String',
-     // gogola: 'String',
+     fullName: 'String',
      // title: 'multilingualSchema', 
      // description: 'multilingualSchema', 
      // smallDescription: 'multilingualSchema-Textarea', 
@@ -55,7 +55,7 @@ export const fields = {
      // aboutPrimitive: 'Textarea',
      // count: 'Number', 
      // thumbnail: 'imageSchema', 
-     // images: '[imageSchema]' ,
+     images: '[imageSchema]' ,
      // createAt: 'Date',
      // socialAccounts: 'Socials',
      // category: 'Reference',

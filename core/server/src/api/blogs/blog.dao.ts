@@ -28,12 +28,12 @@ export function insertMany(data: any) {
 
 export function update(id: any, data: any) {
   return Model.findOneAndUpdate({_id: id}, {$set: data})
-    .then(assertFound(`Could not update blog (id ${id})`));
+    .then(assertFound(`Could not update Blog (id ${id})`));
 }
 
 export function destroy(id: any) {
   return Model.findOneAndRemove({_id: id})
-    .then(assertFound(`Could not destroy blog (id ${id})`));
+    .then(assertFound(`Could not destroy Blog (id ${id})`));
 }
 
 export function destroyAll() {

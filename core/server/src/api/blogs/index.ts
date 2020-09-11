@@ -19,8 +19,8 @@ export default blogRouter;
 async function getByQuery(req: Request, res: Response, next: NextFunction) {
   try {
     const query = req.query;
-    const blogsData = await blogDao.getByQuery(query);
-    res.json(blogsData);
+    const blogData = await blogDao.getByQuery(query);
+    res.json(blogData);
   } catch (e) {
     next(e);
   }

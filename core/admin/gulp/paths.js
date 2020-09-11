@@ -21,7 +21,7 @@ const paths = {
     mainComponent: `${root}/gulp/generator/main-component/**`,
     adminComponent: `${root}/gulp/generator/admin-component/**`,
     api: {
-      standart : `${root}/gulp/generator/api/standar/**`,
+      standart : `${root}/gulp/generator/api/standart/**`,
       common : `${root}/gulp/generator/api/common/**`,
     },    
     stub: `${root}/gulp/generator/stub/**`
@@ -32,9 +32,6 @@ const paths = {
     service: `${root}/gulp/generator/service/**`,
     articles: `${root}/gulp/generator/admin/source/articles/**`,
     articlesWithModal: `${root}/gulp/generator/admin/source/articles-with-modal/**`,
-    articlesWithModalTest: `${root}/gulp/generator/admin/source/test/articles-with-modal/**`,
-    articlesTest: `${root}/gulp/generator/admin/source/test/articles/**`,
-    editPageTest: `${root}/gulp/generator/admin/source/test/edit-page/**`,
     editPage: `${root}/gulp/generator/admin/source/edit-page/**`,
     common: `${root}/gulp/generator/admin/source/common/**`,
     commonHttp: `${root}/gulp/generator/admin/source/common-http/**`,

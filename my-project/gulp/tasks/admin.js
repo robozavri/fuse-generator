@@ -12,7 +12,7 @@ import { generateInterface } from './admin/model';
 import { getIsGeenerateArgv, getNameFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
 const $ = require('gulp-load-plugins')();
 
-gulp.task('admin', (done) => {
+gulp.task('admin-articles', (done) => {
   runSequence('generateArticlesAdminComponent2', 'generateHttp2', 'generateModel2', 'generateEditPage2', done);
 });
 
@@ -21,9 +21,9 @@ gulp.task('generateArticlesAdminComponent2', () => {
     let src, dest = path.join(paths.admin.adminModules, _.kebabCase(plural(name)));
 
     if('false' === getIsGeenerateArgv()) { 
-       src = paths.adminGeneratorTemplates.articlesWithModalTest;
+       src = paths.adminGeneratorTemplates.articlesWithModal;
     } else {
-       src = paths.adminGeneratorTemplates.articlesTest;
+       src = paths.adminGeneratorTemplates.articles;
     }
 
     return insertArticlesTemplate2(name, src, dest);
@@ -55,12 +55,12 @@ gulp.task('generateEditPage2', () => {
   }else{
       destDirName = singular(name);
   }
-  const src = paths.adminGeneratorTemplates.editPageTest;
+  const src = paths.adminGeneratorTemplates.editPage;
   const dest = path.join(paths.admin.adminModules, _.kebabCase(destDirName));
   return insertEditPageTemplate(name, src, dest, fields);
 });
 
-gulp.task('admincommon', (done) => {
+gulp.task('admin-commons', (done) => {
   runSequence('generateCommon', 'generateCommonHttp', 'generateModel2', done);
 });
 
@@ -126,11 +126,11 @@ function insertArticlesTemplate2(name, src, dest) {
 function mergeProperties(data,name) {
 
   const names = {
-    nameSingularUC: firstUC(singular(name)),
-    namePluralLC: plural(name.toLowerCase()),
-    namePluralFUC: firstUC(plural(name)),
-    nameSingularLC: singular(name),
-    nameSingularFUC: firstUC(singular(name)),
+    nameSingularUC: firstUC(_.camelCase(singular(name))),
+    namePluralLC: _.camelCase(plural(name.toLowerCase())),
+    namePluralFUC: firstUC(_.camelCase(plural(name))),
+    nameSingularLC: singular(_.camelCase(name)),
+    nameSingularFUC: firstUC(_.camelCase(singular(name))),
     singularFileName: _.kebabCase(singular(name)),
     pluralFileName: _.kebabCase(plural(name)),
   };
@@ -195,8 +195,8 @@ function insertModelTemplate(name, src, dest, fields) {
     .pipe($.template({
       nameUC: firstUC(name),
       nameLC: firstLC(name),
-      namePlural: plural(name),
-      nameSingularUC: firstUC(singular(name)),
+      namePlural: _.camelCase(plural(name)),
+      nameSingularUC: firstUC(_.camelCase(singular(name))),
       singularFileName: _.kebabCase(singular(name)),
       pluralFileName: _.kebabCase(plural(name)),
       interfaceFields: generateInterface(fields),
@@ -214,9 +214,9 @@ function insertHttpTemplate(name, src, dest) {
     .pipe($.template({
       nameUC: firstUC(name),
       nameLC: firstLC(name),
-      namePlural: plural(name),
-      nameSingular: singular(name),
-      nameSingularUC: firstUC(singular(name)),
+      namePlural: _.camelCase(plural(name)),
+      nameSingular: _.camelCase(singular(name)),
+      nameSingularUC: firstUC(_.camelCase(singular(name))),
       singularFileName: _.kebabCase(singular(name)),
       pluralFileName: _.kebabCase(plural(name)),
     }, {

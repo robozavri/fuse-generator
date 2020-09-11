@@ -5,8 +5,6 @@ import { Blog } from 'app/shared/models/blog';
 import { Query } from 'app/shared/models/query';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
-import { BlogCategoryApiService } from 'app/shared/http/blog-category-api.service';
-
 
 @Component({
   selector: 'app-list',
@@ -38,14 +36,11 @@ export class ListComponent implements OnInit {
   dataSource: Blog[];
   pageLength: number;
   pageEvent: PageEvent;
-  expandedElement: any;  
-  categories: any;
-   
+  expandedElement: any;
   displayedColumns = ['name', ];
 
+
   constructor(
-    private blogCategoryApiService: BlogCategoryApiService,
-      
   ) { }
 
   ngOnInit(): void {
@@ -54,10 +49,6 @@ export class ListComponent implements OnInit {
     });
     this.numTotal.subscribe((data) => this.pageLength = data);
     
-    this.blogCategoryApiService.getByQuery({all: true}).subscribe((data: any) => {
-        this.categories = data.items;
-    });
-  
   }
 
   pagenatorEvent(pageData: any): any {

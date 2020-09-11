@@ -4,10 +4,10 @@
         <mat-tab-group style="width: 100%; margin-bottom: 20px">
             <mat-tab label="information">
                 <div class="page_body">
-                    <app-form [formData]="data" <%=listComponentBindParams%> #<%=nameSingularLC%>Form [showSubmit]="showSubmit"></app-form>
+                    <app-form [formData]="data" <%=formComponentBindParams%> #<%=nameSingularLC%>Form [showSubmit]="showSubmit"></app-form>
                 </div>
             </mat-tab>
-            <%=MetaModalHtml%>
+            <%=modalHtmlTabArea%>
         </mat-tab-group>
     </div>
     <mat-dialog-actions>

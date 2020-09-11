@@ -1,5 +1,5 @@
 'use strict';
-
+import * as _ from 'lodash';
 import gulp from 'gulp';
 import path from 'path';
 import runSequence from 'run-sequence';
@@ -10,7 +10,7 @@ import {getNameFromArgv,  getDirFromArgv, firstUC, firstLC, plural, singular} fr
 const $ = require('gulp-load-plugins')();
 
 // commons
-gulp.task('apicommon', (done) => {
+gulp.task('api-commons', (done) => {
   runSequence('generateApiCommon', 'generateCommonStub', done);
 });
 
@@ -28,6 +28,8 @@ function insertCommonsTemplates(name, src, dest) {
   return gulp.src(src)
     .pipe($.template({
       nameUC: firstUC(name),
+      nameFUCCamel: firstUC(_.camelCase(name)),
+      nameCamel: _.camelCase(name),
       nameLC: firstLC(name),
       namePlural: plural(name),
       namePluralLC: plural(name.toLowerCase()),
@@ -59,11 +61,11 @@ gulp.task('generateCommonStub', () => {
 
 
 // articles with edit page
-gulp.task('api2', (done) => {
-  runSequence('generateApi2', 'generateStub2', done);
+gulp.task('api', (done) => {
+  runSequence('generateApi', 'generateStub', done);
 });
 
-gulp.task('generateApi2', () => {
+gulp.task('generateApi', () => {
   const name = getNameFromArgv();
   const dir = getDirFromArgv();
   const src = paths.generatorTemplates.api.standart;
@@ -71,7 +73,7 @@ gulp.task('generateApi2', () => {
   return insertTemplates(name, src, dest, true);
 });
 
-gulp.task('generateStub2', () => {
+gulp.task('generateStub', () => {
   const name = getNameFromArgv();
   const src = paths.generatorTemplates.stub;
   const dest = path.join(paths.server.src, 'stubs');
@@ -83,6 +85,8 @@ function insertTemplates(name, src, dest) {
 
   return gulp.src(src)
     .pipe($.template({
+      nameFUCCamel: firstUC(_.camelCase(name)),
+      nameCamel: _.camelCase(name),
       nameUC: firstUC(name),
       nameLC: firstLC(name),
       namePlural: plural(name),

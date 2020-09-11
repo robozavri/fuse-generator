@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { Blog } from 'app/shared/models/blog';
 import { FormComponent as _FormComponent } from '../../../../../../shared/components/form.component';
-import { accounts } from '../../../../../../shared/constants/socials';
+import { accounts } from 'app/shared/constants/socials';
     
 
 @Component({
@@ -12,9 +12,7 @@ import { accounts } from '../../../../../../shared/constants/socials';
 })
 export class BasicInfoComponent extends _FormComponent implements OnInit {
 
-    
-  @Input() categories: any;
-   
+  
   @Input() formData: Blog;
   @Input() showSubmit = true;
   @Output() submitForm = new EventEmitter<Blog>();
@@ -23,10 +21,11 @@ export class BasicInfoComponent extends _FormComponent implements OnInit {
  
   form: FormGroup;
   
+  public images88 = [];
+  public items88: FormArray;
     
-  blogTypes = ['metal', 'rock', 'classic', 'black', ];
-  public images = [];
-  public items: FormArray;
+  public images44 = [];
+  public items44: FormArray;
     
   get accounts(): any { return accounts; }
 
@@ -45,9 +44,25 @@ export class BasicInfoComponent extends _FormComponent implements OnInit {
 
     
     this.formData.name = this.formData.name || '';
-    this.formData.about.contact.category = this.formData.about.contact.category || [];
+    this.formData.fullName = this.formData.fullName || '';
+    this.images88 = this.formData.images || [];
+    this.formData.about = this.formData.about || {};
+    this.formData.about.contact = this.formData.about.contact || {};
+    this.formData.about.contact.street = this.formData.about.contact.street || {};
+    this.formData.about.contact.street.peoples = this.formData.about.contact.street.peoples || {};
+    this.formData.about.contact.street.peoples.human = this.formData.about.contact.street.peoples.human || {};
+    this.formData.about.behemoth = this.formData.about.behemoth || {};
+    this.formData.about.behemoth.songs = this.formData.about.behemoth.songs || {};
+    this.formData.about.behemoth.blackmetal = this.formData.about.behemoth.blackmetal || {};
+    this.formData.about.about = this.formData.about.about || {};
+    this.formData.about.contact = this.formData.about.contact || {};
+    this.formData.about.contact.street = this.formData.about.contact.street || {};
+    this.formData.about.contact.street.peoples = this.formData.about.contact.street.peoples || {};
+    this.formData.about.contact.street.peoples.human = this.formData.about.contact.street.peoples.human || {};
+    this.formData.about.behemoth = this.formData.about.behemoth || {};
+    this.formData.about.behemoth.songs = this.formData.about.behemoth.songs || {};
+    this.formData.about.behemoth.blackmetal = this.formData.about.behemoth.blackmetal || {};
     this.formData.about.contact.street.title = this.formData.about.contact.street.title || '';
-    this.formData.about.contact.street.blogType = this.formData.about.contact.street.blogType || '';
     this.formData.about.contact.street.peoples.human.age = this.formData.about.contact.street.peoples.human.age || {};
     this.formData.about.contact.street.peoples.human.age4 = this.formData.about.contact.street.peoples.human.age4 || '';
     this.formData.about.contact.street.peoples.isFeatured = this.formData.about.contact.street.peoples.isFeatured === undefined ? false : this.formData.about.contact.street.peoples.isFeatured;
@@ -56,22 +71,22 @@ export class BasicInfoComponent extends _FormComponent implements OnInit {
     this.formData.about.behemoth.ambum = this.formData.about.behemoth.ambum || '';
     this.formData.about.behemoth.songs.oneSong = this.formData.about.behemoth.songs.oneSong || {};
     this.formData.about.behemoth.songs.oneSong2 = this.formData.about.behemoth.songs.oneSong2 || {};
-    this.images = this.formData.about.behemoth.blackmetal.images || [];
+    this.images44 = this.formData.about.behemoth.blackmetal.images || [];
     const socialObj = { account: '', link: ''};
     const socialArray = (this.formData.about.socialAccounts || [socialObj]).map((socialItem: any) => this.createSocials(socialItem));
     
 
     this.form = this.fb.group({
         name: [this.formData.name || ''],
+        fullName: [this.formData.fullName || ''],
+        images: this.fb.array(this.formData.images || []),
     about: this.fb.group({
     
     contact: this.fb.group({
     
-        category: [this.formData.about.contact.category || []],
     street: this.fb.group({
     
         title: [this.formData.about.contact.street.title || ''],
-        blogType: [this.formData.about.contact.street.blogType || ''],
     peoples: this.fb.group({
     
     human: this.fb.group({
@@ -118,32 +133,55 @@ export class BasicInfoComponent extends _FormComponent implements OnInit {
   }
 
   
+  // images upload methods
+  deleteImageImages88(index: any): void {
+     this.images88.splice(index, 1);
+     this.items88 = this.form.get('images') as FormArray;
+     this.items88.removeAt(index);
+  }
+
+  createItemImages88(url= ''): FormGroup {
+       return this.fb.group({
+           url: url,
+       });
+  }
+
+  addItemImages88(url: any): void {
+       this.items88 = this.form.get('images') as FormArray;
+       this.items88.push(this.createItemImages88(url));
+       this.images88.push({ url: url });
+  }
+
+  onUploadCompleteImages88(data: any): void {
+       this.addItemImages88(data.url);
+  }
+   
   onUploadCompleteImage(data: any): void {
       this.form.get('about.contact.image').get('url').markAsTouched();
       this.form.get('about.contact.image').get('url').setValue(data.url);
   }
      
   // images upload methods
-  deleteImageImages(index: any): void {
-     this.images.splice(index, 1);
-     this.items = this.form.get('about.behemoth.blackmetal.images') as FormArray;
-     this.items.removeAt(index);
+  deleteImageImages44(index: any): void {
+     this.images44.splice(index, 1);
+     this.items44 = this.form.get('about.behemoth.blackmetal.images') as FormArray;
+     this.items44.removeAt(index);
   }
 
-  createItemImages(url= ''): FormGroup {
+  createItemImages44(url= ''): FormGroup {
        return this.fb.group({
            url: url,
        });
   }
 
-  addItemImages(url: any): void {
-       this.items = this.form.get('about.behemoth.blackmetal.images') as FormArray;
-       this.items.push(this.createItemImages(url));
-       this.images.push({ url: url });
+  addItemImages44(url: any): void {
+       this.items44 = this.form.get('about.behemoth.blackmetal.images') as FormArray;
+       this.items44.push(this.createItemImages44(url));
+       this.images44.push({ url: url });
   }
 
-  onUploadCompleteImages(data: any): void {
-       this.addItemImages(data.url);
+  onUploadCompleteImages44(data: any): void {
+       this.addItemImages44(data.url);
   }
    
   // socialAccounts methods

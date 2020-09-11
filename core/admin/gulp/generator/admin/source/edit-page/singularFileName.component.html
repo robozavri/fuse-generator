@@ -52,11 +52,11 @@
                 <mat-tab-group>
                     <mat-tab label="Basic Info">
                         <div class="tab-content p-24" fusePerfectScrollbar>
-                            <app-basic-info [formData]="mainData" #basicInfoForm [showSubmit]="false">
+                            <app-basic-info [formData]="mainData" <%=formComponentBindParams%> #basicInfoForm [showSubmit]="false">
                             </app-basic-info>
                         </div>
                     </mat-tab>
-                    <%=editPageHtml%>
+                    <%=editPageHtmlTabArea%>
                 </mat-tab-group>
 
             </div>

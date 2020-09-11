@@ -31,6 +31,8 @@ function parseSearch({ keyword }: { keyword?: string }) {
       
         { 'name': { $regex: keyword, $options: 'i' } },
         
+        { 'fullName': { $regex: keyword, $options: 'i' } },
+        
     ],
   } : {};
 }
@@ -63,7 +65,8 @@ function parseBaseProps(body: any) {
   return _.pick(body, [
     
     'name',
-    'meta',
+    'fullName',
+    'images',
     'about',
     'position',
   ]);
