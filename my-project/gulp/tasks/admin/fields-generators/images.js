@@ -6,10 +6,11 @@ import {
 } from '../fields-helper';
 import { availableLangs } from '../../fields';
 
-const numbers = [5, 88, 99, 44];
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200];
 
 export function imagesBuilder(key, nested = null) {
-    const rand = numbers[Math.floor(Math.random() * numbers.length)];
+    // const rand = numbers[Math.floor(Math.random() * numbers.length)];
+    const rand = _.random(1,999);
 
     return {
         formComponentClassOnInitBodyArea: buildCheckImagesEmpty(key, nested,"[]", rand),

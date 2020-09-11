@@ -34,15 +34,22 @@ export function generateArticlesList(fields){
 }
 
 let nestedArr = [];
+let hierarchy = '';
 function buildTree(key, obj) {
 
   const allObjs = [];
-  const formComponentFormGroupArea = nestedForGroupBuilder(key, obj);
-  const formComponentHtmlArea = nestedHtmlForGroupBuilder(key, obj);
-  const emptyObjectsForOpenModal = nestedemptyObjectsForOpenModal(key, obj);
+  // const formComponentFormGroupArea = nestedForGroupBuilder(key, obj);
+  // const formComponentHtmlArea = nestedHtmlForGroupBuilder(key, obj);
+  // const emptyObjectsForOpenModal = nestedemptyObjectsForOpenModal(key, obj);
+
+const { 
+   formComponentFormGroupArea,
+   formComponentHtmlArea,
+   emptyObjectsForOpenModal} = nestedHierarchyBuilder(key, obj);
 
   checkNestedEmptyObjs(key, obj);
   let formComponentClassOnInitBodyArea = '';
+
   _.forEach(nestedArr, function(keys) {
     let name = keys.substring(0, keys.length - 1);
     formComponentClassOnInitBodyArea += `
@@ -51,22 +58,74 @@ function buildTree(key, obj) {
 
   let restored = {};
   restored[key] = obj;
-  const objectKeys = _.flattenDeep(getStringOutOfHierarchy(restored));
 
-  _.forEach(objectKeys, function(keys) {
-    const type = _.get(restored, keys);  
-    let property = _.last(keys.split("."));
-    let preparedKeys =  keys.substring(0, keys.indexOf(property));
-    const objAreas =  detectFieldType(_.last(keys.split(".")), type, preparedKeys) ;
-    allObjs.push( objAreas );
-  });
+function nestedHierarchyBuilder(key, obj, parent = null) {
+  let tempGroup = '';
+  let tempHtml = '';
+  let tempEmptyObj = '';
+
+  if (parent !== null) {
+      hierarchy = hierarchy.substring(0, hierarchy.indexOf(parent) + parent.length + 1);
+  }
+
+
+  if (typeof obj == "object") { 
+    hierarchy += `${key}.`;
+    tempEmptyObj +=  `
+    ${key}: {
+    `;
+    tempHtml +=  `   
+    <div formGroupName='${key}'>
+    `;
+    tempGroup +=  `
+    ${key}: this.fb.group({
+    `;
+    for (let property in obj) {
+      const fieldObj = nestedHierarchyBuilder(property, obj[property], key);
+      if (typeof fieldObj === "object" && _.has(fieldObj,'formComponentFormGroupArea') ) {
+        const { formComponentFormGroupArea, formComponentHtmlArea, emptyObjectsForOpenModal } = fieldObj;
+        tempGroup += formComponentFormGroupArea;
+        tempHtml += formComponentHtmlArea;
+        tempEmptyObj += emptyObjectsForOpenModal;
+      }
+    }
+    tempGroup += `
+    }),`;
+    tempHtml += `
+    </div>`;
+    tempEmptyObj += ` 
+  },`;
+  } else {
+    const fieldObj = detectFieldType(key, obj, hierarchy);
+    // console.log('hierarchy', hierarchy)
+    // console.log('formComponentClassOnInitBodyArea', fieldObj.formComponentClassOnInitBodyArea)
+    allObjs.push( fieldObj );
+    return fieldObj;
+  }
+  return {
+    formComponentFormGroupArea : tempGroup,
+    formComponentHtmlArea : tempHtml,
+    emptyObjectsForOpenModal : tempEmptyObj,
+  };
+}
+
+
+  // const objectKeys = _.flattenDeep(getStringOutOfHierarchy(restored));
+
+  // _.forEach(objectKeys, function(keys) {
+  //   const type = _.get(restored, keys);  
+  //   let property = _.last(keys.split("."));
+  //   let preparedKeys =  keys.substring(0, keys.indexOf(property));
+  //   const objAreas =  detectFieldType(_.last(keys.split(".")), type, preparedKeys) ;
+  //   allObjs.push( objAreas );
+  // });
 
   const mergedAreas = mergeProperties(allObjs, [
     'formComponentFormGroupArea',
     'formComponentHtmlArea',
     'emptyObjectsForOpenModal',
   ]);
-
+  // console.log(':::::', mergedAreas.formComponentClassOnInitBodyArea);
   mergedAreas.formComponentFormGroupArea = formComponentFormGroupArea;
   mergedAreas.formComponentHtmlArea = formComponentHtmlArea;
   mergedAreas.emptyObjectsForOpenModal = emptyObjectsForOpenModal;
@@ -163,7 +222,7 @@ function getStringOutOfHierarchy(obj){
 
   }
 }
-
+/*
 let nestedHtml = '';
 function nestedHtmlForGroupBuilder(key, obj, parent = null) {
   let temp = '';
@@ -237,6 +296,56 @@ function nestedemptyObjectsForOpenModal(key, obj, parent = null) {
   }
   return temp;
 }
+*/
+
+
+
+// let hierarchy = '';
+// function nestedHierarchyBuilder(key, obj, parent = null) {
+//   let tempGroup = '';
+//   let tempHtml = '';
+//   let tempEmptyObj = '';
+
+//   if (parent !== null) {
+//       hierarchy = hierarchy.substring(0, hierarchy.indexOf(parent) + parent.length + 1);
+//   }
+
+//   if (typeof obj == "object") { 
+//     hierarchy += `${key}.`;
+//     tempEmptyObj +=  `
+//     ${key}: {
+//     `;
+//     tempHtml +=  `   
+//     <div formGroupName='${key}'>
+//     `;
+//     tempGroup +=  `
+//     ${key}: this.fb.group({
+//     `;
+//     for (let property in obj) {
+//       const fieldObj = nestedHierarchyBuilder(property, obj[property], key);
+//       if (typeof fieldObj === "object" && _.has(fieldObj,'formComponentFormGroupArea') ) {
+//         const { formComponentFormGroupArea, formComponentHtmlArea, emptyObjectsForOpenModal } = fieldObj;
+//         tempGroup += formComponentFormGroupArea;
+//         tempHtml += formComponentHtmlArea;
+//         tempEmptyObj += emptyObjectsForOpenModal;
+//       }
+//     }
+//     tempGroup += `
+//     }),`;
+//     tempHtml += `
+//     </div>`;
+//     tempEmptyObj += ` 
+//   },`;
+//   } else {
+//     const fieldObj = detectFieldType(key, obj, hierarchy);
+//     return fieldObj;
+//   }
+//   return {
+//     formComponentFormGroupArea : tempGroup,
+//     formComponentHtmlArea : tempHtml,
+//     emptyObjectsForOpenModal : tempEmptyObj,
+//   };
+// }
 
 function detectFieldType(key, type, nested = null) {
   try { 

@@ -54,7 +54,9 @@ export const fields = {
      // aboutQuili: 'quill-editor',
      // aboutPrimitive: 'Textarea',
      // count: 'Number', 
-     // thumbnail: 'imageSchema', 
+     thumbnail: 'imageSchema', 
+     image: 'imageSchema', 
+     fotos: '[imageSchema]' ,
      images: '[imageSchema]' ,
      // createAt: 'Date',
      // socialAccounts: 'Socials',
@@ -62,6 +64,7 @@ export const fields = {
      // blogType: 'Select',
      // isFeatured: 'Slide-toggle',
      // meta: 'Meta',
+
      about: {
           contact: {
                // category: 'Reference',
@@ -92,15 +95,16 @@ export const fields = {
           },
           socialAccounts: 'Socials',
      }
+
      // about: {
      //      contact: {
-     //           street: {
-     //                title:'multilingualSchema', 
-     //                description: 'multilingualSchema', 
-     //           },
+     //           // street: {
+     //           //      title:'multilingualSchema', 
+     //           //      // description: 'multilingualSchema', 
+     //           // },
      //           title: 'multilingualSchema', 
      //           address: 'multilingualSchema', 
-     //           images: '[imageSchema]', 
+     //           // images: '[imageSchema]', 
      //      },
      //      phone: 'String',
      //      socialAccounts: 'Socials',
