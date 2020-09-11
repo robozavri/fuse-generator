@@ -1,23 +1,6 @@
-<div class="page-layout carded fullwidth inner-scroll">
-    <div class="top-bg accent"></div>
-    <div class="center">
-        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
-            <div fxLayout="row" fxLayoutAlign="start center">
-                <div fxLayout="column" fxLayoutAlign="start start">
-                    <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
-                        <mat-icon class="logo-icon s-32 mr-16"> filter </mat-icon>
-                        <span class="logo-text h1"> common </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="content-card">
-            <div class="content">
-
-                <form [formGroup]="form" (ngSubmit)="submit()">
-                    <div class="tab-content p-24" fusePerfectScrollbar fxLayout="column">
-                        
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="tab-content p-24" fusePerfectScrollbar fxLayout="column">
+        
         <div fxLayout="row" fxLayoutAlign="space-between">
             <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
                 <mat-label> name</mat-label>
@@ -32,9 +15,24 @@
             </mat-form-field>
         </div>
 
+        <h3>thumbnail</h3>
+        <div class="inputs_container">
+            <app-image-upload [image]="formData.thumbnail" (uploadComplete)="onUploadCompleteThumbnail3($event)"></app-image-upload>
+        </div>
+      
+        <h3>image</h3>
+        <div class="inputs_container">
+            <app-image-upload [image]="formData.image" (uploadComplete)="onUploadCompleteImage200($event)"></app-image-upload>
+        </div>
+      
+        <h3>fotos</h3>
+        <div class="inputs_container">
+            <app-images-upload *ngIf="images622" [images]="images622" (removeImage)="deleteImageFotos622($event)" (uploadComplete)="onUploadCompleteFotos622($event)"></app-images-upload>
+        </div>
+  
         <h3>images</h3>
         <div class="inputs_container">
-            <app-images-upload *ngIf="images88" [images]="images88" (removeImage)="deleteImageImages88($event)" (uploadComplete)="onUploadCompleteImages88($event)"></app-images-upload>
+            <app-images-upload *ngIf="images894" [images]="images894" (removeImage)="deleteImageImages894($event)" (uploadComplete)="onUploadCompleteImages894($event)"></app-images-upload>
         </div>
      
     <div formGroupName='about'>
@@ -91,7 +89,7 @@
     </div>
         <h3>image</h3>
         <div class="inputs_container">
-            <app-image-upload [image]="formData.about.contact.image" (uploadComplete)="onUploadCompleteImage($event)"></app-image-upload>
+            <app-image-upload [image]="formData.about.contact.image" (uploadComplete)="onUploadCompleteImage30($event)"></app-image-upload>
         </div>
       
     </div>   
@@ -139,7 +137,7 @@
     
         <h3>images</h3>
         <div class="inputs_container">
-            <app-images-upload *ngIf="images44" [images]="images44" (removeImage)="deleteImageImages44($event)" (uploadComplete)="onUploadCompleteImages44($event)"></app-images-upload>
+            <app-images-upload *ngIf="images444" [images]="images444" (removeImage)="deleteImageImages444($event)" (uploadComplete)="onUploadCompleteImages444($event)"></app-images-upload>
         </div>
   
     </div>
@@ -175,23 +173,9 @@
         </div>
 
     </div>
-                
-                        <div>
-                            <button mat-raised-button color="primary"> Submit </button>
-                        </div>
-                    </div>
-                </form>
 
-
-                <!-- <mat-tab-group fxLayout="column" fxFlex *ngIf="metas">
-
-                    <mat-tab label="Homepage">
-                        <app-meta-form [meta]="metas.home" pageTitle="home" (submitMeta)="update($event, 'home')">
-                        </app-meta-form>
-                    </mat-tab>
-
-                </mat-tab-group> -->
-            </div>
+        <div>
+            <button mat-raised-button color="primary" *ngIf="showSubmit"> Submit </button>
         </div>
     </div>
-</div>
+</form>

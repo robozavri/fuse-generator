@@ -6,13 +6,17 @@ import {
 } from '../fields-helper';
 import { availableLangs } from '../../fields';
 
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200];
+
 export function imageBuilder(key, nested = null) {
+    const rand = numbers[Math.floor(Math.random() * numbers.length)];
+
     return {
         formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key, nested,"{}"),
         emptyObjectsForOpenModal:  buildForModalEmpty(key,"{}"),
         formComponentFormGroupArea: buildFormGroup(key, nested),
-        formComponentHtmlArea: buildHtml(key, nested),
-        formComponentClassBodyArea: imageMethodTemplate(key, nested)
+        formComponentHtmlArea: buildHtml(key, nested, rand),
+        formComponentClassBodyArea: imageMethodTemplate(key, nested, rand)
     }
 }
 
@@ -28,7 +32,7 @@ function buildFormGroup(key, nested = null) {
         }),`;
 }
 
-function buildHtml(key, nested = null) {
+function buildHtml(key, nested = null, rand) {
     if (nested === null) {
         nested = key;
     }else{
@@ -37,19 +41,19 @@ function buildHtml(key, nested = null) {
     return  `
         <h3>${_.kebabCase(key)}</h3>
         <div class="inputs_container">
-            <app-image-upload [image]="formData.${nested}" (uploadComplete)="onUploadComplete${_.upperFirst(key)}($event)"></app-image-upload>
+            <app-image-upload [image]="formData.${nested}" (uploadComplete)="onUploadComplete${_.upperFirst(key)}${rand}($event)"></app-image-upload>
         </div>
       `;
 }
 
-function imageMethodTemplate(key, nested = null) {
+function imageMethodTemplate(key, nested = null, rand) {
     if (nested === null) {
         nested = key;
     }else{
         nested += key;
     }
     return `
-  onUploadComplete${_.upperFirst(key)}(data: any): void {
+  onUploadComplete${_.upperFirst(key)}${rand}(data: any): void {
       this.form.get('${nested}').get('url').markAsTouched();
       this.form.get('${nested}').get('url').setValue(data.url);
   }
