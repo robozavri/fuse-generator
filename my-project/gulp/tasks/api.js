@@ -4,14 +4,24 @@ import gulp from 'gulp';
 import path from 'path';
 import runSequence from 'run-sequence';
 import paths from '../paths';
-import { fields } from './fields'
+// import { fields } from './fields'
 import { generateSchema, generateKeywordSearch, generateBaseProps, generateSingleStub } from './api/generator'
-import {getNameFromArgv,  getDirFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
+import { getFieldsPath, getNameFromArgv,  getDirFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
 const $ = require('gulp-load-plugins')();
+var fields;
 
 // commons
 gulp.task('api-commons', (done) => {
-  runSequence('generateApiCommon', 'generateCommonStub', done);
+  runSequence('babel');
+  getFieldsPath().then((fieldDir) => {
+    import(fieldDir).then(module => { 
+      fields = module.fields;
+      runSequence('generateApiCommon', 'generateCommonStub', done);
+    }).catch( (err) => {
+        console.log("Error", err)
+    });
+  });
+  // runSequence('generateApiCommon', 'generateCommonStub', done);
 });
 
 gulp.task('generateApiCommon', () => {
@@ -62,7 +72,16 @@ gulp.task('generateCommonStub', () => {
 
 // articles with edit page
 gulp.task('api', (done) => {
-  runSequence('generateApi', 'generateStub', done);
+  runSequence('babel');
+  getFieldsPath().then((fieldDir) => {
+    import(fieldDir).then(module => { 
+      fields = module.fields;
+      runSequence('generateApi', 'generateStub', done);
+    }).catch( (err) => {
+        console.log("Error", err)
+    });
+  });
+  // runSequence('generateApi', 'generateStub', done);
 });
 
 gulp.task('generateApi', () => {

@@ -13,6 +13,7 @@
     "lodash": "^4.17.20"
   },
   "devDependencies": {
+    "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-preset-es2015": "^6.3.13",
     "babel-register": "^6.4.3",
     "del": "^2.2.0",

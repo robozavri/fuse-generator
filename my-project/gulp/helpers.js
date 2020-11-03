@@ -30,6 +30,20 @@ export function singular(str) {
   return pluralize.singular(str);
 }
 
+export async function getFieldsPath() {
+  let dir = argv.directory || argv.d;
+  
+  return new Promise((resolve, reject) => {     
+    if(dir) {
+      setTimeout(() => {
+        resolve('../dist/fields.js');
+      }, 2500);
+    } else {
+      resolve('./fields.js');
+    }
+  });
+}
+
 export function getIsGeenerateArgv() {
   const edit = argv.edit || argv.n;
   if (!edit) {
