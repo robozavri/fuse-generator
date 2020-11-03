@@ -1,27 +1,21 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
-import { Blog } from 'app/shared/models/blog';
-import { FormComponent as _FormComponent } from '../../../../../../shared/components/form.component';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { CommonsTextApiService } from '../../../../shared/http/commons-text-api.service';
+import { SnackBarService } from 'app/shared/services/snack-bar.service';
+
 import { accounts } from 'app/shared/constants/socials';
     
 
 @Component({
-  selector: 'app-basic-info',
-  templateUrl: './basic-info.component.html',
-  styleUrls: ['./basic-info.component.scss']
+  selector: 'app-commons-text',
+  templateUrl: './commons-text.component.html',
+  styleUrls: ['./commons-text.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class BasicInfoComponent extends _FormComponent implements OnInit {
+export class CommonsTextComponent implements OnInit {
 
-    
-  @Input() categories: any;
-   
-  @Input() formData: Blog;
-  @Input() showSubmit = true;
-  @Output() submitForm = new EventEmitter<Blog>();
-
-
- 
   form: FormGroup;
+  formData: any = {};
   
   get accounts(): any { return accounts; }
 
@@ -29,22 +23,52 @@ export class BasicInfoComponent extends _FormComponent implements OnInit {
       return this.form.get('about.socialAccounts') as FormArray;
   }
 
-  constructor(
-    private fb: FormBuilder,
     
-  ) {
-    super();
-  }
+  @Input() categories: any;
+   
+  constructor(
+    
+    private snackBarService: SnackBarService,
+    private fb: FormBuilder,
+    public api: CommonsTextApiService,
+  ) {}
 
   ngOnInit(): void {
+    this.loadData();
+    this.api.getOne().subscribe((data: any) => {
+      this.formData = data;
+      this.loadData();
+    });
+  }
+
+  
+  // socialAccounts methods
+  createSocials(data: any): FormGroup {
+      return this.fb.group({
+          account: [ data.account || ''],
+          link: [ data.link || ''],
+      });
+  }
+  
+  addSocials(details: string): void {
+      const detailsForm = this.fb.group({
+          account: [''],
+          link: [''],
+      });
+      this[details].push(detailsForm);
+  }
+
+  deleteSocials(i: any): void{
+      this.socials.removeAt(i);
+  }
+  
+  loadData(): any {
 
     
     this.formData.name = this.formData.name || '';
     this.formData.fullName = this.formData.fullName || '';
     this.formData.category = this.formData.category || [];
     this.formData.about = this.formData.about || {};
-    this.formData.about.contact = this.formData.about.contact || {};
-    this.formData.about.about = this.formData.about.about || {};
     this.formData.about.contact = this.formData.about.contact || {};
     this.formData.about.contact.title = this.formData.about.contact.title || {};
     this.formData.about.contact.address = this.formData.about.contact.address || {};
@@ -76,32 +100,14 @@ export class BasicInfoComponent extends _FormComponent implements OnInit {
         socialAccounts: this.fb.array( socialArray ),
     }),
     });
-  }
-
   
-  // socialAccounts methods
-  createSocials(data: any): FormGroup {
-      return this.fb.group({
-          account: [ data.account || ''],
-          link: [ data.link || ''],
-      });
-  }
-  
-  addSocials(details: string): void {
-      const detailsForm = this.fb.group({
-          account: [''],
-          link: [''],
-      });
-      this[details].push(detailsForm);
-  }
-
-  deleteSocials(i: any): void{
-      this.socials.removeAt(i);
   }
 
   submit(): void {
-    if (this.form.valid) {
-      this.submitForm.emit(this.form.value);
-    }
+    this.api.update({ ...this.form.value }).subscribe(
+      () => this.snackBarService.open('Updated Successfully'),
+      () => this.snackBarService.open('Update Failed'),
+    );
   }
+
 }

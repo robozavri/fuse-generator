@@ -6,8 +6,10 @@ import runSequence from 'run-sequence';
 import paths from '../paths';
 import * as _ from 'lodash';
 import { fields, refFields } from './fields';
-import { generateCommon } from './admin/common';
-import { generateArticlesList } from './admin/articles-list';
+import { generate } from './admin/generate';
+// old conde need to remov in future
+// import { generateCommon } from './admin/common';
+// import { generateArticlesList } from './admin/articles-list';
 import { generateInterface } from './admin/model';
 import { getIsGeenerateArgv, getNameFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
 const $ = require('gulp-load-plugins')();
@@ -79,7 +81,7 @@ gulp.task('generateCommonHttp', () => {
 });
 
 function insertCommonTemplate(name, src, dest) {
-  const common = generateCommon(fields, refFields);
+  const common = generate(fields, refFields);
   // ყველა ობიექტებს ამოიღებს და არეების მიხედვით გაერთიანებს მაგათ ფილდებს
   const data = mergeProperties(common,name);
 
@@ -94,7 +96,7 @@ function insertCommonTemplate(name, src, dest) {
 }
 
 function insertEditPageTemplate(name, src, dest, fields) {
-  const articlesList = generateArticlesList(fields, refFields);
+  const articlesList = generate(fields, refFields);
   // ყველა ობიექტებს ამოიღებს და არეების მიხედვით გაერთიანებს მაგათ ფილდებს
   const data = mergeProperties(articlesList,name);
 
@@ -109,7 +111,7 @@ function insertEditPageTemplate(name, src, dest, fields) {
 }
 
 function insertArticlesTemplate2(name, src, dest) {
-    const articlesList = generateArticlesList(fields, refFields);
+    const articlesList = generate(fields, refFields);
     // ყველა ობიექტებს ამოიღებს და არეების მიხედვით გაერთიანებს მაგათ ფილდებს
     const data = mergeProperties(articlesList,name);
 

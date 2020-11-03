@@ -66,7 +66,7 @@ function parseBaseProps(body: any) {
     
     'name',
     'fullName',
-    'images',
+    'category',
     'about',
     'position',
   ]);

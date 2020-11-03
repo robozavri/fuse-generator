@@ -30,7 +30,7 @@ function getAboutObject(i: number = 0): any {
     ],};
 }
 
-const BlogStub = {
+const CommonsTextsStub = {
     name: getNameObject(),
     fullName: getFullNameObject(),
     category: getCategoryObject(),
@@ -39,7 +39,7 @@ const BlogStub = {
 
 export function getSingle(fields?: any): any {
   return {
-    ...cloneStub(BlogStub),
+    ...cloneStub(CommonsTextsStub),
     ...fields
   };
 }

@@ -19,7 +19,7 @@ const $ = require('gulp-load-plugins')();
 const log = $.util.log;
 const colors = $.util.colors;
 
-export function generateArticlesList(fields){
+export function generate(fields){
     let data = [];
 
     for (let key in fields) {

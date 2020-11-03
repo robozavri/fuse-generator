@@ -55,54 +55,58 @@ export const fields = {
      // aboutPrimitive: 'Textarea',
      // count: 'Number', 
      // thumbnail: 'imageSchema', 
-     images: '[imageSchema]' ,
+     // image: 'imageSchema', 
+     // fotos: '[imageSchema]' ,
+     // images: '[imageSchema]' ,
      // createAt: 'Date',
      // socialAccounts: 'Socials',
-     // category: 'Reference',
+     category: 'Reference',
      // blogType: 'Select',
      // isFeatured: 'Slide-toggle',
      // meta: 'Meta',
-     about: {
-          contact: {
-               // category: 'Reference',
-               street: {
-                    title:'String', 
-                    // blogType: 'Select',
-                    // category: 'Reference', 
-                    peoples: {
-                         human: {
-                              age : 'multilingualSchema',
-                              age4 : 'String'
-                         },
-                         isFeatured: 'Slide-toggle',
-                    },
-                    desc: 'String', 
-               },
-               image: 'imageSchema', 
-          },
-          behemoth: {
-               ambum: 'String',
-               songs: {
-                    oneSong: 'multilingualSchema',
-                    oneSong2: 'multilingualSchema',
-               },
-               blackmetal: {
-                    images: '[imageSchema]', 
-               }
-          },
-          socialAccounts: 'Socials',
-     }
+
      // about: {
      //      contact: {
+     //           // category: 'Reference',
      //           street: {
-     //                title:'multilingualSchema', 
-     //                description: 'multilingualSchema', 
+     //                title:'String', 
+     //                // blogType: 'Select',
+     //                // category: 'Reference', 
+     //                peoples: {
+     //                     human: {
+     //                          age : 'multilingualSchema',
+     //                          age4 : 'String'
+     //                     },
+     //                     isFeatured: 'Slide-toggle',
+     //                },
+     //                desc: 'String', 
      //           },
-     //           title: 'multilingualSchema', 
-     //           address: 'multilingualSchema', 
-     //           images: '[imageSchema]', 
+     //           image: 'imageSchema', 
      //      },
-     //      phone: 'String',
+     //      behemoth: {
+     //           ambum: 'String',
+     //           songs: {
+     //                oneSong: 'multilingualSchema',
+     //                oneSong2: 'multilingualSchema',
+     //           },
+     //           blackmetal: {
+     //                images: '[imageSchema]', 
+     //           }
+     //      },
      //      socialAccounts: 'Socials',
      // }
+
+     about: {
+          contact: {
+               // street: {
+               //      title:'multilingualSchema', 
+               //      // description: 'multilingualSchema', 
+               // },
+               title: 'multilingualSchema', 
+               address: 'multilingualSchema', 
+               // images: '[imageSchema]', 
+          },
+          phone: 'String',
+          socialAccounts: 'Socials',
+     }
 }

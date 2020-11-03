@@ -1,4 +1,4 @@
-export interface Blog {
+export interface CommonsText {
     _id?: any;
     name?: any;
     fullName?: any;

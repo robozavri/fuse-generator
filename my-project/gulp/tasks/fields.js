@@ -21,16 +21,16 @@ export const availableLangs = ['en', 'ge' ];
 // list display fields
 // only String or multilingualSchema
 export const listFields = {
-     name: 'String',
+     title: 'String',
      // title: 'multilingualSchema', 
 };
 
 export const refFields = {
-     category: {
+     subject: {
           //  reference must be camelCase
-          reference: 'blogCategory',
+          reference: 'Subject',
           //  single/multiple
-          referenceType: 'multiple',
+          referenceType: 'single',
           value: '_id',
           displayFieldName: 'title?.ge',
      }
@@ -45,8 +45,8 @@ export const selectFields = {
 }
 
 export const fields = {
-     name: 'String',
-     fullName: 'String',
+     // name: 'String',
+     // fullName: 'String',
      // title: 'multilingualSchema', 
      // description: 'multilingualSchema', 
      // smallDescription: 'multilingualSchema-Textarea', 
@@ -54,10 +54,10 @@ export const fields = {
      // aboutQuili: 'quill-editor',
      // aboutPrimitive: 'Textarea',
      // count: 'Number', 
-     thumbnail: 'imageSchema', 
-     image: 'imageSchema', 
-     fotos: '[imageSchema]' ,
-     images: '[imageSchema]' ,
+     // thumbnail: 'imageSchema', 
+     // image: 'imageSchema', 
+     // fotos: '[imageSchema]' ,
+     // images: '[imageSchema]' ,
      // createAt: 'Date',
      // socialAccounts: 'Socials',
      // category: 'Reference',
@@ -65,36 +65,36 @@ export const fields = {
      // isFeatured: 'Slide-toggle',
      // meta: 'Meta',
 
-     about: {
-          contact: {
-               // category: 'Reference',
-               street: {
-                    title:'String', 
-                    // blogType: 'Select',
-                    // category: 'Reference', 
-                    peoples: {
-                         human: {
-                              age : 'multilingualSchema',
-                              age4 : 'String'
-                         },
-                         isFeatured: 'Slide-toggle',
-                    },
-                    desc: 'String', 
-               },
-               image: 'imageSchema', 
-          },
-          behemoth: {
-               ambum: 'String',
-               songs: {
-                    oneSong: 'multilingualSchema',
-                    oneSong2: 'multilingualSchema',
-               },
-               blackmetal: {
-                    images: '[imageSchema]', 
-               }
-          },
-          socialAccounts: 'Socials',
-     }
+     // about: {
+     //      contact: {
+     //           // category: 'Reference',
+     //           street: {
+     //                title:'String', 
+     //                // blogType: 'Select',
+     //                // category: 'Reference', 
+     //                peoples: {
+     //                     human: {
+     //                          age : 'multilingualSchema',
+     //                          age4 : 'String'
+     //                     },
+     //                     isFeatured: 'Slide-toggle',
+     //                },
+     //                desc: 'String', 
+     //           },
+     //           image: 'imageSchema', 
+     //      },
+     //      behemoth: {
+     //           ambum: 'String',
+     //           songs: {
+     //                oneSong: 'multilingualSchema',
+     //                oneSong2: 'multilingualSchema',
+     //           },
+     //           blackmetal: {
+     //                images: '[imageSchema]', 
+     //           }
+     //      },
+     //      socialAccounts: 'Socials',
+     // }
 
      // about: {
      //      contact: {
@@ -109,4 +109,12 @@ export const fields = {
      //      phone: 'String',
      //      socialAccounts: 'Socials',
      // }
+     fullName: 'String',
+     email: 'String',
+     phoneNumber: 'String',
+     subject: 'Reference',
+     language: 'String',
+     spots: 'String',
+     price: 'String',
+     additionalNote: 'String',
 }

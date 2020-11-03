@@ -7,18 +7,38 @@
                 <input matInput placeholder="name" formControlName="name">
             </mat-form-field>
         </div>
-   
+
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label> full-name</mat-label>
+                <input matInput placeholder="fullName" formControlName="fullName">
+            </mat-form-field>
+        </div>
+
+        <h3>thumbnail</h3>
+        <div class="inputs_container">
+            <app-image-upload [image]="formData.thumbnail" (uploadComplete)="onUploadCompleteThumbnail60($event)"></app-image-upload>
+        </div>
+      
+        <h3>image</h3>
+        <div class="inputs_container">
+            <app-image-upload [image]="formData.image" (uploadComplete)="onUploadCompleteImage30($event)"></app-image-upload>
+        </div>
+      
+        <h3>fotos</h3>
+        <div class="inputs_container">
+            <app-images-upload *ngIf="images827" [images]="images827" (removeImage)="deleteImageFotos827($event)" (uploadComplete)="onUploadCompleteFotos827($event)"></app-images-upload>
+        </div>
+  
+        <h3>images</h3>
+        <div class="inputs_container">
+            <app-images-upload *ngIf="images871" [images]="images871" (removeImage)="deleteImageImages871($event)" (uploadComplete)="onUploadCompleteImages871($event)"></app-images-upload>
+        </div>
+     
     <div formGroupName='about'>
        
     <div formGroupName='contact'>
-    
-      <mat-form-field [style.width.px]=500 *ngIf="categories">
-          <mat-label>category</mat-label>
-          <mat-select formControlName="category" multiple>
-              <mat-option *ngFor="let item of categories" [value]="item._id">{{ item.title?.ge }}</mat-option>
-          </mat-select>
-      </mat-form-field>
-   
+       
     <div formGroupName='street'>
     
         <div fxLayout="row" fxLayoutAlign="space-between">
@@ -27,13 +47,6 @@
                 <input matInput placeholder="title" formControlName="title">
             </mat-form-field>
         </div>
-
-        <mat-form-field [style.width.px]=500 *ngIf="blogTypes">
-            <mat-label>blog-type</mat-label>
-            <mat-select formControlName="blogType" >
-                <mat-option *ngFor="let item of blogTypes" [value]="item">{{ item }}</mat-option>
-            </mat-select>
-        </mat-form-field>
    
     <div formGroupName='peoples'>
        
@@ -76,7 +89,7 @@
     </div>
         <h3>image</h3>
         <div class="inputs_container">
-            <app-image-upload [image]="formData.about.contact.image" (uploadComplete)="onUploadCompleteImage($event)"></app-image-upload>
+            <app-image-upload [image]="formData.about.contact.image" (uploadComplete)="onUploadCompleteImage6($event)"></app-image-upload>
         </div>
       
     </div>   
@@ -124,7 +137,7 @@
     
         <h3>images</h3>
         <div class="inputs_container">
-            <app-images-upload *ngIf="images" [images]="images" (removeImage)="deleteImageImages($event)" (uploadComplete)="onUploadCompleteImages($event)"></app-images-upload>
+            <app-images-upload *ngIf="images547" [images]="images547" (removeImage)="deleteImageImages547($event)" (uploadComplete)="onUploadCompleteImages547($event)"></app-images-upload>
         </div>
   
     </div>
