@@ -21,16 +21,16 @@ export const availableLangs = ['en', 'ge' ];
 // list display fields
 // only String or multilingualSchema
 export const listFields = {
-     name: 'String',
+     title: 'String',
      // title: 'multilingualSchema', 
 };
 
 export const refFields = {
-     category: {
+     subject: {
           //  reference must be camelCase
-          reference: 'blogCategory',
+          reference: 'Subject',
           //  single/multiple
-          referenceType: 'multiple',
+          referenceType: 'single',
           value: '_id',
           displayFieldName: 'title?.ge',
      }
@@ -45,8 +45,8 @@ export const selectFields = {
 }
 
 export const fields = {
-     name: 'String',
-     fullName: 'String',
+     // name: 'String',
+     // fullName: 'String',
      // title: 'multilingualSchema', 
      // description: 'multilingualSchema', 
      // smallDescription: 'multilingualSchema-Textarea', 
@@ -60,7 +60,7 @@ export const fields = {
      // images: '[imageSchema]' ,
      // createAt: 'Date',
      // socialAccounts: 'Socials',
-     category: 'Reference',
+     // category: 'Reference',
      // blogType: 'Select',
      // isFeatured: 'Slide-toggle',
      // meta: 'Meta',
@@ -96,17 +96,25 @@ export const fields = {
      //      socialAccounts: 'Socials',
      // }
 
-     about: {
-          contact: {
-               // street: {
-               //      title:'multilingualSchema', 
-               //      // description: 'multilingualSchema', 
-               // },
-               title: 'multilingualSchema', 
-               address: 'multilingualSchema', 
-               // images: '[imageSchema]', 
-          },
-          phone: 'String',
-          socialAccounts: 'Socials',
-     }
+     // about: {
+     //      contact: {
+     //           // street: {
+     //           //      title:'multilingualSchema', 
+     //           //      // description: 'multilingualSchema', 
+     //           // },
+     //           title: 'multilingualSchema', 
+     //           address: 'multilingualSchema', 
+     //           // images: '[imageSchema]', 
+     //      },
+     //      phone: 'String',
+     //      socialAccounts: 'Socials',
+     // }
+     fullName: 'String',
+     email: 'String',
+     phoneNumber: 'String',
+     subject: 'Reference',
+     language: 'String',
+     spots: 'String',
+     price: 'String',
+     additionalNote: 'String',
 }

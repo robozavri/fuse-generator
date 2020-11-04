@@ -100,14 +100,6 @@ const routes: Routes = [
         loadChildren: './routes/compiuter/compiuter.module#CompiuterModule'
       },
       {
-        path: 'blogs',
-        loadChildren: './routes/blogs/blogs.module#BlogsModule'
-      },
-      {
-        path: 'blog/:id',
-        loadChildren: './routes/blog/blog.module#BlogModule'
-      },
-      {
         path: 'commons',
         loadChildren: './routes/commons/common.module#CommonsModule'
       },

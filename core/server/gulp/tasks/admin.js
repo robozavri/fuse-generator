@@ -5,17 +5,28 @@ import path from 'path';
 import runSequence from 'run-sequence';
 import paths from '../paths';
 import * as _ from 'lodash';
-import { fields, refFields } from './fields';
+// import { fields, refFields } from './fields';
 import { generate } from './admin/generate';
 // old conde need to remov in future
 // import { generateCommon } from './admin/common';
 // import { generateArticlesList } from './admin/articles-list';
 import { generateInterface } from './admin/model';
-import { getIsGeenerateArgv, getNameFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
+import { getFieldsPath, getIsGeenerateArgv, getNameFromArgv, firstUC, firstLC, plural, singular} from '../helpers';
 const $ = require('gulp-load-plugins')();
+var fields, refFields;
 
 gulp.task('admin-articles', (done) => {
-  runSequence('generateArticlesAdminComponent2', 'generateHttp2', 'generateModel2', 'generateEditPage2', done);
+  runSequence('babel');
+  getFieldsPath().then((fieldDir) => {
+    import(fieldDir).then(module => { 
+      fields = module.fields;
+      refFields = module.refFields;
+      runSequence('generateArticlesAdminComponent2', 'generateHttp2', 'generateModel2', 'generateEditPage2', done);
+    }).catch( (err) => {
+        console.log("Error", err)
+    });
+  });
+  // runSequence('generateArticlesAdminComponent2', 'generateHttp2', 'generateModel2', 'generateEditPage2', done);
 });
 
 gulp.task('generateArticlesAdminComponent2', () => {
@@ -63,7 +74,17 @@ gulp.task('generateEditPage2', () => {
 });
 
 gulp.task('admin-commons', (done) => {
-  runSequence('generateCommon', 'generateCommonHttp', 'generateModel2', done);
+  runSequence('babel');
+  getFieldsPath().then((fieldDir) => {
+    import(fieldDir).then(module => { 
+      fields = module.fields;
+      refFields = module.refFields;
+      runSequence('generateCommon', 'generateCommonHttp', 'generateModel2', done);
+    }).catch( (err) => {
+        console.log("Error", err)
+    });
+  });
+  // runSequence('generateCommon', 'generateCommonHttp', 'generateModel2', done);
 });
 
 gulp.task('generateCommon', () => {

@@ -22,9 +22,6 @@ export class CommonsTextComponent implements OnInit {
   get socials(): FormArray {
       return this.form.get('about.socialAccounts') as FormArray;
   }
-
-    
-  @Input() categories: any;
    
   constructor(
     

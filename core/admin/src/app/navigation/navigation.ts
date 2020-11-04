@@ -95,14 +95,6 @@ export const navigation: FuseNavigation[] = [
         icon: 'info',
         url: '/admin/compiuters',
     },
-    {
-      id: 'blogs',
-      title: 'blogs',
-      translate: 'blogs',
-      type: 'item',
-      icon: 'info',
-      url: '/admin/blogs',
-  },
   {
     id: 'cars',
     title: 'cars',
