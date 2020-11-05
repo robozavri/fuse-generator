@@ -60,6 +60,8 @@ import { QuillModule } from 'ngx-quill';
 import { CalendarApiService } from './http/calendar-api.service';
 import { SnackBarService } from './services/snack-bar.service';
 import { NewsApiService } from './http/news-api.service';
+import { CategoryApiService } from './http/category-api.service';
+import { ModuleApiService } from './http/module-api.service';
 
 
 @NgModule({
@@ -184,7 +186,9 @@ export class SharedModule {
         MetaApiService,
         CalendarApiService,
         SnackBarService,
-        NewsApiService
+        NewsApiService,
+        CategoryApiService,
+        ModuleApiService
       ]
     };
   }

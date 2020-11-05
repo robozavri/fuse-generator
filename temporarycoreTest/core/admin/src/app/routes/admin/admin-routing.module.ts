@@ -47,6 +47,22 @@ const routes: Routes = [
         path: 'news',
         loadChildren: './routes/news/news.module#NewsModule'
       },
+      {
+        path: 'categories',
+        loadChildren: './routes/categories/categories.module#CategoriesModule'
+      },
+      {
+        path: 'category/:id',
+        loadChildren: './routes/category/category.module#CategoryModule'
+      },
+      {
+        path: 'modules',
+        loadChildren: './routes/modules/modules.module#ModulesModule'
+      },
+      {
+        path: 'module/:id',
+        loadChildren: './routes/module/module.module#ModuleModule'
+      },
     ]
   }
 ];

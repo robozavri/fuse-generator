@@ -8,6 +8,20 @@ export const navigation: FuseNavigation[] = [
     type: 'group',
     children: [
       {
+        id: 'modules',
+        title: 'modules',
+        type: 'item',
+        icon: 'info',
+        url: '/admin/modules',
+      },
+      {
+        id: 'categories',
+        title: 'categories',
+        type: 'item',
+        icon: 'info',
+        url: '/admin/categories',
+      },
+      {
         id: 'info',
         title: 'Info',
         translate: 'NAV.INFO',

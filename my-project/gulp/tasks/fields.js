@@ -109,12 +109,7 @@ export const fields = {
      //      phone: 'String',
      //      socialAccounts: 'Socials',
      // }
-     fullName: 'String',
-     email: 'String',
-     phoneNumber: 'String',
-     subject: 'Reference',
-     language: 'String',
-     spots: 'String',
-     price: 'String',
-     additionalNote: 'String',
+     title: 'String',
+     cmdTitle: 'String',
+     editPage: 'Slide-toggle',
 }

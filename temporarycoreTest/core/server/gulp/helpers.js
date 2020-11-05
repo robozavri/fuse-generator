@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 
 import gulp from 'gulp';
 import _ from 'lodash';
@@ -30,6 +30,29 @@ export function singular(str) {
   return pluralize.singular(str);
 }
 
+export async function getFieldsPath() {
+  let dir = argv.directory || argv.d;
+  
+  return new Promise((resolve, reject) => {     
+    if(dir) {
+      setTimeout(() => {
+        resolve('../dist/fields.js');
+      }, 2500);
+    } else {
+      resolve('./fields.js');
+    }
+  });
+}
+
+export function getIsGeenerateArgv() {
+  const edit = argv.edit || argv.n;
+  if (!edit) {
+    log(colors.red('Error: name parameter is required (e.g. --edit <edit>) value: true or false'));
+    process.exit(1);
+  }
+  return edit;
+}
+
 export function getNameFromArgv() {
   const name = argv.name || argv.n;
   if (!name) {
@@ -44,12 +67,25 @@ export function getDirFromArgv() {
 }
 
 export function getDefFieldFromArgv() {
-  const field = argv.field;
+  const field = argv.f;
   if (!field) {
-    log(colors.red('Error: default field is required (e.g. --field <myField>)'));
+    log(colors.red('Error: default field is required (e.g. -f <myField>)'));
     process.exit(1);
   }
   return field;
+}
+
+export function getDefFieldsFromArgv() {
+  // { name: string, title: 'multilingual', description: 'multilingual', count: 'number', thumbnail: 'image', images: 'images' }
+  // { \"name\": \"string\", \"title\": \"multilingual\", \"description\": \"multilingual\", \"count\": \"number\", \"thumbnail\": \"image\", \"images\": \"images\" }
+  // { \"name\": \"string\", \"title\": \"multilingual\", \"description\": \"multilingual\", \"count\": \"number\", \"thumbnail\": \"image\" }
+  const fields = argv.fields;
+  if (!fields) {
+    log(colors.red('Error: default fields is required (e.g. --fields <myField>)'));
+    process.exit(1);
+  }
+  return JSON.parse(fields);
+  // return fields;
 }
 
 export function getMinifyFromArgv() {

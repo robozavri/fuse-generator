@@ -8,7 +8,7 @@ export default {
   },
 
   mongo: {
-    uri: `mongodb://localhost:27017/core`,
+    uri: `mongodb://localhost:27017/test-core`,
     options: {
       useNewUrlParser: true,
       useCreateIndex: true,
@@ -17,5 +17,5 @@ export default {
 
   resourceUrl: 'http://localhost:4002',
 
-  seedDB: true,
+  // seedDB: true,
 };
