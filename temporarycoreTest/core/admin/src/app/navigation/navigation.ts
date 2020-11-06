@@ -15,11 +15,11 @@ export const navigation: FuseNavigation[] = [
         url: '/admin/modules',
       },
       {
-        id: 'categories',
-        title: 'categories',
+        id: 'fields',
+        title: 'fields',
         type: 'item',
         icon: 'info',
-        url: '/admin/categories',
+        url: '/admin/fields',
       },
       {
         id: 'info',

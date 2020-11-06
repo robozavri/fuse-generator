@@ -48,12 +48,12 @@ const routes: Routes = [
         loadChildren: './routes/news/news.module#NewsModule'
       },
       {
-        path: 'categories',
-        loadChildren: './routes/categories/categories.module#CategoriesModule'
+        path: 'fields',
+        loadChildren: './routes/fields/fields.module#FieldsModule'
       },
       {
-        path: 'category/:id',
-        loadChildren: './routes/category/category.module#CategoryModule'
+        path: 'field/:id',
+        loadChildren: './routes/field/field.module#FieldModule'
       },
       {
         path: 'modules',

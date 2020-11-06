@@ -1,0 +1,74 @@
+<form [formGroup]="form" (ngSubmit)="submit()" *ngIf="formData">
+    <div class="tab-content p-24" fusePerfectScrollbar fxLayout="column">
+
+        <mat-form-field  [style.width.px]=300 *ngIf="modules">
+            <mat-label>Module</mat-label>
+            <mat-select  formControlName="module"  panelClass="my-select-panel-class">
+                <mat-option *ngFor="let module of modules" [value]="module._id">{{ module.title }}</mat-option>
+            </mat-select>
+        </mat-form-field> 
+
+       <h2 *ngIf="parentField" class="display-choosed-field"> 
+           <button mat-mini-fab class="my-fab" color="primary" aria-label="Example icon button with a delete icon">
+                <mat-icon (click)="removeParentField()">delete</mat-icon>
+            </button>
+            <span>Parent: </span> {{ parentField?.name  }}
+        </h2>
+
+        <div>
+            <h4>Module fields</h4>
+        </div>
+        <mat-list fxLayout="column" fxLayoutAlign="start start" class="list mb-24">
+            <mat-list-item class="cursor-pointer list-elemnt" *ngFor="let fieldItem of moduleFields" (click)="chooseField(fieldItem)"> {{ fieldItem?.name  }} <span style="margin: auto;"> TYPE: {{ fieldItem?.fieldType  }}</span> </mat-list-item>
+        </mat-list>
+
+        
+        <mat-form-field  [style.width.px]=300 >
+            <mat-label>Field type *</mat-label>
+            <mat-select  formControlName="fieldType"  panelClass="my-select-panel-class">
+                <mat-option *ngFor="let type of fieldTypes" [value]="type">{{ type }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div class="custom-slied-toggle">
+            <mat-slide-toggle formControlName="displayToList">display to list</mat-slide-toggle>
+        </div>
+
+
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label> name * </mat-label>
+                <input matInput placeholder="name" name="name" formControlName="name">
+            </mat-form-field>
+        </div>
+
+        <div *ngIf="fieldType === 'Select'">
+
+            <mat-form-field  [style.width.px]=300 >
+                <mat-label>Select type </mat-label>
+                <mat-select  formControlName="selectType"  panelClass="my-select-panel-class">
+                    <mat-option *ngFor="let type of ['single','multiple']" [value]="type">{{ type }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field  appearance="outline" floatLabel="always" class="w-100-p">
+                <mat-label>Select values </mat-label>
+                <mat-chip-list #chipList aria-label="selection">
+                    <mat-chip *ngFor="let val of values.controls; let i = index;"
+                        [selectable]="selectable" [removable]="removable" (removed)="remove(i)">
+                        {{val.value}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="New item..." [matChipInputFor]="chipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                        (matChipInputTokenEnd)="add($event)">
+                </mat-chip-list>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <button mat-raised-button color="primary" type="submit" *ngIf="showSubmit"> Submit </button>
+        </div>
+
+    </div>
+</form>
