@@ -56,6 +56,10 @@ const routes: Routes = [
         loadChildren: './routes/field/field.module#FieldModule'
       },
       {
+        path: 'configs',
+        loadChildren: './routes/configs/config.module#ConfigsModule'
+      },
+      {
         path: 'modules',
         loadChildren: './routes/modules/modules.module#ModulesModule'
       },

@@ -17,7 +17,7 @@
 // notie objet key titles must be camelCase
 
 // available langs
-export const availableLangs = ['en', 'ge' ];
+export const availableLangs = ['en', 'ge', 'ru'];
 // list display fields
 // only String or multilingualSchema
 export const listFields = {
@@ -37,10 +37,10 @@ export const refFields = {
 }
 
 export const selectFields = {
-     blogType: {
+     langs: {
           //  single/multiple
-          selectType: 'single',
-          values: ['metal', 'rock', 'classic', 'black']
+          selectType: 'multiple',
+          values: ['en', 'ge', 'ru']
      }
 }
 
@@ -109,7 +109,5 @@ export const fields = {
      //      phone: 'String',
      //      socialAccounts: 'Socials',
      // }
-     title: 'String',
-     cmdTitle: 'String',
-     editPage: 'Slide-toggle',
+     langs: 'Select',
 }

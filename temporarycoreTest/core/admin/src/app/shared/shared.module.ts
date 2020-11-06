@@ -62,6 +62,7 @@ import { SnackBarService } from './services/snack-bar.service';
 import { NewsApiService } from './http/news-api.service';
 import { FieldApiService } from './http/field-api.service';
 import { ModuleApiService } from './http/module-api.service';
+import { ConfigApiService } from './http/config-api.service';
 
 
 @NgModule({
@@ -188,7 +189,8 @@ export class SharedModule {
         SnackBarService,
         NewsApiService,
         FieldApiService,
-        ModuleApiService
+        ModuleApiService,
+        ConfigApiService
       ]
     };
   }

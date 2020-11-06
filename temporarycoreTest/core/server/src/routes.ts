@@ -17,6 +17,7 @@ import appLogsRouter from './api/appLogs';
 import newsRouter from './api/news';
 import fieldsRouter from './api/fields';
 import modulesRouter from './api/modules';
+import configRouter from './api/configs';
 
 import { getMetaTags } from './helpers/metaTagsHelper';
 
@@ -43,6 +44,7 @@ export function initRoutes(app: Express) {
   app.use('/api/news', newsRouter);
   app.use('/api/fields', fieldsRouter);
   app.use('/api/modules', modulesRouter);
+  app.use('/api/configs', configRouter);
 
   app.get('/admin/*', renderAdminHtml);
   app.get('/*', renderClientHtml);

@@ -10,6 +10,7 @@ import * as ArticleDao from '../api/articles/article.dao';
 import * as EventDao from '../api/events/event.dao';
 import * as NewsDao from '../api/news/news.dao';
 import * as ModulesDao from '../api/modules/modules.dao';
+import * as ConfigsDao from '../api/configs/config.dao';
 
 import * as UserStub from '../stubs/user.stub';
 import * as CommonStub from '../stubs/common.stub';
@@ -18,6 +19,7 @@ import * as ArticleStub from '../stubs/article.stub';
 import * as EventStub from '../stubs/event.stub';
 import * as NewsStub from '../stubs/news.stub';
 import * as ModulesStub from '../stubs/modules.stub';
+import * as ConfigStub from '../stubs/config.stub';
 
 
 export async function seedDB() {
@@ -41,6 +43,7 @@ export async function seedDBDevelopment() {
   await EventDao.insertMany(EventStub.getMany(11));
   await NewsDao.insertMany(NewsStub.getMany(11));
   await ModulesDao.insertMany(ModulesStub.getMany(11));
+  await ConfigsDao.create(ConfigStub.getSingle(11));
 
   logger.info('Seed DB development completed');
 }
