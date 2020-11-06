@@ -85,9 +85,11 @@ export class BasicInfoComponent extends FormComponent implements OnInit {
 
   loadForm(): void {
     this.formData.values = this.formData.values || [];
+    this.formData.parent = this.formData.parent || null;
+    this.parentField = this.fields.filter((field: any) => field._id === this.formData.parent)[0];
 
     this.form = this.fb.group({
-      parent: [this.formData.parent || ''],
+      parent: [this.formData.parent || null],
       name: [this.formData.name || '', Validators.required],
       module: [this.formData.module || '', Validators.required],
       fieldType: [this.formData.fieldType || '', Validators.required],

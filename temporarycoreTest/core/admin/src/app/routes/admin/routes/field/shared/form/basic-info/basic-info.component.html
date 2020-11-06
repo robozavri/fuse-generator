@@ -38,12 +38,11 @@
         <div fxLayout="row" fxLayoutAlign="space-between">
             <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
                 <mat-label> name * </mat-label>
-                <input matInput placeholder="name" name="name" formControlName="name">
+                <input matInput placeholder="field name in camelCase" formControlName="name">
             </mat-form-field>
         </div>
 
         <div *ngIf="fieldType === 'Select'">
-
             <mat-form-field  [style.width.px]=300 >
                 <mat-label>Select type </mat-label>
                 <mat-select  formControlName="selectType"  panelClass="my-select-panel-class">
@@ -64,6 +63,36 @@
                         (matChipInputTokenEnd)="add($event)">
                 </mat-chip-list>
             </mat-form-field>
+        </div>
+
+        <div *ngIf="fieldType === 'Reference'">
+            <mat-form-field  [style.width.px]=300 >
+                <mat-label>Reference type </mat-label>
+                <mat-select  formControlName="referenceType"  panelClass="my-select-panel-class">
+                    <mat-option *ngFor="let type of ['single','multiple']" [value]="type">{{ type }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div fxLayout="row" fxLayoutAlign="space-between">
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                    <mat-label>Reference Model * </mat-label>
+                    <input matInput placeholder="exemple: Subject"  formControlName="reference">
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between">
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                    <mat-label>value * </mat-label>
+                    <input matInput placeholder="exemple: _id"  formControlName="value">
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between">
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                    <mat-label>Display Field Name in list * </mat-label>
+                    <input matInput placeholder="exemple: title?.ge"  formControlName="displayFieldName">
+                </mat-form-field>
+            </div>
+
         </div>
 
         <div>
