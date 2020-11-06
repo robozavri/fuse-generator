@@ -11,6 +11,18 @@
                 <p class="text-truncate">{{item?.title}}</p>
             </mat-cell>
         </ng-container>
+
+        <!-- Active Column -->
+        <ng-container matColumnDef="generate">
+            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs>Generate</mat-header-cell>
+            <mat-cell *matCellDef="let item" fxHide fxShow.gt-xs>
+
+                <span class="cal-event-actions ng-star-inserted checkboxStyle" (click)="toggleCheckbox($event)">
+                    <button mat-raised-button [color]="item.isGenerated ? 'warn' : 'primary'"  (click)="generateModule($event, item)"> Generate </button>
+                </span>
+
+            </mat-cell>
+        </ng-container>
     
 
         <!-- Active Column -->

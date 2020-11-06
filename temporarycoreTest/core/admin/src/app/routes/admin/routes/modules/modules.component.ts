@@ -92,6 +92,21 @@ export class ModulesComponent {
       );
   }
 
+  generate(data: Module): void {
+    this.dialog
+      .open(ConfirmDeleteModalComponent, { data })
+      .afterClosed()
+      .pipe(
+        filter(r => r),
+        switchMap(() => this.api.generate(data)),
+      )
+      .subscribe(
+        () => this.snackBarService.open('Generated Successfully'),
+        () => this.snackBarService.open('Generate Failed'),
+        () => this.loadData$.next(this.query)
+      );
+  }
+
   reloadParams(query: Query): void {
     this.query = { ...this.query, ...query };
     this.loadData$.next(this.query);

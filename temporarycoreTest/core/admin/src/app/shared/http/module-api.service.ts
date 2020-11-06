@@ -13,9 +13,17 @@ const API_URL = environment.apiUrl;
 export class ModuleApiService {
   constructor(private http: HttpClient) { }
 
+
+
   getByQuery(params): Observable<QueryResponse<Module>> {
     return this.http.get<any>(`${API_URL}/api/modules`, {
       params,
+    });
+  }
+
+  generate(data): Observable<any> {
+    return this.http.post(`${API_URL}/api/modules/generate`, data, {
+      responseType: 'text',
     });
   }
 

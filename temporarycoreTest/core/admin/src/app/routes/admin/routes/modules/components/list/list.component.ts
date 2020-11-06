@@ -4,6 +4,8 @@ import { PageEvent, MatTable } from '@angular/material';
 import { Module } from 'app/shared/models/module';
 import { Query } from 'app/shared/models/query';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { ModuleApiService } from 'app/shared/http/module-api.service';
+import { SnackBarService } from 'app/shared/services/snack-bar.service';
 
 
 @Component({
@@ -27,6 +29,7 @@ export class ListComponent implements OnInit {
   @Output() queryChange = new EventEmitter<Query>();
   @Output() updateForm = new EventEmitter<any>();
   @Output() deleteForm = new EventEmitter<Module>();
+  @Output() generate = new EventEmitter<any>();
   @Output() updateMeta = new EventEmitter<any>();
   @Output() updatePositions = new EventEmitter<any>();
 
@@ -37,10 +40,12 @@ export class ListComponent implements OnInit {
   pageLength: number;
   pageEvent: PageEvent;
   expandedElement: any;
-  displayedColumns = ['title', 'active'];
+  displayedColumns = ['title', 'generate', 'active'];
 
 
   constructor(
+    private moduleApiService: ModuleApiService,
+    private snackBarService: SnackBarService,
   ) { }
 
   ngOnInit(): void {
@@ -49,6 +54,19 @@ export class ListComponent implements OnInit {
     });
     this.numTotal.subscribe((data) => this.pageLength = data);
     
+  }
+
+  toggleCheckbox(event: any): void {
+    event.stopPropagation();
+  }
+
+  generateModule(event: any, module: any): void {
+     console.log('module', module);
+     this.moduleApiService.generate({_id: module._id}).subscribe(
+      () => this.snackBarService.open('Genereted Successfully'),
+      () => this.snackBarService.open('Generate Failed'),
+    );
+    //  this.generate.emit({_id: module._id});
   }
 
   pagenatorEvent(pageData: any): any {

@@ -14,6 +14,10 @@ function getCmdTitleObject(i: number = 0): any {
     return `cmdTitle ${i}`;
 }
 
+function getIsGeneratedObject(i: number = 0): any {
+    return false;
+}
+
 function getModuleTypeObject(i: number = 0): any {
     return moduleTypes[Math.floor(Math.random() * moduleTypes.length)];
 }
@@ -27,6 +31,7 @@ const ModulesStub = {
     cmdTitle: getCmdTitleObject(),
     moduleType: getModuleTypeObject(),
     editPage: getEditPageObject(),
+    isGenerated: getIsGeneratedObject(),
 };
 
 export function getSingle(fields?: any): any {
@@ -44,5 +49,6 @@ export function getMany(count: number, fields?: any) {
     cmdTitle: getCmdTitleObject(i),
     moduleType: getModuleTypeObject(i),
     editPage: getEditPageObject(i),
+    isGenerated: getIsGeneratedObject(i),
   }));
 }

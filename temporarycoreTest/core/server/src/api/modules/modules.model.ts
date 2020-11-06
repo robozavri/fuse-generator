@@ -6,6 +6,7 @@ const ModulesSchema = new Schema({
   cmdTitle: String,
   moduleType: String,
   editPage: Boolean,
+  isGenerated: Boolean,
   position: Number,
 });
 

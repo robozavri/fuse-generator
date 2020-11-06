@@ -1,5 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import * as modulesDao from './modules.dao';
+import * as fieldsDao from '../fields/fields.dao';
 import * as modulesParser  from './modules.parser';
 import * as auth from '../../auth';
 
@@ -8,6 +9,7 @@ const modulesRouter = Router();
 
 modulesRouter.get('/', modulesParser.parseGetByQuery, getByQuery);
 modulesRouter.post('/', auth.isAdmin, modulesParser.parseCreate, create);
+modulesRouter.post('/generate', auth.isAdmin, modulesParser.parseGenerate, generate);
 modulesRouter.put('/:id', auth.isAdmin, modulesParser.parseUpdate, update);
 modulesRouter.delete('/:id', auth.isAdmin, destroy);
 modulesRouter.patch('/positions', modulesParser.parseUpdatePositions, updatePositions);
@@ -27,6 +29,18 @@ async function getByQuery(req: Request, res: Response, next: NextFunction) {
 }
 
 // =============== POST ===============
+
+async function generate(req: Request, res: Response, next: NextFunction) {
+  try {
+    const payload = req.body;
+    const module = await modulesDao.getById(payload._id);
+    const fields = await fieldsDao.getByQuery({ find: { module: payload._id}, limit: 1000});
+    console.log('module', module);
+    res.sendStatus(200);
+  } catch (e) {
+    next(e);
+  }
+}
 
 async function create(req: Request, res: Response, next: NextFunction) {
   try {

@@ -52,6 +52,14 @@ export function parseUpdate(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
+export function parseGenerate(req: Request, res: Response, next: NextFunction) {
+  req.body = {
+    _id: req.body._id,
+    ...parseBaseProps(req.body)
+  };
+  next();
+}
+
 export function parseUpdatePositions(req: Request, res: Response, next: NextFunction) {
   req.body = Object.assign(
     {
