@@ -11,6 +11,20 @@
                 <p class="text-truncate">{{item.title?.ge || item.name}}</p>
             </mat-cell>
         </ng-container>
+
+        <ng-container matColumnDef="type">
+            <mat-header-cell *matHeaderCellDef #nameLabel>Field type</mat-header-cell>
+            <mat-cell *matCellDef="let item">
+                <p class="text-truncate">{{ item.fieldType }}</p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="module">
+            <mat-header-cell *matHeaderCellDef #nameLabel>Module</mat-header-cell>
+            <mat-cell *matCellDef="let item">
+                <p class="text-truncate">{{item.module?.title }}</p>
+            </mat-cell>
+        </ng-container>
   
 
         <!-- Active Column -->

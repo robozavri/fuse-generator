@@ -94,13 +94,14 @@ export class FieldsComponent {
   }
 
   reloadParams(query: Query): void {
-    this.query = { ...this.query, ...query };
+    this.query = { ...this.query, ...query, populate: 'module' };
     this.loadData$.next(this.query);
   }
 
   parseQueryParams(params): Query {
     return {
       ...params,
+      populate: 'module',
       page: params.page ? Number(params.page) : 1,
       limit: params.limit ? Number(params.limit) : 10,
     };

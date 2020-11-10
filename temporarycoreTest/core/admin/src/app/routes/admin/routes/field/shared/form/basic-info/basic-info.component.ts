@@ -86,6 +86,7 @@ export class BasicInfoComponent extends FormComponent implements OnInit {
   loadForm(): void {
     this.formData.values = this.formData.values || [];
     this.formData.parent = this.formData.parent || null;
+    this.fields = this.fields || [];
     this.parentField = this.fields.filter((field: any) => field._id === this.formData.parent)[0];
 
     this.form = this.fb.group({
@@ -98,7 +99,7 @@ export class BasicInfoComponent extends FormComponent implements OnInit {
       selectType: [this.formData.selectType || ''],
       reference: [this.formData.reference || ''],
       referenceType: [this.formData.referenceType || ''],
-      value: [this.formData.value || ''],
+      value: [this.formData.value || '_id'],
       displayFieldName: [this.formData.displayFieldName || ''],
     });
 

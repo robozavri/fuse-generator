@@ -10,29 +10,61 @@ const modulesRouter = Router();
 
 modulesRouter.get('/', modulesParser.parseGetByQuery, getByQuery);
 modulesRouter.post('/', auth.isAdmin, modulesParser.parseCreate, create);
-modulesRouter.post('/generate', auth.isAdmin, modulesParser.parseGenerate, generate);
-modulesRouter.post('/fields', getFields);
+modulesRouter.post('/generate',  modulesParser.parseGenerate, generate);
+modulesRouter.post('/fields', getPreparedFields);
 modulesRouter.put('/:id', auth.isAdmin, modulesParser.parseUpdate, update);
 modulesRouter.delete('/:id', auth.isAdmin, destroy);
 modulesRouter.patch('/positions', modulesParser.parseUpdatePositions, updatePositions);
 
 export default modulesRouter;
 
+const listFields: any = {};
+const refFields: any = {};
+const selectFields: any = {};
+
+// recursive search fub fields and build fields tree
 function findChild(fields: any, parentId: string) {
-  const field = _.find(fields, { parent: parentId });
-  if (!field) {
-    return;
+  let preparedField: any = {};
+  const childs = _.filter(fields, { parent: parentId });
+  if (childs.length === 0) {
+    return false;
   }
-  const subChild = findChild(fields, field._id);
-  if (!subChild) {
-    return field;
-  }
-  field[subChild.name] = subChild;
-  // console.log('founded field', field);
-  return field;
+
+  childs.map((childField) => {
+    const subChilds = _.filter(fields, { parent: childField._id });
+    let preparedSubField: any = {};
+
+    if (subChilds.length === 0) {
+      preparedField[childField.name] = childField.fieldType;
+      return false;
+    }
+    subChilds.map((subChildField) => {
+      preparedSubField[subChildField.name] = subChildField.fieldType;
+    });
+    preparedField[childField.name] = preparedSubField;
+  });
+  return preparedField; 
 }
 
-
+function detectRefAndSelectTypes(field: any) {
+  if (field.displayToList === true) {
+    listFields[field.name] = field.fieldType;
+  }
+  switch (field.fieldType) {
+    case 'Reference' : 
+    refFields[field.name] = {
+      reference: field.reference,
+      referenceType: field.referenceType,
+      value: field.value,
+      displayFieldName: field.displayFieldName,
+    };
+    case 'Select' : 
+    selectFields[field.name] = {
+      selectType: field.selectType,
+      values: field.values
+    };
+  }
+}
 // =============== GET ===============
 
 async function getByQuery(req: Request, res: Response, next: NextFunction) {
@@ -45,21 +77,19 @@ async function getByQuery(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-async function getFields(req: Request, res: Response, next: NextFunction) {
+
+// =============== POST ===============
+async function generate(req: Request, res: Response, next: NextFunction) {
   try {
-    const query = req.query;
-    const modulesData = await modulesDao.getByQuery(query);
-    res.json(modulesData);
+    const payload = req.body;
+    const module = await modulesDao.getById(payload._id);
+    res.json(module);
   } catch (e) {
     next(e);
   }
 }
 
-// =============== POST ===============
-
-
-
-async function generate(req: Request, res: Response, next: NextFunction) {
+async function getPreparedFields(req: Request, res: Response, next: NextFunction) {
   try {
     const payload = req.body;
     const module = await modulesDao.getById(payload._id);
@@ -67,34 +97,33 @@ async function generate(req: Request, res: Response, next: NextFunction) {
     const configs = await configDao.getOne();
     const fields = fieldsData.items;
 
-    const nestedFields = [Array];
+    const nestedFields: any = {};
 
     fields.map((field) => {
-      if (field.parent === null) {
-        // console.log('passed parent id: ',  field._id);
-        const child =  findChild(fields, field._id);
+      detectRefAndSelectTypes(field);
+      if (!_.has(field, 'parent') || _.has(field, 'parent') === null) {
+        const child = findChild(fields, field._id);
         if (!child) {
-          nestedFields.push(field);
+          nestedFields[field.name] = field.fieldType;
         } else {
-          field[child.name] = child;
-          nestedFields.push(field);
+          nestedFields[field.name] = child;
         }
       }
     });
 
-    console.log('nestedFields', nestedFields);
-    // console.log('module', module);
-    // console.log('fields', fieldsData);
-
     // res.json(nestedFields);
-    res.json(nestedFields);
-    // res.json({
-    //   configs: configs,
-    //   module: module,
-    //   fields: fieldsData,
-    // } );
+    res.json({
+      listFields: listFields,
+      refFields: refFields,
+      selectFields: selectFields,
+
+      configs: configs,
+      module: module,
+      fields: nestedFields,
+    } );
     // res.sendStatus(200);
   } catch (e) {
+    console.log(e);
     next(e);
   }
 }
