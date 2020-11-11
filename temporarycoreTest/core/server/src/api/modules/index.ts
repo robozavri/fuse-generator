@@ -5,6 +5,8 @@ import * as configDao from '../configs/config.dao';
 import * as modulesParser  from './modules.parser';
 import * as auth from '../../auth';
 import * as _ from 'lodash';
+import { exec } from 'child_process';
+
 
 const modulesRouter = Router();
 
@@ -83,6 +85,19 @@ async function generate(req: Request, res: Response, next: NextFunction) {
   try {
     const payload = req.body;
     const module = await modulesDao.getById(payload._id);
+
+    exec(`gulp generate --moduleId ${payload._id}`, (error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    });
+
     res.json(module);
   } catch (e) {
     next(e);

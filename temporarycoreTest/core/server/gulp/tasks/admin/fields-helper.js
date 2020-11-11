@@ -1,4 +1,5 @@
-import {  availableLangs } from '../fields';
+// import {  availableLangs } from '../fields';
+var availableLangs = global.langs;
 
 export function buildForModalEmpty(key, value){
     return `

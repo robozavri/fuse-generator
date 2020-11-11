@@ -1,5 +1,10 @@
 import * as _ from 'lodash';
 import { availableLangs, refFields, selectFields } from '../fields';
+// var availableLangs = global.langs;
+// var refFields = global.refFields;
+// var selectFields = global.selectFields;
+// import {refFields, availableLangs, selectFields} from "../auto.js";
+
 
 export function generateSchema(fields = false) {
     if(!fields) {
@@ -94,7 +99,7 @@ function buildFieldObject(key, obj) {
 }
 
 function nestedBuilder(key, obj) {
-  let temp = ``
+   let temp = ``
   if (typeof obj == "object") {
     temp +=  `{`;
       for (let property in obj) {
@@ -190,7 +195,9 @@ function buildSelect(key) {
   return `String`;
 }
 
-function buildReference(key) {
+function buildReference(key) { 
+  // console.log('refFields[key].referenceType:', key, refFields)
+  // return;
   if ( refFields[key].referenceType === 'multiple' ) {
     return `[{ type: Schema.Types.ObjectId, ref: '${ refFields[key].reference}' }]`;
   }

@@ -30,6 +30,15 @@ export function singular(str) {
   return pluralize.singular(str);
 }
 
+export function getModuleId() {
+  let moduleId = argv.moduleId || argv.m;
+  if (!moduleId) {
+    log(colors.red('Error: module parameter is required (e.g. --module <module>) value: string'));
+    process.exit(1);
+  }
+  return moduleId;
+}
+
 export async function getFieldsPath() {
   let dir = argv.directory || argv.d;
   

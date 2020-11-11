@@ -5,6 +5,7 @@ import path from 'path';
 import runSequence from 'run-sequence';
 import paths from '../paths';
 import * as _ from 'lodash';
+import axios from 'axios';
 // import { fields, refFields } from './fields';
 import { generate } from './admin/generate';
 // old conde need to remov in future
