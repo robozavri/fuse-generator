@@ -1,9 +1,5 @@
 import * as _ from 'lodash';
 import { availableLangs, refFields, selectFields } from '../fields';
-// var availableLangs = global.langs;
-// var refFields = global.refFields;
-// var selectFields = global.selectFields;
-// import {refFields, availableLangs, selectFields} from "../auto.js";
 
 
 export function generateSchema(fields = false) {
@@ -407,4 +403,4 @@ function generateSelect(key) {
   }
   const randomValue = selectFields[key].values[Math.floor(Math.random() * selectFields[key].values.length)];
   return `'${randomValue}'`;
- }
+}
