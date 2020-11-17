@@ -4,7 +4,7 @@ import { assertFound } from '../../helpers/db-result-handler';
 
 // =============== Getters ===============
 
-export function getByQuery({find = {}, populate = '', or = [{}], sort = { position: 1 }, offset = 0, limit = 10}) {
+export function getByQuery({find = {}, populate = '', or = [{}], sort = { position: 1, _id: -1 }, offset = 0, limit = 10}) {
   return Promise.all([
     Model.find(find).populate(populate).lean().or(or).sort(sort).skip(offset).limit(limit),
     Model.find(find).lean().or(or).countDocuments()

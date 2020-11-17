@@ -4,6 +4,7 @@ import metaTagsSchema from '../../schemas/metaTags.schema';
 import imageSchema from '../../schemas/image.schema';
 
 const <%=nameFUCCamel%>Schema = new Schema({
+  adminEmail: String,
   <%=schema%>
 });
 

@@ -20,7 +20,10 @@ const paths = {
     validator: `${root}/gulp/generator/validator/**`,
     mainComponent: `${root}/gulp/generator/main-component/**`,
     adminComponent: `${root}/gulp/generator/admin-component/**`,
-    api: `${root}/gulp/generator/api/**`,
+    api: {
+      standart : `${root}/gulp/generator/api/standart/**`,
+      common : `${root}/gulp/generator/api/common/**`,
+    },    
     stub: `${root}/gulp/generator/stub/**`
   },
 
@@ -28,8 +31,10 @@ const paths = {
     modal: `${root}/gulp/generator/modal/**`,
     service: `${root}/gulp/generator/service/**`,
     articles: `${root}/gulp/generator/admin/source/articles/**`,
-    products: `${root}/gulp/generator/admin/source/products/**`,
-    product: `${root}/gulp/generator/admin/source/product/**`,
+    articlesWithModal: `${root}/gulp/generator/admin/source/articles-with-modal/**`,
+    editPage: `${root}/gulp/generator/admin/source/edit-page/**`,
+    common: `${root}/gulp/generator/admin/source/common/**`,
+    commonHttp: `${root}/gulp/generator/admin/source/common-http/**`,
     http: `${root}/gulp/generator/admin/source/http/**`,
     model: `${root}/gulp/generator/admin/source/model/**`,
   },

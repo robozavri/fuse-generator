@@ -49,17 +49,12 @@ export function parseUpdate(req: Request, res: Response, next: NextFunction) {
 }
 
 export function parseUpdatePositions(req: Request, res: Response, next: NextFunction) {
-  req.body = Object.assign(
-    {
-      items: req.body.items,
-    }
-  );
+  req.body = { items: req.body.items };
   next();
 }
 
 function parseBaseProps(body: any) {
   return _.pick(body, [
     <%=keybaseProps%>
-    'position',
   ]);
 }

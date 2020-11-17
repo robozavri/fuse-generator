@@ -86,18 +86,30 @@ async function generate(req: Request, res: Response, next: NextFunction) {
     const payload = req.body;
     const module = await modulesDao.getById(payload._id);
 
-    exec(`gulp generate --moduleId ${payload._id}`, (error, stdout, stderr) => {
-        if (error) {
-            console.log(`error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            return;
-        }
-        console.log(`stdout: ${stdout}`);
-    });
+    // exec(`gulp generate --moduleId ${payload._id}`, (error, stdout, stderr) => {
+    //     if (error) {
+    //         console.log(`error: ${error.message}`);
+    //         return;
+    //     }
+    //     if (stderr) {
+    //         console.log(`stderr: ${stderr}`);
+    //         return;
+    //     }
+    //     console.log(`stdout: ${stdout}`);
+    // });
 
+    exec(`cd ../admin && gulp generate --moduleId ${payload._id}`, (error, stdout, stderr) => {
+      if (error) {
+          console.log(`error: ${error.message}`);
+          return;
+      }
+      if (stderr) {
+          console.log(`stderr: ${stderr}`);
+          return;
+      }
+      console.log(`stdout: ${stdout}`);
+  });
+  
     res.json(module);
   } catch (e) {
     next(e);

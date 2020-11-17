@@ -1,5 +1,4 @@
 import Model from './<%=nameLC%>.model';
-import Promise from 'bluebird';
 import { assertFound } from '../../helpers/db-result-handler';
 
 // =============== Getters ===============

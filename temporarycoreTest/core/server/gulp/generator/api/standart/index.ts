@@ -31,7 +31,7 @@ async function getByQuery(req: Request, res: Response, next: NextFunction) {
 async function create(req: Request, res: Response, next: NextFunction) {
   try {
     const payload = req.body;
-    await <%=nameCamel%>Dao.create(payload);
+    await <%=nameCamel%>Dao.create({ ...payload, position: 0 });
     res.sendStatus(201);
   } catch (e) {
     next(e);

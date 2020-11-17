@@ -40,7 +40,7 @@ async function sendEmail(req: Request, res: Response, next: NextFunction) {
   try {
     const payload = req.body;
     const data: any = await <%=nameCamel%>Dao.getOne();
-    await sendClientMessage(data.contact.adminEmail, payload);
+    await sendClientMessage(data.adminEmail, payload);
     res.sendStatus(200);
   } catch (e) {
     next(e);

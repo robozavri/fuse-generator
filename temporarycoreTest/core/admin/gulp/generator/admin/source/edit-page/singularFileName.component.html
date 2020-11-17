@@ -1,0 +1,46 @@
+<div id="product" class="page-layout carded fullwidth inner-scroll">
+  <div class="top-bg accent"></div>
+
+  <div class="center" *ngIf="mainData">
+    <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/admin/<%=pluralFileName%>'">
+          <mat-icon> arrow_back </mat-icon>
+        </button>
+
+        <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          <div class="h2" *ngIf="!editMode"> New <%=singularFileName%> </div>
+          <div class="h1" *ngIf="editMode" style="text-transform: capitalize;">
+            {{mainData.title?.en || '<%=singularFileName%>'}}
+          </div>
+          <div class="subtitle logo-text h2" *ngIf="editMode" style="text-transform: capitalize;">
+            <span> <%=singularFileName%> Detail </span>
+          </div>
+        </div>
+      </div>
+
+      <button mat-raised-button class="save-product-button" type="submit" *ngIf="!editMode" (click)="save()">
+        <span> Add </span>
+      </button>
+
+      <button mat-raised-button class="save-product-button" type="submit" *ngIf="editMode"
+        [disabled]="formComponents && !formsAreValid()" (click)="save()">
+        <span> Save </span>
+      </button>
+    </div>
+
+    <div class="content-card">
+      <div class="content">
+        <mat-tab-group>
+          <mat-tab label="Basic Info">
+            <div class="tab-content" fusePerfectScrollbar>
+              <app-basic-info [formData]="mainData" <%=formComponentBindParams%> #basicInfoForm [showSubmit]="false">
+              </app-basic-info>
+            </div>
+          </mat-tab>
+          <%=editPageHtmlTabArea%>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+</div>
