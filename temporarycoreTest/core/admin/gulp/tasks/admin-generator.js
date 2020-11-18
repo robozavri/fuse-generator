@@ -1,19 +1,19 @@
-import { multilingualQuillEditorBuilder } from './admin/fields-generators/multilingual-quill-editor';
-import { multilingualTextareaBuilder } from './admin/fields-generators/multilingual-textarea';
-import { multilingualSchemaBuilder } from './admin/fields-generators/multilingual-schema';
-import { quillEditorBuilder } from './admin/fields-generators/quill-editor';
+import { MultilingualQuillEditorField } from './admin/fields-generators/multilingual-quill-editor';
+import { MultilingualTextareaField } from './admin/fields-generators/multilingual-textarea';
+import { MultilingualSchemaField } from './admin/fields-generators/multilingual-schema';
+import { QuillEditorField } from './admin/fields-generators/quill-editor';
 import { TextareaField } from './admin/fields-generators/textarea';
 import { StringField } from './admin/fields-generators/string';
 import { NumberField } from './admin/fields-generators/number';
-import { imageBuilder } from './admin/fields-generators/image';
-import { imagesBuilder } from './admin/fields-generators/images';
+import { ImageField } from './admin/fields-generators/image';
+import { ImagesField } from './admin/fields-generators/images';
 import { DateField } from './admin/fields-generators/date';
-import { socialsBuilder } from './admin/fields-generators/socials';
-import { selectBuilder } from './admin/fields-generators/select';
-import { slideToggleBuilder } from './admin/fields-generators/slide-toggle';
-import { referenceBuilder } from './admin/fields-generators/reference';
-import { buildListColumns } from './admin/fields-generators/list';
-import { metaBuilder } from './admin/fields-generators/meta';
+import { SocialsField } from './admin/fields-generators/socials';
+import { SelectField } from './admin/fields-generators/select';
+import { SlideToggleField } from './admin/fields-generators/slide-toggle';
+import { ReferenceField } from './admin/fields-generators/reference';
+import { List } from './admin/fields-generators/list';
+import { MetaField } from './admin/fields-generators/meta';
 
 import { FieldsHelper } from './admin/fields-helper';
 
@@ -43,8 +43,8 @@ export default class AdminGenerator {
     startGenerate(){
         if (this.module.moduleType === 'articles') { 
             this.generateArticleModule();
-            this.generateArticleHttp();
-            this.generateArticleModel();
+            // this.generateArticleHttp();
+            // this.generateArticleModel();
         }
         
         if (this.module.moduleType === 'common') {
@@ -219,43 +219,65 @@ export default class AdminGenerator {
     detectFieldType(key, type, nested = null) {
         try { 
             switch( type ) { 
-              case 'multilingualSchema-quill-editor': return multilingualQuillEditorBuilder(key, nested);
+              case 'multilingualSchema-quill-editor':
+                const multilingualQuillEditorField = new MultilingualQuillEditorField(this.fieldsHelper, this.availableLangs);
+                return multilingualQuillEditorField.Builder(key, nested);
               break;
-              case 'multilingualSchema-Textarea': return multilingualTextareaBuilder(key, nested);
+              case 'multilingualSchema-Textarea':
+                const multilingualTextareaField = new MultilingualTextareaField(this.fieldsHelper, this.availableLangs);
+                return multilingualTextareaField.builder(key, nested);
               break;
-              case 'multilingualSchema': return multilingualSchemaBuilder(key, nested);
+              case 'multilingualSchema': 
+                const multilingualSchemaField = new MultilingualSchemaField(this.fieldsHelper, this.availableLangs);
+                return multilingualSchemaField.builder(key, nested);
                 break;
-              case 'quill-editor': return quillEditorBuilder(key, nested);
+              case 'quill-editor': 
+                const quillEditorField = new QuillEditorField(this.fieldsHelper);
+                return quillEditorField.builder(key, nested);
                 break;
               case 'Textarea': 
-              const textareaField = new TextareaField(this.fieldsHelper);
-              return textareaField.textareaBuilder(key, nested);
+                const textareaField = new TextareaField(this.fieldsHelper);
+                return textareaField.textareaBuilder(key, nested);
                 break;
               case 'String':
-              const stringField = new StringField(this.fieldsHelper);
-              return stringField.stringBuilder(key, nested);
+                const stringField = new StringField(this.fieldsHelper);
+                return stringField.stringBuilder(key, nested);
                 break;
               case 'Number': 
-              const numberField = new NumberField(this.fieldsHelper);
-              return numberField.numberBuilder(key, nested);
+                const numberField = new NumberField(this.fieldsHelper);
+                return numberField.numberBuilder(key, nested);
                 break;
-              case 'imageSchema': return imageBuilder(key, nested);
+              case 'imageSchema': 
+                const imageField = new ImageField(this.fieldsHelper);
+                return imageField.builder(key, nested);
                 break;
-              case '[imageSchema]': return imagesBuilder(key, nested);
+              case '[imageSchema]': 
+                const imagesField = new ImagesField(this.fieldsHelper);
+                return imagesField.builder(key, nested);
                 break;
               case 'Date': 
-              const dateField = new DateField(this.fieldsHelper);
-              return dateField.dateBuilder(key, nested);
+                const dateField = new DateField(this.fieldsHelper);
+                return dateField.dateBuilder(key, nested);
                 break;
-              case 'Socials': return socialsBuilder(key, nested);
+              case 'Socials': 
+                const socialsField = new SocialsField(this.fieldsHelper);
+                return socialsField.builder(key, nested);
                 break;
-              case 'Select': return selectBuilder(key, nested);
+              case 'Select': 
+                const selectField = new SelectField(this.fieldsHelper, this.selectFields);
+                return selectField.builder(key, nested);
                 break;
-              case 'Slide-toggle': return slideToggleBuilder(key, nested);
+              case 'Slide-toggle': 
+                const slideToggleField = new SlideToggleField(this.fieldsHelper);
+                return slideToggleField.builder(key, nested);
                 break;
-              case 'Reference': return referenceBuilder(key, nested);
+              case 'Reference': 
+                const referenceField = new ReferenceField(this.fieldsHelper, this.refFields);
+                return referenceField.builder(key, nested);
                 break;
-              case 'Meta': return metaBuilder(key, nested);
+              case 'Meta': 
+              const metaField = new MetaField();
+              return metaField.builder(key, nested);
                 break;
               break;
             }
@@ -414,66 +436,3 @@ export default class AdminGenerator {
 }
 
 
-class List {
-
-    constructor({ availableLangs, listFields}) {
-        this.listFields = listFields;
-        this.availableLangs = availableLangs;
-    }
-
-    buildListColumns() {
-        return {
-            listHtmlColumnsArea: this.generateListHtmlColumns(),
-            listComponentClassPropertiesArea: this.buildColumns()
-        }
-    }
-    
-    buildColumns() {
-        if(!this.listFields) return '';
-        let columns ='';
-        Object.keys(this.listFields).map((key) => {
-            columns += `'${key}', `;
-        });
-        return `
-        displayedColumns = ['id', ${columns}'active'];`;
-    }
-    
-    generateListHtmlColumns() {
-        if(!this.listFields) return '';
-        
-        let template ='';
-        Object.keys(this.listFields).map((key) => {
-            switch( this.listFields[key] ) {
-            case 'multilingualSchema': template += this.listColumnHtmlMultilingual(key);
-                break;
-            case 'String': template += this.listColumnHtmlString(key);
-                break;
-            }
-        });
-        return template;
-    }
-    
-    listColumnHtmlMultilingual(key) {
-        return `
-            <!-- ${key} column -->
-            <ng-container matColumnDef="${key}">
-            <mat-header-cell *matHeaderCellDef #${key}Label> ${_.upperFirst(key)} </mat-header-cell>
-            <mat-cell *matCellDef="let item">
-                <p class="text-truncate">{{item.${key}?.${this.availableLangs[0]}}}</p>
-            </mat-cell>
-            </ng-container>
-        `;
-    }
-    
-    listColumnHtmlString(key) {
-        return `
-            <!-- ${key} column -->
-            <ng-container matColumnDef="${key}">
-            <mat-header-cell *matHeaderCellDef #${key}Label> ${_.upperFirst(key)} </mat-header-cell>
-            <mat-cell *matCellDef="let item">
-                <p class="text-truncate">{{item?.${key}}}</p>
-            </mat-cell>
-            </ng-container>
-        `;
-    }        
-}

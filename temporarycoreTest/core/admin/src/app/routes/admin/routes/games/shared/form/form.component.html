@@ -1,0 +1,46 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="tab-content pt-24 pb-24" fusePerfectScrollbar fxLayout="column">
+    
+      <div formGroupName='firstLevelTestFieldTWO'>
+        <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+          <mat-label> first level test field two en </mat-label>
+          <textarea matInput placeholder="first level test field two en" formControlName="en" rows="5">
+          </textarea>
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+          <mat-label> first level test field two ge </mat-label>
+          <textarea matInput placeholder="first level test field two ge" formControlName="ge" rows="5">
+          </textarea>
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+          <mat-label> first level test field two ru </mat-label>
+          <textarea matInput placeholder="first level test field two ru" formControlName="ru" rows="5">
+          </textarea>
+        </mat-form-field>
+        
+      </div>
+  
+      <div fxLayout="row" fxLayoutAlign="space-between" formGroupName='firstLevelTestField'>
+        
+        <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+            <mat-label> first level test field en </mat-label>
+            <input matInput placeholder="first level test field en" formControlName="en">
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+            <mat-label> first level test field ge </mat-label>
+            <input matInput placeholder="first level test field ge" formControlName="ge">
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
+            <mat-label> first level test field ru </mat-label>
+            <input matInput placeholder="first level test field ru" formControlName="ru">
+        </mat-form-field>
+  
+      </div>
+  
+    <div>
+      <button mat-raised-button color="primary" *ngIf="showSubmit"> Submit </button>
+    </div>
+  </div>
+</form>

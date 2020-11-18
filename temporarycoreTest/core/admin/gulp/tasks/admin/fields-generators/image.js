@@ -1,62 +1,64 @@
 import * as _ from 'lodash';
-import { 
-    buildCheckFormElementEmpty,
-    buildForModalEmpty
-} from '../fields-helper';
 
-const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200];
+export class ImageField {
 
-export function imageBuilder(key, nested = null) {
-  const rand = numbers[Math.floor(Math.random() * numbers.length)];
-
-  return {
-    formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key, nested,"{}"),
-    emptyObjectsForOpenModal:  buildForModalEmpty(key,"{}"),
-    formComponentFormGroupArea: buildFormGroup(key, nested),
-    formComponentHtmlArea: buildHtml(key, nested, rand),
-    formComponentClassBodyArea: imageMethodTemplate(key, nested, rand)
+  constructor(FieldsHelper) {
+    this.FieldsHelper = FieldsHelper;
   }
-}
+  numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200];
 
-function buildFormGroup(key, nested = null) {
-  if (nested === null) {
-    nested = key;
-  } else {
-    nested += key;
-  }
-  return ` 
-    ${key}: this.fb.group({
-      url: [this.formData.${nested}.url || '']
-    }),`;
-}
+  builder(key, nested = null) {
+    const rand = numbers[Math.floor(Math.random() * numbers.length)];
 
-function buildHtml(key, nested = null, rand) {
-  if (nested === null) {
-    nested = key;
-  } else {
-    nested += key;
+    return {
+      formComponentClassOnInitBodyArea: this.FieldsHelper.buildCheckFormElementEmpty(key, nested,"{}"),
+      emptyObjectsForOpenModal:  this.FieldsHelper.buildForModalEmpty(key,"{}"),
+      formComponentFormGroupArea: this.buildFormGroup(key, nested),
+      formComponentHtmlArea: this.buildHtml(key, nested, rand),
+      formComponentClassBodyArea: this.imageMethodTemplate(key, nested, rand)
+    }
   }
-  return `
-    <h3> ${_.lowerCase(key)} </h3>
-    <div class="inputs_container">
-      <app-image-upload
-        [image]="formData.${nested}"
-        [imageHeight]="imageSize.height"
-        [imageWidth]="imageSize.width"
-        (uploadComplete)="onUploadComplete${_.upperFirst(key)}${rand}($event)">
-      </app-image-upload>
-    </div>`;
-}
 
-function imageMethodTemplate(key, nested = null, rand) {
-  if (nested === null) {
-    nested = key;
-  } else {
-    nested += key;
+  buildFormGroup(key, nested = null) {
+    if (nested === null) {
+      nested = key;
+    } else {
+      nested += key;
+    }
+    return ` 
+      ${key}: this.fb.group({
+        url: [this.formData.${nested}.url || '']
+      }),`;
   }
-  return `
-  onUploadComplete${_.upperFirst(key)}${rand}(data: any): void {
-    this.form.get('${nested}').get('url').markAsTouched();
-    this.form.get('${nested}').get('url').setValue(data.url);
-  }`;
+
+  buildHtml(key, nested = null, rand) {
+    if (nested === null) {
+      nested = key;
+    } else {
+      nested += key;
+    }
+    return `
+      <h3> ${_.lowerCase(key)} </h3>
+      <div class="inputs_container">
+        <app-image-upload
+          [image]="formData.${nested}"
+          [imageHeight]="imageSize.height"
+          [imageWidth]="imageSize.width"
+          (uploadComplete)="onUploadComplete${_.upperFirst(key)}${rand}($event)">
+        </app-image-upload>
+      </div>`;
+  }
+
+  imageMethodTemplate(key, nested = null, rand) {
+    if (nested === null) {
+      nested = key;
+    } else {
+      nested += key;
+    }
+    return `
+    onUploadComplete${_.upperFirst(key)}${rand}(data: any): void {
+      this.form.get('${nested}').get('url').markAsTouched();
+      this.form.get('${nested}').get('url').setValue(data.url);
+    }`;
+  }
 }

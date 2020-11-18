@@ -1,57 +1,60 @@
 import * as _ from 'lodash';
-import { 
-  buildCheckFormElementEmpty,
-  buildForModalEmpty
-} from '../fields-helper';
-import { selectFields } from '../../fields';
 import { plural } from '../../../helpers';
 
-export function selectBuilder(key, nested = null) {
-  const selectType = selectFields[key].selectType === 'single' ? "''" : '[]';
-  return {
-    formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key, nested, selectType),
-    emptyObjectsForOpenModal:  buildForModalEmpty(key,selectType),
-    formComponentFormGroupArea: buildFormGroup(key, nested),
-    formComponentHtmlArea: buildHtml(key),
-    formComponentClassPropertiesArea: generateSelectArray(key)
-  }
-}
+export class SelectField {
 
-function buildFormGroup(key, nested = null) {
-  if (nested === null) {
-    nested = key;
-  } else {
-    nested += key;
+  constructor(FieldsHelper, selectFields) {
+    this.FieldsHelper = FieldsHelper;
+    this.selectFields = selectFields;
   }
-  if (selectFields[key].selectType === 'single') {
+
+  selectBuilder(key, nested = null) {
+    const selectType = selectFields[key].selectType === 'single' ? "''" : '[]';
+    return {
+      formComponentClassOnInitBodyArea: this.FieldsHelper.buildCheckFormElementEmpty(key, nested, selectType),
+      emptyObjectsForOpenModal:  this.FieldsHelper.buildForModalEmpty(key,selectType),
+      formComponentFormGroupArea: this.buildFormGroup(key, nested),
+      formComponentHtmlArea: this.buildHtml(key),
+      formComponentClassPropertiesArea: this.generateSelectArray(key)
+    }
+  }
+
+  buildFormGroup(key, nested = null) {
+    if (nested === null) {
+      nested = key;
+    } else {
+      nested += key;
+    }
+    if (this.selectFields[key].selectType === 'single') {
+      return `
+      ${key}: [this.formData.${nested} || ''],`;
+    }
+
     return `
-    ${key}: [this.formData.${nested} || ''],`;
+      ${key}: [this.formData.${nested} || []],`;  
   }
 
-  return `
-    ${key}: [this.formData.${nested} || []],`;  
-}
+  buildHtml(key) {
+    const pluralName = plural(key);
+    const multiple = this.selectFields[key].selectType === 'multiple' ? 'multiple': '';
 
-function buildHtml(key) {
-  const pluralName = plural(key);
-  const multiple = selectFields[key].selectType === 'multiple' ? 'multiple': '';
+    return `
+      <mat-form-field *ngIf="${pluralName}" fxFlex="100">
+        <mat-label> ${_.lowerCase(key)} </mat-label>
+        <mat-select formControlName="${key}" ${multiple}>
+          <mat-option *ngFor="let item of ${pluralName}" [value]="item">{{ item }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+  `;
+  }
 
-  return `
-    <mat-form-field *ngIf="${pluralName}" fxFlex="100">
-      <mat-label> ${_.lowerCase(key)} </mat-label>
-      <mat-select formControlName="${key}" ${multiple}>
-        <mat-option *ngFor="let item of ${pluralName}" [value]="item">{{ item }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-`;
-}
+  generateSelectArray(key) {
+    let template = '';
+    this.selectFields[key].values.map( (value) => {
+      template += `'${value}', `;
+    });
+    return `
 
-function generateSelectArray(key) {
-  let template = '';
-  selectFields[key].values.map( (value) => {
-    template += `'${value}', `;
-  });
-  return `
-
-  ${ plural(key) } = [${template}];`;
+    ${ plural(key) } = [${template}];`;
+  }
 }

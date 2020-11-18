@@ -1,114 +1,115 @@
 import * as _ from 'lodash';
-import { 
-    buildMultilingual,
-    buildCheckFormElementEmpty,
-    buildForModalEmpty
-} from '../fields-helper';
-import { availableLangs, refFields } from '../../fields';
 import { plural, firstLC, firstUC, singular } from '../../../helpers';
 
-export function referenceBuilder(key, nested = null) {
-  const selectType = refFields[key].referenceType === 'single' ? "''" : '[]';
-    return {
-        formComponentClassOnInitBodyArea: buildCheckFormElementEmpty(key, nested,selectType),
-        emptyObjectsForOpenModal:  buildForModalEmptyObj(key),
-        formComponentFormGroupArea: buildFormGroup(key, nested),
-        formComponentHtmlArea: buildHtml(key),
-        
-        formComponentClassInputArea: generateInputs(key),
+export class ReferenceField {
 
-        modalImportsArea: generateImport(key),
-        modalComponentClassPropertiesArea: generateClassProperties(key),
-        modalComponentClassConstructorArgumentsArea: generateConstructorArgument(key),
-        modalComponentClassOnInitBodyArea: generateApiCall(key),
+  constructor(FieldsHelper, refFields) {
+    this.FieldsHelper = FieldsHelper;
+    this.refFields = refFields;
+  }
+    
+  builder(key, nested = null) {
+    const selectType = refFields[key].referenceType === 'single' ? "''" : '[]';
+      return {
+          formComponentClassOnInitBodyArea: this.FieldsHelper.buildCheckFormElementEmpty(key, nested,selectType),
+          emptyObjectsForOpenModal:  this.buildForModalEmptyObj(key),
+          formComponentFormGroupArea: this.buildFormGroup(key, nested),
+          formComponentHtmlArea: this.buildHtml(key),
+          
+          formComponentClassInputArea: this.generateInputs(key),
 
-        formComponentBindParams: generateBindParams(key),
+          modalImportsArea: this.generateImport(key),
+          modalComponentClassPropertiesArea: this.generateClassProperties(key),
+          modalComponentClassConstructorArgumentsArea: this.generateConstructorArgument(key),
+          modalComponentClassOnInitBodyArea: this.generateApiCall(key),
 
-        listImportsArea: generateImport(key),
-        listComponentClassOnInitBodyArea: generateApiCall(key),
-        listComponentClassPropertiesArea: generateClassProperties(key),
-        listComponentClassConstructorArgumentsArea: generateConstructorArgument(key),
+          formComponentBindParams: this.generateBindParams(key),
 
-        editPageComponentImportsArea: generateImport(key),
-        editPageComponentClassPropertiesArea: generateClassProperties(key),
-        editPageComponentClassConstructorArgumentsArea: generateConstructorArgument(key),
-        editPageComponentClassOnInitBodyArea: generateApiCall(key),
+          listImportsArea: this.generateImport(key),
+          listComponentClassOnInitBodyArea: this.generateApiCall(key),
+          listComponentClassPropertiesArea: this.generateClassProperties(key),
+          listComponentClassConstructorArgumentsArea: this.generateConstructorArgument(key),
+
+          editPageComponentImportsArea: this.generateImport(key),
+          editPageComponentClassPropertiesArea: this.generateClassProperties(key),
+          editPageComponentClassConstructorArgumentsArea: this.generateConstructorArgument(key),
+          editPageComponentClassOnInitBodyArea: this.generateApiCall(key),
+      }
+  }
+
+
+  buildForModalEmptyObj(key) {
+    if (this.refFields[key].referenceType === 'single') {
+          return  `
+          ${key}: '',`;
     }
-}
-
-
-function buildForModalEmptyObj(key) {
-  if (refFields[key].referenceType === 'single') {
-        return  `
-        ${key}: '',`;
+    return  `
+          ${key}: [],`;   
   }
 
-  return  `
-        ${key}: [],`;   
-}
-
-function buildFormGroup(key, nested = null) {
-  if (nested === null) {
-      nested = key;
-  }else{
-      nested += key;
+  buildFormGroup(key, nested = null) {
+    if (nested === null) {
+        nested = key;
+    }else{
+        nested += key;
+    }
+    if (this.refFields[key].referenceType === 'single') {
+      return   `
+        ${key}: [this.formData.${nested} || ''],`;
   }
-  if (refFields[key].referenceType === 'single') {
-    return   `
-      ${key}: [this.formData.${nested} || ''],`;
-}
 
-    return   `
-      ${key}: [this.formData.${nested} || []],`;  
-}
+      return   `
+        ${key}: [this.formData.${nested} || []],`;  
+  }
 
-function buildHtml(key) {
-  const pluralName = plural(key);
-  const multiple = refFields[key].referenceType === 'multiple' ? 'multiple': '';
+  buildHtml(key) {
+    const pluralName = plural(key);
+    const multiple = this.refFields[key].referenceType === 'multiple' ? 'multiple': '';
 
-  return `
-      <mat-form-field [style.width.px]=500 *ngIf="${pluralName}">
-          <mat-label>${_.kebabCase(key)}</mat-label>
-          <mat-select formControlName="${key}" ${multiple}>
-              <mat-option *ngFor="let item of ${pluralName}" [value]="item.${refFields[key].value}">{{ item.${refFields[key].displayFieldName} }}</mat-option>
-          </mat-select>
-      </mat-form-field>
-`;
-}
-
-
-function generateInputs(key) {
-  return  `  
-  @Input() ${ plural(key) }: any;
-   `
-}
-
-function generateBindParams(key) {
-  return  ` [${ plural(key) }]="${ plural(key) }" `;
-}
-
-function generateImport(key) {
-  return `
-import { ${ firstUC(singular( refFields[key].reference )) }ApiService } from 'app/shared/http/${_.kebabCase(singular( refFields[key].reference ))}-api.service';
-`;
-}
-
-function generateClassProperties(key) {
-   return  `  
-  ${ plural(key) }: any;
-   `
-}
-
-function generateConstructorArgument(key) {
-      return  `
-    private ${ firstLC(singular( refFields[key].reference  )) }ApiService: ${ firstUC(singular( refFields[key].reference  )) }ApiService,
-      `;
-}
-
-function generateApiCall(key) {
-  return  `
-    this.${ firstLC(singular( refFields[key].reference  )) }ApiService.getByQuery({all: true}).subscribe((data: any) => {
-        this.${ plural(key) } = data.items;
-    });
+    return `
+        <mat-form-field [style.width.px]=500 *ngIf="${pluralName}">
+            <mat-label>${_.kebabCase(key)}</mat-label>
+            <mat-select formControlName="${key}" ${multiple}>
+                <mat-option *ngFor="let item of ${pluralName}" [value]="item.${this.refFields[key].value}">{{ item.${this.refFields[key].displayFieldName} }}</mat-option>
+            </mat-select>
+        </mat-form-field>
   `;
+  }
+
+
+  generateInputs(key) {
+    return  `  
+    @Input() ${ plural(key) }: any;
+    `
+  }
+
+  generateBindParams(key) {
+    return  ` [${ plural(key) }]="${ plural(key) }" `;
+  }
+
+  generateImport(key) {
+    return `
+  import { ${ firstUC(singular( this.refFields[key].reference )) }ApiService } from 'app/shared/http/${_.kebabCase(singular( this.refFields[key].reference ))}-api.service';
+  `;
+  }
+
+  generateClassProperties(key) {
+    return  `  
+    ${ plural(key) }: any;
+    `
+  }
+
+  generateConstructorArgument(key) {
+        return  `
+      private ${ firstLC(singular( this.refFields[key].reference  )) }ApiService: ${ firstUC(singular( this.refFields[key].reference  )) }ApiService,
+        `;
+  }
+
+  generateApiCall(key) {
+    return  `
+      this.${ firstLC(singular( this.refFields[key].reference  )) }ApiService.getByQuery({all: true}).subscribe((data: any) => {
+          this.${ plural(key) } = data.items;
+      });
+    `;
+  }
 }
