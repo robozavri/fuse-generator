@@ -27,9 +27,12 @@
         <div fxFlex [@detailExpand]="item == expandedElement ? 'expanded' : 'collapsed'" style="overflow: hidden;">
           <mat-tab-group>
             <mat-tab label="Info">
-              <app-form [formData]="item"  (submitForm)="submitFormData($event, item._id)"></app-form>
+              <app-form [formData]="item"  [SubjectReferenseTypes]="SubjectReferenseTypes"  (submitForm)="submitFormData($event, item._id)"></app-form>
             </mat-tab>
             
+          <mat-tab label="Meta">
+            <app-meta-form [meta]="item.meta" (submitMeta)="submitMeta($event, item._id)"></app-meta-form>
+          </mat-tab>
           </mat-tab-group>
         </div>
       </td>

@@ -55,8 +55,20 @@ export class GamesComponent {
 
   add(): void {
     const data: Game = { 
-      firstLevelTestFieldTWO: {},
-      firstLevelTestField: {},
+      variantsSelectType: [],
+          SubjectReferenseType: '',
+      booleanSlideToggleType: false,
+      justTextarea: '',
+      AdditionalNoteQuiliEditor: '',
+      contentQuiliMultilingual: {},
+      DescriptionMultilingualTextarea: {},
+      SocialsType: [],
+      GalleryImagesType: [],
+      AvatarImageType: {},
+      SomeNameMultilingualTypeField: {},
+      CreateDateType: '',
+      UsersCountNumberType: '',
+      titleStringType: '',
     };
     this.dialog
       .open(GameModalComponent, { data })

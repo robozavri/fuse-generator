@@ -43,8 +43,8 @@ export default class AdminGenerator {
     startGenerate(){
         if (this.module.moduleType === 'articles') { 
             this.generateArticleModule();
-            // this.generateArticleHttp();
-            // this.generateArticleModel();
+            this.generateArticleHttp();
+            this.generateArticleModel();
         }
         
         if (this.module.moduleType === 'common') {

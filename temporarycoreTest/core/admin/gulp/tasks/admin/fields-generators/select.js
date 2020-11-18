@@ -8,8 +8,8 @@ export class SelectField {
     this.selectFields = selectFields;
   }
 
-  selectBuilder(key, nested = null) {
-    const selectType = selectFields[key].selectType === 'single' ? "''" : '[]';
+  builder(key, nested = null) {
+    const selectType = this.selectFields[key].selectType === 'single' ? "''" : '[]';
     return {
       formComponentClassOnInitBodyArea: this.FieldsHelper.buildCheckFormElementEmpty(key, nested, selectType),
       emptyObjectsForOpenModal:  this.FieldsHelper.buildForModalEmpty(key,selectType),

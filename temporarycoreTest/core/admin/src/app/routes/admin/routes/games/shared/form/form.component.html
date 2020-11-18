@@ -1,42 +1,159 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
   <div class="tab-content pt-24 pb-24" fusePerfectScrollbar fxLayout="column">
     
-      <div formGroupName='firstLevelTestFieldTWO'>
+      <mat-form-field *ngIf="variantsSelectTypes" fxFlex="100">
+        <mat-label> variants select type </mat-label>
+        <mat-select formControlName="variantsSelectType" multiple>
+          <mat-option *ngFor="let item of variantsSelectTypes" [value]="item">{{ item }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+        <mat-form-field [style.width.px]=500 *ngIf="SubjectReferenseTypes">
+            <mat-label>subject-referense-type</mat-label>
+            <mat-select formControlName="SubjectReferenseType" >
+                <mat-option *ngFor="let item of SubjectReferenseTypes" [value]="item._id">{{ item.title?.ge }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+  
+      <div class="custom-slide-toggle">
+        <mat-slide-toggle formControlName="booleanSlideToggleType"> boolean-slide-toggle-type </mat-slide-toggle>
+      </div>
+  
+      <div fxLayout="row" fxLayoutAlign="space-between">
         <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-          <mat-label> first level test field two en </mat-label>
-          <textarea matInput placeholder="first level test field two en" formControlName="en" rows="5">
+          <mat-label> just textarea </mat-label>
+          <textarea matInput placeholder="just textarea" formControlName="justTextarea" rows="5">
+          </textarea>
+        </mat-form-field>
+      </div>
+  
+      <div>
+        <label class="formLabel"> additional note quili editor </label>
+        <quill-editor formControlName="AdditionalNoteQuiliEditor"></quill-editor>
+      </div>
+  
+      <div formGroupName='contentQuiliMultilingual'>
+          
+        <label class="formLabel">content-quili-multilingual en</label>
+        <quill-editor formControlName="en"></quill-editor>
+  
+        <label class="formLabel">content-quili-multilingual ge</label>
+        <quill-editor formControlName="ge"></quill-editor>
+  
+        <label class="formLabel">content-quili-multilingual ru</label>
+        <quill-editor formControlName="ru"></quill-editor>
+  
+      </div>
+  
+      <div formGroupName='DescriptionMultilingualTextarea'>
+        <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+          <mat-label> description multilingual textarea en </mat-label>
+          <textarea matInput placeholder="description multilingual textarea en" formControlName="en" rows="5">
           </textarea>
         </mat-form-field>
         <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-          <mat-label> first level test field two ge </mat-label>
-          <textarea matInput placeholder="first level test field two ge" formControlName="ge" rows="5">
+          <mat-label> description multilingual textarea ge </mat-label>
+          <textarea matInput placeholder="description multilingual textarea ge" formControlName="ge" rows="5">
           </textarea>
         </mat-form-field>
         <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
-          <mat-label> first level test field two ru </mat-label>
-          <textarea matInput placeholder="first level test field two ru" formControlName="ru" rows="5">
+          <mat-label> description multilingual textarea ru </mat-label>
+          <textarea matInput placeholder="description multilingual textarea ru" formControlName="ru" rows="5">
           </textarea>
         </mat-form-field>
         
       </div>
   
-      <div fxLayout="row" fxLayoutAlign="space-between" formGroupName='firstLevelTestField'>
+      <h2>socials-type</h2>
+      <div formArrayName="SocialsType">
+        <mat-card *ngFor="let item of socials.controls; let i = index;" style="margin-bottom: 20px;">
+          <h2>Account {{i + 1}}</h2>
+          <div [formGroupName]="i" style="margin: 20px">
+            <div fxLayout="column" fxLayoutAlign="">
+
+              <mat-form-field  [style.width.px]=300 >
+                <mat-label>Account</mat-label>
+                <mat-select  formControlName="account">
+                    <mat-option *ngFor="let account of accounts" [value]="account">{{ account }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" floatLabel="always" fxFlex="40">
+                <mat-label> link </mat-label>
+                <input matInput placeholder="link" name="link" formControlName="link">
+              </mat-form-field>
+            </div>
+            <button type="button" mat-raised-button color="warn" (click)="deleteSocials(i)">
+                <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-card>
+        <button type="button" mat-raised-button color="accent" (click)="addSocials('socials')"
+          style="margin-bottom: 30px;">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+  
+      <h3> gallery images type </h3>
+      <div class="inputs_container">
+        <app-images-upload
+          *ngIf="images640"
+          [images]="images640"
+          [imageHeight]="imageSize.height"
+          [imageWidth]="imageSize.width"
+          (removeImage)="deleteImageGalleryImagesType640($event)"
+          (uploadComplete)="onUploadCompleteGalleryImagesType640($event)">
+        </app-images-upload>
+      </div>
+      <h3> avatar image type </h3>
+      <div class="inputs_container">
+        <app-image-upload
+          [image]="formData.AvatarImageType"
+          [imageHeight]="imageSize.height"
+          [imageWidth]="imageSize.width"
+          (uploadComplete)="onUploadCompleteAvatarImageType825($event)">
+        </app-image-upload>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between" formGroupName='SomeNameMultilingualTypeField'>
         
         <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
-            <mat-label> first level test field en </mat-label>
-            <input matInput placeholder="first level test field en" formControlName="en">
+            <mat-label> some name multilingual type field en </mat-label>
+            <input matInput placeholder="some name multilingual type field en" formControlName="en">
         </mat-form-field>
   
         <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
-            <mat-label> first level test field ge </mat-label>
-            <input matInput placeholder="first level test field ge" formControlName="ge">
+            <mat-label> some name multilingual type field ge </mat-label>
+            <input matInput placeholder="some name multilingual type field ge" formControlName="ge">
         </mat-form-field>
   
         <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
-            <mat-label> first level test field ru </mat-label>
-            <input matInput placeholder="first level test field ru" formControlName="ru">
+            <mat-label> some name multilingual type field ru </mat-label>
+            <input matInput placeholder="some name multilingual type field ru" formControlName="ru">
         </mat-form-field>
   
+      </div>
+  
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label> create date type </mat-label>
+          <input matInput [matDatepicker]="startDatePicker" formControlName="CreateDateType">
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+  
+    <div fxLayout="row" fxLayoutAlign="space-between">
+      <mat-form-field appearance="outline" floatLabel="always" fxFlex="100">
+        <mat-label> users count number type </mat-label>
+        <input matInput type="number" min="0" placeholder="users count number type" formControlName="UsersCountNumberType">
+      </mat-form-field>
+    </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <mat-form-field appearance="outline" floatLabel="always" fxFlex="100">
+          <mat-label> title string type </mat-label>
+          <input matInput placeholder="title string type" formControlName="titleStringType">
+        </mat-form-field>
       </div>
   
     <div>

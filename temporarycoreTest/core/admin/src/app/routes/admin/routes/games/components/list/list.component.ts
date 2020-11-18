@@ -5,6 +5,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Query } from 'app/shared/models/query';
 import { Game } from 'app/shared/models/game';
 
+  import { SubjectApiService } from 'app/shared/http/subject-api.service';
+  
 
 @Component({
   selector: 'app-list',
@@ -35,10 +37,14 @@ export class ListComponent implements OnInit {
   dataSource: Game[];
   pageLength: number;
   pageEvent: PageEvent;
-  expandedElement: any;
-        displayedColumns = ['id', 'active'];
+  expandedElement: any;  
+    SubjectReferenseTypes: any;
+    
+      displayedColumns = ['id', 'active'];
 
   constructor(
+      private subjectApiService: SubjectApiService,
+        
   ) { }
 
   ngOnInit(): void {
@@ -46,6 +52,10 @@ export class ListComponent implements OnInit {
       this.dataSource = data;
     });
     this.numTotal.subscribe((data) => this.pageLength = data);
+    
+      this.subjectApiService.getByQuery({all: true}).subscribe((data: any) => {
+          this.SubjectReferenseTypes = data.items;
+      });
     
   }
 

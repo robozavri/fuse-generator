@@ -9,7 +9,7 @@ export class ReferenceField {
   }
     
   builder(key, nested = null) {
-    const selectType = refFields[key].referenceType === 'single' ? "''" : '[]';
+    const selectType = this.refFields[key].referenceType === 'single' ? "''" : '[]';
       return {
           formComponentClassOnInitBodyArea: this.FieldsHelper.buildCheckFormElementEmpty(key, nested,selectType),
           emptyObjectsForOpenModal:  this.buildForModalEmptyObj(key),
