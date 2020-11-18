@@ -1,6 +1,22 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <div class="tab-content pt-24 pb-24" fusePerfectScrollbar fxLayout="column">
-    
+<div class="page-layout carded fullwidth inner-scroll">
+  <div class="top-bg accent"></div>
+  <div class="center">
+    <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <div fxLayout="column" fxLayoutAlign="start start">
+          <div class="logo mb-24 mb-md-0" fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon class="logo-icon s-32 mr-16"> info </mat-icon>
+            <span class="logo-text h1"> game </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="tab-content p-24" fusePerfectScrollbar fxLayout="column">
+            
       <mat-form-field *ngIf="variantsSelectTypes" fxFlex="100">
         <mat-label> variants select type </mat-label>
         <mat-select formControlName="variantsSelectType" multiple>
@@ -97,12 +113,12 @@
       <h3> gallery images type </h3>
       <div class="inputs_container">
         <app-images-upload
-          *ngIf="images640"
-          [images]="images640"
+          *ngIf="images834"
+          [images]="images834"
           [imageHeight]="imageSize.height"
           [imageWidth]="imageSize.width"
-          (removeImage)="deleteImageGalleryImagesType640($event)"
-          (uploadComplete)="onUploadCompleteGalleryImagesType640($event)">
+          (removeImage)="deleteImageGalleryImagesType834($event)"
+          (uploadComplete)="onUploadCompleteGalleryImagesType834($event)">
         </app-images-upload>
       </div>
       <h3> avatar image type </h3>
@@ -111,7 +127,7 @@
           [image]="formData.AvatarImageType"
           [imageHeight]="imageSize.height"
           [imageWidth]="imageSize.width"
-          (uploadComplete)="onUploadCompleteAvatarImageType825($event)">
+          (uploadComplete)="onUploadCompleteAvatarImageType887($event)">
         </app-image-upload>
       </div>
       <div fxLayout="row" fxLayoutAlign="space-between" formGroupName='SomeNameMultilingualTypeField'>
@@ -156,8 +172,13 @@
         </mat-form-field>
       </div>
   
-    <div>
-      <button mat-raised-button color="primary" *ngIf="showSubmit"> Submit </button>
+    
+            <div>
+              <button mat-raised-button color="primary"> Submit </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</form>
+</div>

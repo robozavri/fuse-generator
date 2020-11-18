@@ -1,24 +1,19 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
-import { FormComponent as _FormComponent } from '../../../../../../shared/components/form.component';
-import { Game } from 'app/shared/models/game';
-import { largeSize } from 'app/shared/constants/image';
+import { SnackBarService } from 'app/shared/services/snack-bar.service';
+import { GameApiService } from '../../../../shared/http/game-api.service';
 import { accounts } from 'app/shared/constants/socials';
+import { largeSize } from 'app/shared/constants/image';
 
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  selector: 'app-game',
+  templateUrl: './game.component.html',
+  styleUrls: ['./game.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class FormComponent extends _FormComponent implements OnInit {
-    
-    @Input() SubjectReferenseTypes: any;
-    
-  @Input() formData: Game;
-  @Input() showSubmit = true;
-  @Output() submitForm = new EventEmitter<Game>();
-
+export class GameComponent implements OnInit {
   form: FormGroup;
+  formData: any = {};
   imageSize = largeSize;
   
 
@@ -28,17 +23,75 @@ export class FormComponent extends _FormComponent implements OnInit {
     get socials(): FormArray {
         return this.form.get('SocialsType') as FormArray;
     }
-    images640 = [];
-    items640: FormArray;
+    images834 = [];
+    items834: FormArray;
+
+    
+    @Input() SubjectReferenseTypes: any;
+    
 
   constructor(
     private fb: FormBuilder,
-  ) {
-    super();
-  }
+    private snackBarService: SnackBarService,
+    public api: GameApiService,
+  ) {}
 
   ngOnInit(): void {
+    this.loadData();
+    this.api.getOne().subscribe((data: any) => {
+      this.formData = data;
+      this.loadData();
+    });
+  }
+
   
+    // SocialsType methods
+    createSocials(data: any): FormGroup {
+      return this.fb.group({
+        account: [ data.account || ''],
+        link: [ data.link || ''],
+      });
+    }
+    
+    addSocials(details: string): void {
+      const detailsForm = this.fb.group({
+        account: [''],
+        link: [''],
+      });
+      this[details].push(detailsForm);
+    }
+
+    deleteSocials(i: any): void{
+      this.socials.removeAt(i);
+    }
+    // GalleryImagesType upload methods
+    deleteImageGalleryImagesType834(index: any): void {
+      this.images834.splice(index, 1);
+      this.items834 = this.form.get('GalleryImagesType') as FormArray;
+      this.items834.removeAt(index);
+    }
+
+    createItemGalleryImagesType834(url= ''): FormGroup {
+      return this.fb.group({
+          url: url,
+      });
+    }
+
+    addItemGalleryImagesType834(url: any): void {
+      this.items834 = this.form.get('GalleryImagesType') as FormArray;
+      this.items834.push(this.createItemGalleryImagesType834(url));
+      this.images834.push({ url: url });
+    }
+
+    onUploadCompleteGalleryImagesType834(data: any): void {
+      this.addItemGalleryImagesType834(data.url);
+    }
+    onUploadCompleteAvatarImageType887(data: any): void {
+      this.form.get('AvatarImageType').get('url').markAsTouched();
+      this.form.get('AvatarImageType').get('url').setValue(data.url);
+    }
+  
+  loadData(): any {
       this.formData.variantsSelectType = this.formData.variantsSelectType || [];
       this.formData.SubjectReferenseType = this.formData.SubjectReferenseType || '';
       this.formData.booleanSlideToggleType = this.formData.booleanSlideToggleType === undefined ? false : this.formData.booleanSlideToggleType;
@@ -49,14 +102,13 @@ export class FormComponent extends _FormComponent implements OnInit {
       const socialObj = { account: '', link: ''};
       const socialArray = (this.formData.SocialsType || [socialObj]).map((socialItem: any) => this.createSocials(socialItem));
   
-      this.images640 = this.formData.GalleryImagesType || [];
+      this.images834 = this.formData.GalleryImagesType || [];
       this.formData.AvatarImageType = this.formData.AvatarImageType || {};
       this.formData.SomeNameMultilingualTypeField = this.formData.SomeNameMultilingualTypeField || {};
       this.formData.CreateDateType = this.formData.CreateDateType || '';
       this.formData.UsersCountNumberType = this.formData.UsersCountNumberType || '';
       this.formData.titleStringType = this.formData.titleStringType || '';
-
-    this.form = this.fb.group({ 
+    this.form = this.fb.group({
       variantsSelectType: [this.formData.variantsSelectType || []],
         SubjectReferenseType: [this.formData.SubjectReferenseType || ''],
       booleanSlideToggleType: [this.formData.booleanSlideToggleType],
@@ -90,55 +142,12 @@ export class FormComponent extends _FormComponent implements OnInit {
       titleStringType: [this.formData.titleStringType || ''],
     });
   }
-  
-    // SocialsType methods
-    createSocials(data: any): FormGroup {
-      return this.fb.group({
-        account: [ data.account || ''],
-        link: [ data.link || ''],
-      });
-    }
-    
-    addSocials(details: string): void {
-      const detailsForm = this.fb.group({
-        account: [''],
-        link: [''],
-      });
-      this[details].push(detailsForm);
-    }
 
-    deleteSocials(i: any): void{
-      this.socials.removeAt(i);
-    }
-    // GalleryImagesType upload methods
-    deleteImageGalleryImagesType640(index: any): void {
-      this.images640.splice(index, 1);
-      this.items640 = this.form.get('GalleryImagesType') as FormArray;
-      this.items640.removeAt(index);
-    }
-
-    createItemGalleryImagesType640(url= ''): FormGroup {
-      return this.fb.group({
-          url: url,
-      });
-    }
-
-    addItemGalleryImagesType640(url: any): void {
-      this.items640 = this.form.get('GalleryImagesType') as FormArray;
-      this.items640.push(this.createItemGalleryImagesType640(url));
-      this.images640.push({ url: url });
-    }
-
-    onUploadCompleteGalleryImagesType640(data: any): void {
-      this.addItemGalleryImagesType640(data.url);
-    }
-    onUploadCompleteAvatarImageType825(data: any): void {
-      this.form.get('AvatarImageType').get('url').markAsTouched();
-      this.form.get('AvatarImageType').get('url').setValue(data.url);
-    }
   submit(): void {
-    if (this.form.valid) {
-      this.submitForm.emit(this.form.value);
-    }
+    this.api.update({ ...this.form.value }).subscribe(
+      () => this.snackBarService.open('Updated Successfully'),
+      () => this.snackBarService.open('Update Failed'),
+    );
   }
+
 }

@@ -44,13 +44,58 @@ export default class AdminGenerator {
         if (this.module.moduleType === 'articles') { 
             this.generateArticleModule();
             this.generateArticleHttp();
-            this.generateArticleModel();
+            this.generateModel();
         }
         
         if (this.module.moduleType === 'common') {
+            this.generateCommonModule();
+            this.generateCommonHttp();
+            this.generateModel();
         }
     }
 
+    // about common modules generates
+    generateCommonModule(){
+      const name = this.module.cmdTitle;
+      let src, dest = path.join(paths.admin.adminModules, _.kebabCase(plural(name)));
+      src = paths.adminGeneratorTemplates.common;
+      let data = this.generateArticles();
+      let generatedData = this.mergeAreaProperties(data, name);
+    
+      return gulp.src(src)
+          .pipe($.template(generatedData, {
+              interpolate: /<%=([\s\S]+?)%>/g
+          }))
+          .pipe($.rename(path => {
+              path.basename = this.getFileName(name, path.basename);
+          }))
+          .pipe(gulp.dest(dest));
+    }
+
+    generateCommonHttp(){
+      const name = this.module.cmdTitle;
+      const src = paths.adminGeneratorTemplates.commonHttp;
+      const dest = paths.admin.http; 
+
+      gulp.src(src)
+        .pipe($.template({
+          nameUC: firstUC(name),
+          nameLC: firstLC(name),
+          namePlural: _.camelCase(plural(name)),
+          nameSingular: _.camelCase(singular(name)),
+          nameSingularUC: firstUC(_.camelCase(singular(name))),
+          singularFileName: _.kebabCase(singular(name)),
+          pluralFileName: _.kebabCase(plural(name)),
+        }, {
+          interpolate: /<%=([\s\S]+?)%>/g
+        }))
+        .pipe($.rename(path => {
+          path.basename = this.getFileName(name, path.basename);
+        }))
+        .pipe(gulp.dest(dest));
+    }
+
+    // about articles modules generate
     generateArticleModule(){
       const name = this.module.cmdTitle;
       let src, dest = path.join(paths.admin.adminModules, _.kebabCase(plural(name)));
@@ -74,7 +119,7 @@ export default class AdminGenerator {
         .pipe(gulp.dest(dest));
     }
 
-    generateArticleModel(){
+    generateModel(){
       const name = this.module.cmdTitle;
       const src = paths.adminGeneratorTemplates.model;
       const dest = paths.admin.model;
